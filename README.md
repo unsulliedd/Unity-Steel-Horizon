@@ -13,9 +13,9 @@ U10 Unity Takımı
 - ***Damla Akkuş*** - Developer
 - ***Beyza Sürücü*** - Developer
 
-##Product Backlog URL
+## Product Backlog URL
 
-https://trello.com/invite/b/CYlMrTJr/ATTIafc313094b58e60cd5e3254c00ad9f6fA123F7CD/bootcamp
+Our product backlog can be accessed [here](https://trello.com/invite/b/CYlMrTJr/ATTIafc313094b58e60cd5e3254c00ad9f6fA123F7CD/bootcamp).
 
 ## Oyun Açıklaması
 Steel Horizon, 4 oyuncunun birlikte açık dünya içerisinde çeşitli görevler yaptığı ,bunun yanında ise üssünü korumaya çalıştığı action rpg türünde bir oyundur.
@@ -46,17 +46,17 @@ Steel Horizon, 4 oyuncunun birlikte açık dünya içerisinde çeşitli görevle
 
 
 
-- **Paylaşılan Roller**
+# **Paylaşılan Roller**
   
--Berk Karakaş:Developer
+- Berk Karakaş: Developer
 
--Barış Çetin:3D Tasarımcı-Product Owner
+- Barış Çetin: 3D Tasarımcı-Product Owner
 
--Damla Akkuş:UI Designer
+- Damla Akkuş: UI Designer
 
--Beyza Sürücü:Texturing
+- Beyza Sürücü: Texturing
 
--Barış Onur Yıldız:Developer-Scrum Master
+- Barış Onur Yıldız: Developer-Scrum Master
 
 
 ## Code Design Pattern
