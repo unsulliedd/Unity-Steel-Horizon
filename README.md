@@ -34,12 +34,10 @@ Steel Horizon, 4 oyuncunun birlikte açık dünya içerisinde çeşitli görevle
 ---
 # **SPRINT 1**
 - Sprint içi puan değerlendirmesi 98 olarak belirlenmiştir.
-- **Puan tamamlama mantığı**: Proje boyunca tamamlanması gereken backlog puanı ????'dır. İlk Sprint için bitirilmesi istenilen puan sayısı 98 olarak belirlenmiştir ve hedefe ulaşılmıştır.
+- **Puan tamamlama mantığı**: İlk Sprint için bitirilmesi istenilen puan sayısı 98 olarak belirlenmiştir ve hedefe ulaşılmıştır.
 - **Daily Scrum**: Discord üzerinden farklı başlıklarda kanallar açılarak dosya aktarımı ve iletişim sağlandı.
+
   
-## Toplantı Screenshotları 
-
-
 
 - **Paylaşılan Roller**
   
@@ -54,10 +52,6 @@ Steel Horizon, 4 oyuncunun birlikte açık dünya içerisinde çeşitli görevle
 -Barış Onur Yıldız:Developer-Scrum Master
 
 
-
-- **Sprint 1 board update**: Sprint Board Screenshot: 
-//Resim eklenecek
-
 ## Code Design Pattern
 
 <img width="2544" alt="Code_Hierarchy" src="https://github.com/unsulliedd/Unity-Steel-Horizon/assets/86011311/2a6c7b3a-d12c-4ee0-b395-0750dabc3ae2">
@@ -68,10 +62,18 @@ Steel Horizon, 4 oyuncunun birlikte açık dünya içerisinde çeşitli görevle
 - **Ürün Durumu**: Ekran Görüntüleri:
   
 <!-- bot1 -->
-<img src="https://github.com/unsulliedd/Unity-Steel-Horizon/assets/86011311/4173018b-4a2a-4ca5-801c-25d5effee85b" height="600" width="600"/>
+<img src="https://github.com/unsulliedd/Unity-Steel-Horizon/assets/86011311/4173018b-4a2a-4ca5-801c-25d5effee85b" height="537" width="500"/>
 
 <!-- bot2 -->
-<img src="https://github.com/unsulliedd/Unity-Steel-Horizon/assets/86011311/013a07af-c392-4fc4-974b-6c33b665d22a" height="600" width="600"/>
+<img src="https://github.com/unsulliedd/Unity-Steel-Horizon/assets/86011311/013a07af-c392-4fc4-974b-6c33b665d22a" height="537" width="500"/>
+
+
+<img src="https://github.com/unsulliedd/Unity-Steel-Horizon/assets/86011311/bb4072fe-3a02-4c35-a3da-57ea11e541d0" width="500" height="300" alt="V0 1 2 1_2024 07 06_-_18 24 57 01_2">
+
+
+<img src="https://github.com/unsulliedd/Unity-Steel-Horizon/assets/86011311/5315348a-d264-4c51-b65b-985d0cda1b87" width="500" height="300" alt="Untitled video - Made with Clipchamp">
+
+
 
 
   **Sprint Review**:
