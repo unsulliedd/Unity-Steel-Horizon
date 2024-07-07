@@ -117,6 +117,12 @@ public class PlayerInputManager : MonoBehaviour
             moveAmount = 0.5f;  // Walk
         else if (moveAmount > 0.5f)
             moveAmount = 1;     // Run
+
+        // No strafe movement
+        if (playerManager)
+            playerManager.PlayerAnimationManager.MovementAnimations(0, moveAmount);
+
+        //// TODO: Enemy locked strafe movement
     }
 
     private void HandleLookInput()

@@ -5,12 +5,14 @@ using UnityEngine;
 public class PlayerManager : CharacterManager
 {
     PlayerLocomotionManager playerLocomotionManager;
+    [HideInInspector] public PlayerAnimationManager PlayerAnimationManager;
 
     protected override void Awake()
     {
         base.Awake();
 
         playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
+        PlayerAnimationManager = GetComponent<PlayerAnimationManager>();
     }
 
     protected override void Start()

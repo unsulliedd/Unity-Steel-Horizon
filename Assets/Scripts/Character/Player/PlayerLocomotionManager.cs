@@ -10,7 +10,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     private Vector3 targetRotaion;
     [SerializeField] private float runSpeed = 10;
     [SerializeField] private float walkSpeed = 5;
-    [SerializeField] private float rotationSpeed = 3;
+    [SerializeField] private float rotationSpeed = 10;
 
     private PlayerManager playerManager;
 
@@ -29,6 +29,18 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     protected override void Update()
     {
         base.Update();
+        if (playerManager.IsOwner)
+        {
+            playerManager.CharacterNetworkManager.networkVertical.Value = verticalMoveInput;
+            playerManager.CharacterNetworkManager.networkHorizontal.Value = horizontalMoveInput;
+            playerManager.CharacterNetworkManager.networkMoveAmount.Value = moveAmount;
+        }
+        else
+        {
+            verticalMoveInput = playerManager.CharacterNetworkManager.networkVertical.Value;
+            horizontalMoveInput = playerManager.CharacterNetworkManager.networkHorizontal.Value;
+            moveAmount = playerManager.CharacterNetworkManager.networkMoveAmount.Value;
+        }
     }
 
     public void HandleAllMovement()

@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: -1757922043949635935}
   - component: {fileID: 6988333894027696659}
   - component: {fileID: 3197321418773486764}
+  - component: {fileID: 55465366360283299}
   - component: {fileID: 2698194475017017999}
   m_Layer: 0
   m_Name: Player
@@ -80,10 +81,10 @@ Animator:
   m_GameObject: {fileID: 107434631492608830}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 9ec0fafe4e079264b8c38d3353b0ccd7, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7c1066a26e5ca8741b4927cf30d0ac10, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -124,6 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f14db1e17bd374049999b8efe4a43088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerAnimationManager: {fileID: 0}
 --- !u!114 &6988333894027696659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,7 +143,7 @@ MonoBehaviour:
   moveAmount: 0
   runSpeed: 10
   walkSpeed: 5
-  rotationSpeed: 3
+  rotationSpeed: 10
 --- !u!114 &3197321418773486764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,6 +154,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a96319704a5d0f40965223aac90bd9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  networkPosition:
+    m_InternalValue: {x: 0, y: 0, z: 0}
+  networkSmoothVelocity: {x: 0, y: 0, z: 0}
+  networkVelocitySmoothTime: 0.1
+  networkRotation:
+    m_InternalValue: {x: 0, y: 0, z: 0, w: 1}
+  networkRotationSmoothTime: 0.1
+  networkHorizontal:
+    m_InternalValue: 0
+  networkVertical:
+    m_InternalValue: 0
+  networkMoveAmount:
+    m_InternalValue: 0
+--- !u!114 &55465366360283299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107434631492608830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 555a7608f59c361498639001baff8679, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!143 &2698194475017017999

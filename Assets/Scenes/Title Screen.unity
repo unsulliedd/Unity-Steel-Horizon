@@ -1255,7 +1255,6 @@ GameObject:
   m_Component:
   - component: {fileID: 782494495}
   - component: {fileID: 782494492}
-  - component: {fileID: 782494494}
   - component: {fileID: 782494493}
   m_Layer: 0
   m_Name: Overlay Camera
@@ -1359,14 +1358,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!81 &782494494
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 782494491}
-  m_Enabled: 1
 --- !u!4 &782494495
 Transform:
   m_ObjectHideFlags: 0
@@ -2798,6 +2789,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 9110033664288017915, guid: 4d389e9a119547342a222aae12e2c336,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4344,6 +4340,6 @@ SceneRoots:
   - {fileID: 690887637}
   - {fileID: 245275871}
   - {fileID: 7035141206996852573}
+  - {fileID: 1406156832}
   - {fileID: 5066810194118275343}
   - {fileID: 564500596228371695}
-  - {fileID: 1406156832}
