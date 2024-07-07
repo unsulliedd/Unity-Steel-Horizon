@@ -11,6 +11,7 @@ public class PlayerInputManager : MonoBehaviour
 
     #region Components
     public PlayerControls playerControls;
+    [HideInInspector] public PlayerManager playerManager;
     #endregion
 
     [Header("Move Input")]
@@ -19,8 +20,13 @@ public class PlayerInputManager : MonoBehaviour
     public float verticalMoveInput;
     public float moveAmount;
 
+    [Header("Look Input")]
+    [SerializeField] private Vector2 lookInput;
+    public float horizontalLookInput;
+    public float verticalLookInput;
+
     // UI Actions
-    [Header("UI Actions")]
+    [Header("UI Input")]
     public Vector2 navigationInput;
     public Vector2 pointerPosition;
     public bool submitPerformed;
@@ -49,9 +55,11 @@ public class PlayerInputManager : MonoBehaviour
         InputSystem.onEvent += OnInputEvent;
 
         playerControls.PlayerMovement.Disable();
+        playerControls.PlayerCamera.Disable();
         playerControls.UI.Enable();
 
         AssignMovementInputs();
+        AssignCameraInput();
         AssignUIInputs();
     }
 
@@ -64,6 +72,7 @@ public class PlayerInputManager : MonoBehaviour
     void Update()
     {
         HandleMoveInput();
+        HandleLookInput();
     }
 
     // Assign Movement Inputs
@@ -72,6 +81,12 @@ public class PlayerInputManager : MonoBehaviour
 
         playerControls.PlayerMovement.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         playerControls.PlayerMovement.Move.canceled += ctx => moveInput = Vector2.zero;
+    }
+
+    private void AssignCameraInput()
+    {
+        playerControls.PlayerCamera.Look.performed += ctx => lookInput = ctx.ReadValue<Vector2>();
+        playerControls.PlayerCamera.Look.canceled += ctx => lookInput = Vector2.zero;
     }
 
     // Assign UI Inputs
@@ -104,17 +119,25 @@ public class PlayerInputManager : MonoBehaviour
             moveAmount = 1;     // Run
     }
 
+    private void HandleLookInput()
+    {
+        horizontalLookInput = lookInput.x;
+        verticalLookInput = lookInput.y;
+    }
+
     // Enable/Disable Player Movement Input based on the current scene
     private void OnSceneChanged(Scene oldScene, Scene newScene)
     {
         if (newScene.buildIndex == 1)
         {
             playerControls.PlayerMovement.Enable();
+            playerControls.PlayerCamera.Enable();
             playerControls.UI.Disable();
         }
         else
         {
             playerControls.PlayerMovement.Disable();
+            playerControls.PlayerCamera.Disable();
             playerControls.UI.Enable();
         }
     }

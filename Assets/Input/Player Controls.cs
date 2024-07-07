@@ -35,15 +35,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Look"",
-                    ""type"": ""Value"",
-                    ""id"": ""1941b032-cabf-4d35-ace2-6f00dbd1ef50"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -156,32 +147,49 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
+                }
+            ]
+        },
+        {
+            ""name"": ""Player Camera"",
+            ""id"": ""ae257f7a-7860-4d58-afa8-e0b19e5401e6"",
+            ""actions"": [
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""08c9675b-1e69-46ea-8f9c-0cc5c3575146"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""c1f7a91b-d0fd-4a62-997e-7fb9b69bf235"",
+                    ""id"": ""acff4b42-c071-479f-b675-35f37d7a9555"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Gamepad"",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8c8e490b-c610-4785-884f-f04217b23ca4"",
+                    ""id"": ""fa30d14c-f80b-4bc4-aabf-dd87f5673307"",
                     ""path"": ""<Pointer>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse;Touch"",
+                    ""groups"": ""Keyboard&Mouse;Touch"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3e5f5442-8668-4b27-a940-df99bad7e831"",
+                    ""id"": ""ad7b986b-d903-4a0a-a089-e1dc7f48ed3c"",
                     ""path"": ""<Joystick>/{Hatswitch}"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -832,7 +840,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // Player Movement
         m_PlayerMovement = asset.FindActionMap("Player Movement", throwIfNotFound: true);
         m_PlayerMovement_Move = m_PlayerMovement.FindAction("Move", throwIfNotFound: true);
-        m_PlayerMovement_Look = m_PlayerMovement.FindAction("Look", throwIfNotFound: true);
+        // Player Camera
+        m_PlayerCamera = asset.FindActionMap("Player Camera", throwIfNotFound: true);
+        m_PlayerCamera_Look = m_PlayerCamera.FindAction("Look", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -906,13 +916,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerMovement;
     private List<IPlayerMovementActions> m_PlayerMovementActionsCallbackInterfaces = new List<IPlayerMovementActions>();
     private readonly InputAction m_PlayerMovement_Move;
-    private readonly InputAction m_PlayerMovement_Look;
     public struct PlayerMovementActions
     {
         private @PlayerControls m_Wrapper;
         public PlayerMovementActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerMovement_Move;
-        public InputAction @Look => m_Wrapper.m_PlayerMovement_Look;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -925,9 +933,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @Look.started += instance.OnLook;
-            @Look.performed += instance.OnLook;
-            @Look.canceled += instance.OnLook;
         }
 
         private void UnregisterCallbacks(IPlayerMovementActions instance)
@@ -935,9 +940,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @Look.started -= instance.OnLook;
-            @Look.performed -= instance.OnLook;
-            @Look.canceled -= instance.OnLook;
         }
 
         public void RemoveCallbacks(IPlayerMovementActions instance)
@@ -955,6 +957,52 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public PlayerMovementActions @PlayerMovement => new PlayerMovementActions(this);
+
+    // Player Camera
+    private readonly InputActionMap m_PlayerCamera;
+    private List<IPlayerCameraActions> m_PlayerCameraActionsCallbackInterfaces = new List<IPlayerCameraActions>();
+    private readonly InputAction m_PlayerCamera_Look;
+    public struct PlayerCameraActions
+    {
+        private @PlayerControls m_Wrapper;
+        public PlayerCameraActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Look => m_Wrapper.m_PlayerCamera_Look;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerCamera; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerCameraActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerCameraActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PlayerCameraActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerCameraActionsCallbackInterfaces.Add(instance);
+            @Look.started += instance.OnLook;
+            @Look.performed += instance.OnLook;
+            @Look.canceled += instance.OnLook;
+        }
+
+        private void UnregisterCallbacks(IPlayerCameraActions instance)
+        {
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
+        }
+
+        public void RemoveCallbacks(IPlayerCameraActions instance)
+        {
+            if (m_Wrapper.m_PlayerCameraActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPlayerCameraActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PlayerCameraActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PlayerCameraActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PlayerCameraActions @PlayerCamera => new PlayerCameraActions(this);
 
     // UI
     private readonly InputActionMap m_UI;
@@ -1113,6 +1161,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IPlayerMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
+    }
+    public interface IPlayerCameraActions
+    {
         void OnLook(InputAction.CallbackContext context);
     }
     public interface IUIActions

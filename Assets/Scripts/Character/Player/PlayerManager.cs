@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerManager : CharacterManager
 {
-    private PlayerLocomotionManager playerLocomotionManager;
+    PlayerLocomotionManager playerLocomotionManager;
 
     protected override void Awake()
     {
@@ -13,10 +13,38 @@ public class PlayerManager : CharacterManager
         playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
     }
 
+    protected override void Start()
+    {
+        base.Start();
+    }
+
     protected override void Update()
     {
         base.Update();
 
+        // Prevent the player controlling other players
+        if (!IsOwner) return;
+
         playerLocomotionManager.HandleAllMovement();
+    }
+
+    protected override void LateUpdate()
+    {
+        base.LateUpdate();
+
+        if (!IsOwner) return;
+
+        PlayerCamera.Instance.HandleAllCameraAction();
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+        if (IsOwner)
+        {
+            PlayerCamera.Instance.playerManager = this;
+            PlayerInputManager.Instance.playerManager = this;
+        }
     }
 }
