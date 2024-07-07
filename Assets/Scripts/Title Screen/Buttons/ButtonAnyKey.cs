@@ -14,7 +14,7 @@ public class ButtonAnyKey : MonoBehaviour
 
     public void AnyKeyPressed()
     {
-        if (PlayerInputManager.Instance.anyKeyPerformed)
+        if (PlayerInputManager.Instance.anyKeyPerformed || Input.GetMouseButtonDown(0))
         {
             EventSystem.current.SetSelectedGameObject(newGameButton);
             titleScreen.SetActive(false);
