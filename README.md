@@ -13,7 +13,9 @@ U10 Unity Takımı
 - ***Damla Akkuş*** - Developer
 - ***Beyza Sürücü*** - Developer
 
+##Product Backlog URL
 
+https://trello.com/invite/b/CYlMrTJr/ATTIafc313094b58e60cd5e3254c00ad9f6fA123F7CD/bootcamp
 
 ## Oyun Açıklaması
 Steel Horizon, 4 oyuncunun birlikte açık dünya içerisinde çeşitli görevler yaptığı ,bunun yanında ise üssünü korumaya çalıştığı action rpg türünde bir oyundur.
@@ -28,6 +30,7 @@ Steel Horizon, 4 oyuncunun birlikte açık dünya içerisinde çeşitli görevle
 - Co-op sevenler
 - +12
 - PC ve konsol oyuncuları
+  
 
 ---
 # **SPRINT 1**
@@ -35,7 +38,13 @@ Steel Horizon, 4 oyuncunun birlikte açık dünya içerisinde çeşitli görevle
 - **Puan tamamlama mantığı**: İlk Sprint için bitirilmesi istenilen puan sayısı 98 olarak belirlenmiştir ve hedefe ulaşılmıştır.
 - **Daily Scrum**: Discord üzerinden farklı başlıklarda kanallar açılarak dosya aktarımı ve iletişim sağlandı.
 
+  Sprint 1 Screenshot
   
+
+
+  ![Trellooo](https://github.com/unsulliedd/Unity-Steel-Horizon/assets/86011311/88cd8968-417e-4a05-8505-91a508f8d74c)
+
+
 
 - **Paylaşılan Roller**
   
