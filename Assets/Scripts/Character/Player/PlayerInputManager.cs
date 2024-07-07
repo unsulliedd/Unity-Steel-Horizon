@@ -13,6 +13,12 @@ public class PlayerInputManager : MonoBehaviour
     public PlayerControls playerControls;
     #endregion
 
+    [Header("Move Input")]
+    [SerializeField] private Vector2 moveInput;
+    public float horizontalMoveInput;
+    public float verticalMoveInput;
+    public float moveAmount;
+
     // UI Actions
     [Header("UI Actions")]
     public Vector2 navigationInput;
@@ -42,8 +48,10 @@ public class PlayerInputManager : MonoBehaviour
         SceneManager.activeSceneChanged += OnSceneChanged;
         InputSystem.onEvent += OnInputEvent;
 
+        playerControls.PlayerMovement.Disable();
         playerControls.UI.Enable();
 
+        AssignMovementInputs();
         AssignUIInputs();
     }
 
@@ -51,6 +59,19 @@ public class PlayerInputManager : MonoBehaviour
     {
         SceneManager.activeSceneChanged -= OnSceneChanged;
         InputSystem.onEvent -= OnInputEvent;
+    }
+
+    void Update()
+    {
+        HandleMoveInput();
+    }
+
+    // Assign Movement Inputs
+    private void AssignMovementInputs()
+    {
+
+        playerControls.PlayerMovement.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
+        playerControls.PlayerMovement.Move.canceled += ctx => moveInput = Vector2.zero;
     }
 
     // Assign UI Inputs
@@ -70,15 +91,30 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.UI.AnyKey.canceled += ctx => anyKeyPerformed = false;
     }
 
+    private void HandleMoveInput()
+    {
+        horizontalMoveInput = moveInput.x;
+        verticalMoveInput = moveInput.y;
+
+        moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalMoveInput) + Mathf.Abs(verticalMoveInput));
+
+        if (moveAmount > 0 && moveAmount <= 0.5f)
+            moveAmount = 0.5f;  // Walk
+        else if (moveAmount > 0.5f)
+            moveAmount = 1;     // Run
+    }
+
     // Enable/Disable Player Movement Input based on the current scene
     private void OnSceneChanged(Scene oldScene, Scene newScene)
     {
         if (newScene.buildIndex == 1)
         {
+            playerControls.PlayerMovement.Enable();
             playerControls.UI.Disable();
         }
         else
         {
+            playerControls.PlayerMovement.Disable();
             playerControls.UI.Enable();
         }
     }
