@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ButtonHighlight : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ButtonHighlight : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
 {
     private Material buttonMaterialInstance;
     [SerializeField] private Material buttonMaterial;
@@ -23,6 +23,16 @@ public class ButtonHighlight : MonoBehaviour, IPointerEnterHandler, IPointerExit
     }
 
     public void OnPointerExit(PointerEventData eventData)
+    {
+        SetEmission(normalEmissionIntensity);
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        SetEmission(highlightEmissionIntensity);
+    }
+
+    public void OnDeselect(BaseEventData eventData)
     {
         SetEmission(normalEmissionIntensity);
     }

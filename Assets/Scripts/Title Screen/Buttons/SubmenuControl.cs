@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -5,16 +6,52 @@ using UnityEngine.EventSystems;
 public class SubmenuControl : MonoBehaviour
 {
     [SerializeField] GameObject newGameSubmenu;
+    [SerializeField] GameObject startAsHostButton;
+    [SerializeField] GameObject joinAsClientButton;
+    [SerializeField] GameObject newGameButton;      
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !IsPointerOverUIObject())
-            newGameSubmenu.SetActive(false);
+        if (PlayerInputManager.Instance.submitPerformed && !PlayerInputManager.Instance.isGamepadActive && !IsPointerOverUIObject())
+        {
+            startAsHostButton.SetActive(false);
+            joinAsClientButton.SetActive(false);
+
+        }
+
+        if (PlayerInputManager.Instance.cancelPerformed)
+        {
+            startAsHostButton.SetActive(false);
+            joinAsClientButton.SetActive(false);
+            StartCoroutine(SetFirstSelectedButton(newGameButton));
+            
+        }
     }
 
     public void ToggleSubMenu()
     {
-        newGameSubmenu.SetActive(!newGameSubmenu.activeSelf);
+        bool isActive = !startAsHostButton.activeSelf;
+        startAsHostButton.SetActive(isActive);
+        joinAsClientButton.SetActive(isActive);
+
+        if (isActive)
+        {
+            StartCoroutine(SetFirstSelectedButton(startAsHostButton));
+        }
+        else
+        {
+            StartCoroutine(SetFirstSelectedButton(newGameButton));
+        }
+    }
+
+    private IEnumerator SetFirstSelectedButton(GameObject button)
+    {
+        yield return null;
+
+        if (button != null)
+        {
+            EventSystem.current.SetSelectedGameObject(button);
+        }
     }
 
     private bool IsPointerOverUIObject()
