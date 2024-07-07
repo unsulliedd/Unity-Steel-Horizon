@@ -14,8 +14,6 @@ U10 Unity Takımı
 - ***Beyza Sürücü*** - Developer
 
 
-## Product Backlog URL
-[U10 Unity Trello Backlog Board]
 
 ## Oyun Açıklaması
 Steel Horizon, 4 oyuncunun birlikte açık dünya içerisinde çeşitli görevler yaptığı ,bunun yanında ise üssünü korumaya çalıştığı action rpg türünde bir oyundur.
