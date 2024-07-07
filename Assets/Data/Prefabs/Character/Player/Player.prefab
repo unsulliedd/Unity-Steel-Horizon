@@ -42,6 +42,9 @@ GameObject:
   - component: {fileID: 5520140177218533052}
   - component: {fileID: 7606752765583813513}
   - component: {fileID: 4820651335707042247}
+  - component: {fileID: -1757922043949635935}
+  - component: {fileID: 6988333894027696659}
+  - component: {fileID: 2698194475017017999}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -99,8 +102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2121901605
-  InScenePlacedSourceGlobalObjectIdHash: 0
+  GlobalObjectIdHash: 3689374084
+  InScenePlacedSourceGlobalObjectIdHash: 2121901605
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -108,6 +111,62 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &-1757922043949635935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107434631492608830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f14db1e17bd374049999b8efe4a43088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6988333894027696659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107434631492608830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfcb7045c3726c64fb12a3d1a87c73e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  horizontalMoveInput: 0
+  verticalMoveInput: 0
+  moveAmount: 0
+  runSpeed: 10
+  walkSpeed: 5
+  rotationSpeed: 3
+--- !u!143 &2698194475017017999
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107434631492608830}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 1.8
+  m_Radius: 0.25
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.96, z: 0}
 --- !u!1 &131903019602639932
 GameObject:
   m_ObjectHideFlags: 0
