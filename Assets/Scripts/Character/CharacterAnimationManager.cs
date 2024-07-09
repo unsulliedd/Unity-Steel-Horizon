@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class CharacterAnimationManager : MonoBehaviour
@@ -27,7 +28,8 @@ public class CharacterAnimationManager : MonoBehaviour
         characterManager.Animator.SetFloat("Vertical", verticalValue, 0.1f, Time.deltaTime);
     }
 
-    public virtual void PlayTargetAnimation(string targetAnimation, 
+    public virtual void PlayTargetAnimation(
+        string targetAnimation, 
         bool isPerformingAction, 
         bool applyRootMotion = true,
         bool canMove = false,
@@ -38,5 +40,10 @@ public class CharacterAnimationManager : MonoBehaviour
         characterManager.canRotate = canRotate;
         characterManager.Animator.CrossFade(targetAnimation, 0.2f);
         characterManager.isPerformingAction = isPerformingAction;
+
+        characterManager.CharacterNetworkManager.NotifyServerOfActionAnimationsServerRpc(
+            NetworkManager.Singleton.LocalClientId,
+            targetAnimation,
+            applyRootMotion);
     }
 }

@@ -84,7 +84,6 @@ public class PlayerInputManager : MonoBehaviour
     // Assign Movement Inputs
     private void AssignMovementInputs()
     {
-
         playerControls.PlayerMovement.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         playerControls.PlayerMovement.Move.canceled += ctx => moveInput = Vector2.zero;
     }
