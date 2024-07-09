@@ -129,6 +129,45 @@
             ]
         },
         {
+            "name": "Player Actions",
+            "id": "3bfa37ff-249f-41d8-999b-63cfc34a90b6",
+            "actions": [
+                {
+                    "name": "Roll",
+                    "type": "Button",
+                    "id": "90ddd02c-87a6-44f6-a1d6-cbb1521bc400",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e6c37d79-6e78-46f2-9344-7787f7a9a26c",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d1700cb8-eaaa-45ed-90e4-be28a4fc479c",
+                    "path": "<Keyboard>/leftAlt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
             "name": "Player Camera",
             "id": "ae257f7a-7860-4d58-afa8-e0b19e5401e6",
             "actions": [
