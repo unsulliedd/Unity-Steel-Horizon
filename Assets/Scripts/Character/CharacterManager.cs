@@ -8,6 +8,12 @@ public class CharacterManager : NetworkBehaviour
     public CharacterController CharacterController { get; private set; }
     public Animator Animator { get; private set; }
     public CharacterNetworkManager CharacterNetworkManager { get; private set; }
+
+    [Header("Flags")]
+    public bool isPerformingAction = false;
+    public bool canMove = true;
+    public bool canRotate = true;
+
     protected virtual void Awake()
     {
         // This will make sure that the character manager is not destroyed when loading a new scene

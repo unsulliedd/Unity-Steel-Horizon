@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerManager : CharacterManager
 {
-    PlayerLocomotionManager playerLocomotionManager;
+    [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
     [HideInInspector] public PlayerAnimationManager PlayerAnimationManager;
 
     protected override void Awake()

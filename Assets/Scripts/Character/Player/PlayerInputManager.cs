@@ -20,6 +20,9 @@ public class PlayerInputManager : MonoBehaviour
     public float verticalMoveInput;
     public float moveAmount;
 
+    [Header("Action Input")]
+    public bool rollInput;
+
     [Header("Look Input")]
     [SerializeField] private Vector2 lookInput;
     public float horizontalLookInput;
@@ -55,10 +58,12 @@ public class PlayerInputManager : MonoBehaviour
         InputSystem.onEvent += OnInputEvent;
 
         playerControls.PlayerMovement.Disable();
+        playerControls.PlayerActions.Disable();
         playerControls.PlayerCamera.Disable();
         playerControls.UI.Enable();
 
         AssignMovementInputs();
+        AssignActionInputs();
         AssignCameraInput();
         AssignUIInputs();
     }
@@ -73,6 +78,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         HandleMoveInput();
         HandleLookInput();
+        HandleDodgeInput();
     }
 
     // Assign Movement Inputs
@@ -81,6 +87,12 @@ public class PlayerInputManager : MonoBehaviour
 
         playerControls.PlayerMovement.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         playerControls.PlayerMovement.Move.canceled += ctx => moveInput = Vector2.zero;
+    }
+
+    private void AssignActionInputs()
+    {
+        playerControls.PlayerActions.Roll.performed += ctx => rollInput = true;
+        playerControls.PlayerActions.Roll.canceled += ctx => rollInput = false;
     }
 
     private void AssignCameraInput()
@@ -131,18 +143,29 @@ public class PlayerInputManager : MonoBehaviour
         verticalLookInput = lookInput.y;
     }
 
+    private void HandleDodgeInput()
+    {
+        if (rollInput)
+        {
+            rollInput = false;
+            playerManager.playerLocomotionManager.AttemptToPerformRoll();
+        }
+    }
+
     // Enable/Disable Player Movement Input based on the current scene
     private void OnSceneChanged(Scene oldScene, Scene newScene)
     {
         if (newScene.buildIndex == 1)
         {
             playerControls.PlayerMovement.Enable();
+            playerControls.PlayerActions.Enable();
             playerControls.PlayerCamera.Enable();
             playerControls.UI.Disable();
         }
         else
         {
             playerControls.PlayerMovement.Disable();
+            playerControls.PlayerActions.Disable();
             playerControls.PlayerCamera.Disable();
             playerControls.UI.Enable();
         }
