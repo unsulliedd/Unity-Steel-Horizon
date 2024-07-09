@@ -40,6 +40,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             verticalMoveInput = playerManager.CharacterNetworkManager.networkVertical.Value;
             horizontalMoveInput = playerManager.CharacterNetworkManager.networkHorizontal.Value;
             moveAmount = playerManager.CharacterNetworkManager.networkMoveAmount.Value;
+
+            playerManager.PlayerAnimationManager.MovementAnimations(horizontalMoveInput, verticalMoveInput);
         }
     }
 
