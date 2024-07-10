@@ -10,13 +10,15 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     [Header("Movement Settings")]
     private Vector3 moveDirection;
     private Vector3 targetRotation;
-    [SerializeField] private float runSpeed = 10;
-    [SerializeField] private float walkSpeed = 5;
+    [SerializeField] private float runSpeed = 8;
+    [SerializeField] private float walkSpeed = 4;
+    [SerializeField] private float sprintSpeed = 10;
     [SerializeField] private float rotationSpeed = 10;
 
     [Header("Roll Settings")]
     private Vector3 rollDirection;
     [SerializeField] private float sprintingRollSpeed = 10;
+
 
     #region References
     private PlayerManager playerManager;
@@ -53,7 +55,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             moveAmount = playerManager.CharacterNetworkManager.networkMoveAmount.Value;
 
             // Update the client's player animation
-            playerManager.PlayerAnimationManager.MovementAnimations(0, moveAmount);
+            playerManager.PlayerAnimationManager.MovementAnimations(0, moveAmount, playerManager.PlayerNetworkManager.isSprinting.Value);
         }
     }
 
@@ -81,8 +83,17 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         moveDirection.Normalize();
         moveDirection.y = 0;
 
-        float speed = PlayerInputManager.Instance.moveAmount <= 0.5f ? walkSpeed : runSpeed;
-        playerManager.CharacterController.Move(speed * Time.deltaTime * moveDirection);
+        if (playerManager.PlayerNetworkManager.isSprinting.Value)
+        {
+            playerManager.CharacterController.Move(sprintSpeed * Time.deltaTime * moveDirection);
+
+        }
+        else
+        {
+            float speed = PlayerInputManager.Instance.moveAmount <= 0.5f ? walkSpeed : runSpeed;
+            playerManager.CharacterController.Move(speed * Time.deltaTime * moveDirection);
+        }
+
     }
 
     private void HandleRotation()
@@ -117,7 +128,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             Quaternion playerRotation = Quaternion.LookRotation(rollDirection);
             transform.rotation = playerRotation;
 
-            if (moveAmount > 0.5f) 
+            if (moveAmount > 0.5f && playerManager.PlayerNetworkManager.isSprinting.Value) 
             { 
                 StartCoroutine(PerformSprintingRoll());
                 playerManager.PlayerAnimationManager.PlayTargetAnimation("Sprinting Forward Roll", true, true, false, false);
@@ -129,6 +140,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             playerManager.PlayerAnimationManager.PlayTargetAnimation("Standing Dodge Backward", true, true, false, false);
     }
 
+    // Sprint Roll Coroutine
     private IEnumerator PerformSprintingRoll()
     {
         float duration = 0.5f;
@@ -140,5 +152,16 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+    }
+
+    public void HandleSprinting()
+    { 
+        if (playerManager.isPerformingAction)
+            playerManager.PlayerNetworkManager.isSprinting.Value = false;
+
+        if (moveAmount >= 0.5f)
+            playerManager.PlayerNetworkManager.isSprinting.Value = PlayerInputManager.Instance.sprintInput;
+        else
+            playerManager.PlayerNetworkManager.isSprinting.Value = false;
     }
 }

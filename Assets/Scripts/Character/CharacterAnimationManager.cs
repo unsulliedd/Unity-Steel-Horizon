@@ -20,10 +20,16 @@ public class CharacterAnimationManager : MonoBehaviour
 
     }
 
-    public void MovementAnimations(float horizontalValue, float verticalValue)
+    public void MovementAnimations(float horizontalValue, float verticalValue, bool isSprinting)
     {
-        characterManager.Animator.SetFloat("Horizontal", horizontalValue, 0.1f, Time.deltaTime);
-        characterManager.Animator.SetFloat("Vertical", verticalValue, 0.1f, Time.deltaTime);
+        float horizontal = horizontalValue;
+        float vertical = verticalValue;
+
+        if (isSprinting)
+            vertical = 2;
+
+        characterManager.Animator.SetFloat("Horizontal", horizontal, 0.1f, Time.deltaTime);
+        characterManager.Animator.SetFloat("Vertical", vertical, 0.1f, Time.deltaTime);
     }
 
     public virtual void PlayTargetAnimation(

@@ -22,6 +22,7 @@ public class PlayerInputManager : MonoBehaviour
 
     [Header("Action Input")]
     public bool rollInput;
+    public bool sprintInput;
 
     [Header("Look Input")]
     [SerializeField] private Vector2 lookInput;
@@ -79,6 +80,7 @@ public class PlayerInputManager : MonoBehaviour
         HandleMoveInput();
         HandleLookInput();
         HandleDodgeInput();
+        HandleSprintInput();
     }
 
     // Assign Movement Inputs
@@ -92,6 +94,8 @@ public class PlayerInputManager : MonoBehaviour
     {
         playerControls.PlayerActions.Roll.performed += ctx => rollInput = true;
         playerControls.PlayerActions.Roll.canceled += ctx => rollInput = false;
+        playerControls.PlayerActions.Sprint.performed += ctx => sprintInput = true;
+        playerControls.PlayerActions.Sprint.canceled += ctx => sprintInput = false;
     }
 
     private void AssignCameraInput()
@@ -131,7 +135,7 @@ public class PlayerInputManager : MonoBehaviour
 
         // No strafe movement
         if (playerManager)
-            playerManager.PlayerAnimationManager.MovementAnimations(0, moveAmount);
+            playerManager.PlayerAnimationManager.MovementAnimations(0, moveAmount, playerManager.PlayerNetworkManager.isSprinting.Value);
 
         //// TODO: Enemy locked strafe movement
     }
@@ -148,6 +152,18 @@ public class PlayerInputManager : MonoBehaviour
         {
             rollInput = false;
             playerManager.playerLocomotionManager.AttemptToPerformRoll();
+        }
+    }
+
+    private void HandleSprintInput()
+    {
+        if (sprintInput)
+        {
+            playerManager.playerLocomotionManager.HandleSprinting();
+        }
+        else if (playerManager != null)
+        {
+            playerManager.PlayerNetworkManager.isSprinting.Value = false;
         }
     }
 
