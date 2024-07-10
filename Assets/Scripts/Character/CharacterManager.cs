@@ -32,25 +32,26 @@ public class CharacterManager : NetworkBehaviour
 
     protected virtual void Update()
     {
+        ///// Disable NetworkTransform first
         // If the player is the owner of the character, then update the network position
-        if (IsOwner)
-        {
-            CharacterNetworkManager.networkPosition.Value = transform.position; // Update the network position
-            CharacterNetworkManager.networkRotation.Value = transform.rotation; // Update the network rotation
-        }
-        // If the player is not the owner of the character, then update the position of the character
-        else
-        {
-            // Smoothly move the character to the network position
-            // Smoothly rotate the character to the network rotation
-            transform.SetPositionAndRotation(Vector3.SmoothDamp(transform.position,
-                CharacterNetworkManager.networkPosition.Value,
-                ref CharacterNetworkManager.networkSmoothVelocity,
-                CharacterNetworkManager.networkVelocitySmoothTime),
-                Quaternion.Slerp(transform.rotation,
-                CharacterNetworkManager.networkRotation.Value,
-                CharacterNetworkManager.networkRotationSmoothTime));
-        }
+        //if (IsOwner)
+        //{
+        //    CharacterNetworkManager.networkPosition.Value = transform.position; // Update the network position
+        //    CharacterNetworkManager.networkRotation.Value = transform.rotation; // Update the network rotation
+        //}
+        //// If the player is not the owner of the character, then update the position of the character
+        //else
+        //{
+        //    // Smoothly move the character to the network position
+        //    // Smoothly rotate the character to the network rotation
+        //    transform.SetPositionAndRotation(Vector3.SmoothDamp(transform.position,
+        //        CharacterNetworkManager.networkPosition.Value,
+        //        ref CharacterNetworkManager.networkSmoothVelocity,
+        //        CharacterNetworkManager.networkVelocitySmoothTime),
+        //        Quaternion.Slerp(transform.rotation,
+        //        CharacterNetworkManager.networkRotation.Value,
+        //        CharacterNetworkManager.networkRotationSmoothTime));
+        //}
     }
 
     protected virtual void LateUpdate()
