@@ -4,8 +4,6 @@ using UnityEngine;
 public class CharacterAnimationManager : MonoBehaviour
 {
     private CharacterManager characterManager;
-    float horizontal;
-    float vertical;
 
     protected virtual void Awake()
     {
@@ -41,7 +39,7 @@ public class CharacterAnimationManager : MonoBehaviour
         characterManager.Animator.CrossFade(targetAnimation, 0.2f);
         characterManager.isPerformingAction = isPerformingAction;
 
-        characterManager.CharacterNetworkManager.NotifyServerOfActionAnimationsServerRpc(
+        characterManager.CharacterNetworkManager.NotifyServerOfActionAnimationsRpc(
             NetworkManager.Singleton.LocalClientId,
             targetAnimation,
             applyRootMotion);

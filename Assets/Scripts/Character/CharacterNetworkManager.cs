@@ -15,8 +15,8 @@ public class CharacterNetworkManager : NetworkBehaviour
     public float networkRotationSmoothTime = 0.1f;
 
     [Header("Network Animation Variables")]
-    public NetworkVariable<float> networkHorizontal = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    public NetworkVariable<float> networkVertical = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<float> networkAnimationParamHorizontal = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<float> networkAnimationParamVertical = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<float> networkMoveAmount = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     protected virtual void Awake()
@@ -24,21 +24,21 @@ public class CharacterNetworkManager : NetworkBehaviour
         characterManager = GetComponent<CharacterManager>();
     }
 
-    [ServerRpc]
-    public void NotifyServerOfActionAnimationsServerRpc(ulong clientId, string animatinName, bool applyRootMotion)
+    [Rpc(SendTo.Server)]
+    public void NotifyServerOfActionAnimationsRpc(ulong clientId, string animatinName, bool applyRootMotion)
     {
         if (IsServer)
         {
-            PlayActionAnimationsForAllClientsClientRpc(clientId, animatinName, applyRootMotion);
+            PlayActionAnimationsForAllClientsRpc(clientId, animatinName, applyRootMotion);
         }
     }
 
-    [ClientRpc]
-    public void PlayActionAnimationsForAllClientsClientRpc(ulong clientId, string animatinName, bool applyRootMotion)
+    [Rpc(SendTo.NotMe)]
+    public void PlayActionAnimationsForAllClientsRpc(ulong clientId, string animationName, bool applyRootMotion)
     {
         if (clientId != NetworkManager.Singleton.LocalClientId)
         {
-            PerformActionAnimationsFromServer(animatinName, applyRootMotion);
+            PerformActionAnimationsFromServer(animationName, applyRootMotion);
         }
     }
 
