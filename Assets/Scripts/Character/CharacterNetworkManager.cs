@@ -19,6 +19,9 @@ public class CharacterNetworkManager : NetworkBehaviour
     public NetworkVariable<float> networkAnimationParamVertical = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<float> networkMoveAmount = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
+    [Header("Flags")]
+    public NetworkVariable<bool> isSprinting = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
     protected virtual void Awake()
     {
         characterManager = GetComponent<CharacterManager>();
@@ -33,7 +36,7 @@ public class CharacterNetworkManager : NetworkBehaviour
         }
     }
 
-    [Rpc(SendTo.NotMe)]
+    [Rpc(SendTo.Everyone)]
     public void PlayActionAnimationsForAllClientsRpc(ulong clientId, string animationName, bool applyRootMotion)
     {
         if (clientId != NetworkManager.Singleton.LocalClientId)
