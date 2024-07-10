@@ -7,6 +7,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     public float verticalMoveInput;
     public float moveAmount;
 
+    [Header("Movement Settings")]
     private Vector3 moveDirection;
     private Vector3 targetRotation;
     [SerializeField] private float runSpeed = 10;
@@ -14,10 +15,12 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     [SerializeField] private float rotationSpeed = 10;
 
     [Header("Roll Settings")]
-    [SerializeField] private Vector3 rollDirection;
-    [SerializeField] private float sprintingRollSpeed = 20f;
+    private Vector3 rollDirection;
+    [SerializeField] private float sprintingRollSpeed = 10;
 
+    #region References
     private PlayerManager playerManager;
+    #endregion
 
     protected override void Awake()
     {
@@ -34,19 +37,23 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     protected override void Update()
     {
         base.Update();
+
         if (playerManager.IsOwner)
         {
-            playerManager.CharacterNetworkManager.networkVertical.Value = verticalMoveInput;
-            playerManager.CharacterNetworkManager.networkHorizontal.Value = horizontalMoveInput;
+            // If the player is the owner, update the network values with the local values
+            playerManager.CharacterNetworkManager.networkAnimationParamVertical.Value = verticalMoveInput;
+            playerManager.CharacterNetworkManager.networkAnimationParamHorizontal.Value = horizontalMoveInput;
             playerManager.CharacterNetworkManager.networkMoveAmount.Value = moveAmount;
         }
         else
         {
-            verticalMoveInput = playerManager.CharacterNetworkManager.networkVertical.Value;
-            horizontalMoveInput = playerManager.CharacterNetworkManager.networkHorizontal.Value;
+            // If the player is not the owner, update the client's player animation
+            verticalMoveInput = playerManager.CharacterNetworkManager.networkAnimationParamVertical.Value;
+            horizontalMoveInput = playerManager.CharacterNetworkManager.networkAnimationParamHorizontal.Value;
             moveAmount = playerManager.CharacterNetworkManager.networkMoveAmount.Value;
 
-            playerManager.PlayerAnimationManager.MovementAnimations(horizontalMoveInput, verticalMoveInput);
+            // Update the client's player animation
+            playerManager.PlayerAnimationManager.MovementAnimations(0, moveAmount);
         }
     }
 
@@ -65,6 +72,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     private void HandleMovement()
     {
+        if (!playerManager.canMove) return;
+
         GetMovementInput();
 
         moveDirection = PlayerCamera.Instance.transform.forward * verticalMoveInput;
@@ -72,20 +81,14 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         moveDirection.Normalize();
         moveDirection.y = 0;
 
-        if (PlayerInputManager.Instance.moveAmount > 0.5f)
-        {
-            // Running Speed
-            playerManager.CharacterController.Move(runSpeed * Time.deltaTime * moveDirection);
-        }
-        else if (PlayerInputManager.Instance.moveAmount <= 0.5f)
-        {
-            // Walking Speed
-            playerManager.CharacterController.Move(walkSpeed * Time.deltaTime * moveDirection);
-        }
+        float speed = PlayerInputManager.Instance.moveAmount <= 0.5f ? walkSpeed : runSpeed;
+        playerManager.CharacterController.Move(speed * Time.deltaTime * moveDirection);
     }
 
     private void HandleRotation()
     {
+        if (!playerManager.canRotate) return;
+
         targetRotation = Vector3.zero;
         targetRotation = PlayerCamera.Instance.playerCamera.transform.forward * verticalMoveInput;
         targetRotation += PlayerCamera.Instance.playerCamera.transform.right * horizontalMoveInput;
@@ -114,10 +117,10 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             Quaternion playerRotation = Quaternion.LookRotation(rollDirection);
             transform.rotation = playerRotation;
 
-            if (moveAmount > 0.5f)
-            {
+            if (moveAmount > 0.5f) 
+            { 
                 StartCoroutine(PerformSprintingRoll());
-                playerManager.PlayerAnimationManager.PlayTargetAnimation("Sprinting Forward Roll", true, false, false, false);
+                playerManager.PlayerAnimationManager.PlayTargetAnimation("Sprinting Forward Roll", true, true, false, false);
             }
             else
                 playerManager.PlayerAnimationManager.PlayTargetAnimation("Stand To Roll", true, true, false, false);
