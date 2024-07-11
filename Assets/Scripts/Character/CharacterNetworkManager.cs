@@ -1,9 +1,11 @@
-using UnityEngine;
 using Unity.Netcode;
+using UnityEngine;
 
 public class CharacterNetworkManager : NetworkBehaviour
 {
-    CharacterManager characterManager;
+    #region    
+    private CharacterManager characterManager;
+    #endregion
 
     [Header("Network Position Variables")]
     public NetworkVariable<Vector3> networkPosition = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -27,24 +29,31 @@ public class CharacterNetworkManager : NetworkBehaviour
         characterManager = GetComponent<CharacterManager>();
     }
 
-    [Rpc(SendTo.Server)]
-    public void NotifyServerOfActionAnimationsRpc(ulong clientId, string animatinName, bool applyRootMotion)
+    // Update network animation parameters
+    public void UpdateNetworkAnimationParams(float vertical, float horizontal, float moveAmount)
     {
-        if (IsServer)
-        {
-            PlayActionAnimationsForAllClientsRpc(clientId, animatinName, applyRootMotion);
-        }
+        networkAnimationParamVertical.Value = vertical;
+        networkAnimationParamHorizontal.Value = horizontal;
+        networkMoveAmount.Value = moveAmount;
     }
 
+    // Notify the server of action animations
+    [Rpc(SendTo.Server)]
+    public void NotifyServerOfActionAnimationsRpc(ulong clientId, string animationName, bool applyRootMotion)
+    {
+        if (IsServer)
+            PlayActionAnimationsForAllClientsRpc(clientId, animationName, applyRootMotion);
+    }
+
+    // Play action animations for all clients
     [Rpc(SendTo.Everyone)]
     public void PlayActionAnimationsForAllClientsRpc(ulong clientId, string animationName, bool applyRootMotion)
     {
         if (clientId != NetworkManager.Singleton.LocalClientId)
-        {
             PerformActionAnimationsFromServer(animationName, applyRootMotion);
-        }
     }
 
+    // Perform action animations received from the server
     private void PerformActionAnimationsFromServer(string animationId, bool applyRootMotion)
     {
         characterManager.Animator.applyRootMotion = applyRootMotion;
