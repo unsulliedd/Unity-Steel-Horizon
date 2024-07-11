@@ -229,4 +229,4 @@ MonoBehaviour:
   cameraCollisionRadius: 0.2
   cameraCollisionLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 208

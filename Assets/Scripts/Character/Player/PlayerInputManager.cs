@@ -20,6 +20,10 @@ public class PlayerInputManager : MonoBehaviour
     public float verticalMoveInput;
     public float moveAmount;
 
+    [Header("Action Input")]
+    public bool rollInput;
+    public bool sprintInput;
+
     [Header("Look Input")]
     [SerializeField] private Vector2 lookInput;
     public float horizontalLookInput;
@@ -55,10 +59,12 @@ public class PlayerInputManager : MonoBehaviour
         InputSystem.onEvent += OnInputEvent;
 
         playerControls.PlayerMovement.Disable();
+        playerControls.PlayerActions.Disable();
         playerControls.PlayerCamera.Disable();
         playerControls.UI.Enable();
 
         AssignMovementInputs();
+        AssignActionInputs();
         AssignCameraInput();
         AssignUIInputs();
     }
@@ -73,14 +79,23 @@ public class PlayerInputManager : MonoBehaviour
     {
         HandleMoveInput();
         HandleLookInput();
+        HandleDodgeInput();
+        HandleSprintInput();
     }
 
     // Assign Movement Inputs
     private void AssignMovementInputs()
     {
-
         playerControls.PlayerMovement.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         playerControls.PlayerMovement.Move.canceled += ctx => moveInput = Vector2.zero;
+    }
+
+    private void AssignActionInputs()
+    {
+        playerControls.PlayerActions.Roll.performed += ctx => rollInput = true;
+        playerControls.PlayerActions.Roll.canceled += ctx => rollInput = false;
+        playerControls.PlayerActions.Sprint.performed += ctx => sprintInput = true;
+        playerControls.PlayerActions.Sprint.canceled += ctx => sprintInput = false;
     }
 
     private void AssignCameraInput()
@@ -120,7 +135,7 @@ public class PlayerInputManager : MonoBehaviour
 
         // No strafe movement
         if (playerManager)
-            playerManager.PlayerAnimationManager.MovementAnimations(0, moveAmount);
+            playerManager.PlayerAnimationManager.MovementAnimations(0, moveAmount, playerManager.PlayerNetworkManager.isSprinting.Value);
 
         //// TODO: Enemy locked strafe movement
     }
@@ -131,18 +146,41 @@ public class PlayerInputManager : MonoBehaviour
         verticalLookInput = lookInput.y;
     }
 
+    private void HandleDodgeInput()
+    {
+        if (rollInput)
+        {
+            rollInput = false;
+            playerManager.playerLocomotionManager.AttemptToPerformRoll();
+        }
+    }
+
+    private void HandleSprintInput()
+    {
+        if (sprintInput)
+        {
+            playerManager.playerLocomotionManager.HandleSprinting();
+        }
+        else if (playerManager != null)
+        {
+            playerManager.PlayerNetworkManager.isSprinting.Value = false;
+        }
+    }
+
     // Enable/Disable Player Movement Input based on the current scene
     private void OnSceneChanged(Scene oldScene, Scene newScene)
     {
         if (newScene.buildIndex == 1)
         {
             playerControls.PlayerMovement.Enable();
+            playerControls.PlayerActions.Enable();
             playerControls.PlayerCamera.Enable();
             playerControls.UI.Disable();
         }
         else
         {
             playerControls.PlayerMovement.Disable();
+            playerControls.PlayerActions.Disable();
             playerControls.PlayerCamera.Disable();
             playerControls.UI.Enable();
         }

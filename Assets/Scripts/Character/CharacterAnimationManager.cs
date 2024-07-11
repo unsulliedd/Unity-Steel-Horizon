@@ -1,10 +1,9 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class CharacterAnimationManager : MonoBehaviour
 {
-    private CharacterManager characterManager;
-    float horizontal;
-    float vertical;
+    protected CharacterManager characterManager;
 
     protected virtual void Awake()
     {
@@ -21,9 +20,34 @@ public class CharacterAnimationManager : MonoBehaviour
 
     }
 
-    public void MovementAnimations(float horizontalValue, float verticalValue)
+    public void MovementAnimations(float horizontalValue, float verticalValue, bool isSprinting)
     {
-        characterManager.Animator.SetFloat("Horizontal", horizontalValue, 0.1f, Time.deltaTime);
-        characterManager.Animator.SetFloat("Vertical", verticalValue, 0.1f, Time.deltaTime);
+        float horizontal = horizontalValue;
+        float vertical = verticalValue;
+
+        if (isSprinting)
+            vertical = 2;
+
+        characterManager.Animator.SetFloat("Horizontal", horizontal, 0.1f, Time.deltaTime);
+        characterManager.Animator.SetFloat("Vertical", vertical, 0.1f, Time.deltaTime);
+    }
+
+    public virtual void PlayTargetAnimation(
+        string targetAnimation, 
+        bool isPerformingAction, 
+        bool applyRootMotion = true,
+        bool canMove = false,
+        bool canRotate = false)
+    {
+        characterManager.applyRootMotion = applyRootMotion;
+        characterManager.canMove = canMove;
+        characterManager.canRotate = canRotate;
+        characterManager.Animator.CrossFade(targetAnimation, 0.2f);
+        characterManager.isPerformingAction = isPerformingAction;
+
+        characterManager.CharacterNetworkManager.NotifyServerOfActionAnimationsRpc(
+            NetworkManager.Singleton.LocalClientId,
+            targetAnimation,
+            applyRootMotion);
     }
 }

@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 3197321418773486764}
   - component: {fileID: 55465366360283299}
   - component: {fileID: 2698194475017017999}
+  - component: {fileID: 8171732682351090474}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -104,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2941018461
+  GlobalObjectIdHash: 2121901605
   InScenePlacedSourceGlobalObjectIdHash: 2121901605
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -125,7 +126,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f14db1e17bd374049999b8efe4a43088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPerformingAction: 0
+  applyRootMotion: 0
+  canMove: 1
+  canRotate: 1
+  playerLocomotionManager: {fileID: 0}
   PlayerAnimationManager: {fileID: 0}
+  PlayerNetworkManager: {fileID: 0}
 --- !u!114 &6988333894027696659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,9 +148,11 @@ MonoBehaviour:
   horizontalMoveInput: 0
   verticalMoveInput: 0
   moveAmount: 0
-  runSpeed: 10
-  walkSpeed: 5
+  runSpeed: 6
+  walkSpeed: 3
+  sprintSpeed: 8
   rotationSpeed: 10
+  sprintingRollSpeed: 8
 --- !u!114 &3197321418773486764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,11 +172,13 @@ MonoBehaviour:
   networkRotation:
     m_InternalValue: {x: 0, y: 0, z: 0, w: 1}
   networkRotationSmoothTime: 0.1
-  networkHorizontal:
+  networkAnimationParamHorizontal:
     m_InternalValue: 0
-  networkVertical:
+  networkAnimationParamVertical:
     m_InternalValue: 0
   networkMoveAmount:
+    m_InternalValue: 0
+  isSprinting:
     m_InternalValue: 0
 --- !u!114 &55465366360283299
 MonoBehaviour:
@@ -206,7 +217,38 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.96, z: 0}
+  m_Center: {x: 0, y: 0.98, z: 0}
+--- !u!114 &8171732682351090474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107434631492608830}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df2868252ab5c4d1da357e8f11f1b524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UseUnreliableDeltas: 0
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 0
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 0
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  Interpolate: 1
+  SlerpPosition: 0
 --- !u!1 &131903019602639932
 GameObject:
   m_ObjectHideFlags: 0
