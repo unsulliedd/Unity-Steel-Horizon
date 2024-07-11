@@ -114,6 +114,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         transform.rotation = newTargetRotation;
     }
 
+    // Attempt to perform a roll action
     public void AttemptToPerformRoll()
     {
         if (playerManager.isPerformingAction) return;

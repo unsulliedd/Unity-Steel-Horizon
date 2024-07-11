@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CharacterAnimationManager : MonoBehaviour
 {
-    private CharacterManager characterManager;
+    protected CharacterManager characterManager;
 
     protected virtual void Awake()
     {
@@ -39,7 +39,7 @@ public class CharacterAnimationManager : MonoBehaviour
         bool canMove = false,
         bool canRotate = false)
     {
-        characterManager.Animator.applyRootMotion = applyRootMotion;
+        characterManager.applyRootMotion = applyRootMotion;
         characterManager.canMove = canMove;
         characterManager.canRotate = canRotate;
         characterManager.Animator.CrossFade(targetAnimation, 0.2f);
