@@ -10,7 +10,7 @@ public class ButtonHighlight : MonoBehaviour, IPointerEnterHandler, IPointerExit
     [SerializeField] private float highlightEmissionIntensity = 5f;
     [SerializeField] private float normalEmissionIntensity = 4f;
 
-    void Start()
+    void OnEnable()
     {
         buttonMaterialInstance = new Material(buttonMaterial);
         GetComponent<Image>().material = buttonMaterialInstance;

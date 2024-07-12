@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -16,15 +15,13 @@ public class SubmenuControl : MonoBehaviour
         {
             startAsHostButton.SetActive(false);
             joinAsClientButton.SetActive(false);
-
         }
 
         if (PlayerInputManager.Instance.cancelPerformed)
         {
             startAsHostButton.SetActive(false);
             joinAsClientButton.SetActive(false);
-            StartCoroutine(SetFirstSelectedButton(newGameButton));
-            
+            StartCoroutine(TitleScreenManager.Instance.SetFirstSelectedButton(newGameButton));
         }
     }
 
@@ -35,23 +32,9 @@ public class SubmenuControl : MonoBehaviour
         joinAsClientButton.SetActive(isActive);
 
         if (isActive)
-        {
-            StartCoroutine(SetFirstSelectedButton(startAsHostButton));
-        }
+            StartCoroutine(TitleScreenManager.Instance.SetFirstSelectedButton(startAsHostButton));
         else
-        {
-            StartCoroutine(SetFirstSelectedButton(newGameButton));
-        }
-    }
-
-    private IEnumerator SetFirstSelectedButton(GameObject button)
-    {
-        yield return null;
-
-        if (button != null)
-        {
-            EventSystem.current.SetSelectedGameObject(button);
-        }
+            StartCoroutine(TitleScreenManager.Instance.SetFirstSelectedButton(newGameButton));
     }
 
     private bool IsPointerOverUIObject()

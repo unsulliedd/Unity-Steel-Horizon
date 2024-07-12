@@ -86,12 +86,9 @@ public class SaveGameManager : MonoBehaviour
         }
 
         if (!emptySlotFound)
-        {
-            Debug.LogError("No empty save slots available.");
-            return;
-        }
-
-        StartCoroutine(LoadWorldScene());
+            TitleScreenManager.Instance.NoEmptySlotPanelPopUp();
+        else
+            StartCoroutine(LoadWorldScene());
     }
 
 
