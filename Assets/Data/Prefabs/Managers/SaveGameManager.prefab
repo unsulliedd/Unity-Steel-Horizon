@@ -45,3 +45,109 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldSceneIndex: 1
+  saveGame: 0
+  loadGame: 0
+  currentCharacterSlot: 0
+  currentCharacterData:
+    characterName: 
+    characterClass: 
+    level: 0
+    totalPlayTime: 0
+    positionX: 0
+    positionY: 0
+    positionZ: 0
+    totalDeaths: 0
+    totalEnemiesKilled: 0
+  characterSlots:
+  - characterName: 
+    characterClass: 
+    level: 0
+    totalPlayTime: 0
+    positionX: 0
+    positionY: 0
+    positionZ: 0
+    totalDeaths: 0
+    totalEnemiesKilled: 0
+  - characterName: 
+    characterClass: 
+    level: 0
+    totalPlayTime: 0
+    positionX: 0
+    positionY: 0
+    positionZ: 0
+    totalDeaths: 0
+    totalEnemiesKilled: 0
+  - characterName: 
+    characterClass: 
+    level: 0
+    totalPlayTime: 0
+    positionX: 0
+    positionY: 0
+    positionZ: 0
+    totalDeaths: 0
+    totalEnemiesKilled: 0
+  - characterName: 
+    characterClass: 
+    level: 0
+    totalPlayTime: 0
+    positionX: 0
+    positionY: 0
+    positionZ: 0
+    totalDeaths: 0
+    totalEnemiesKilled: 0
+  - characterName: 
+    characterClass: 
+    level: 0
+    totalPlayTime: 0
+    positionX: 0
+    positionY: 0
+    positionZ: 0
+    totalDeaths: 0
+    totalEnemiesKilled: 0
+  - characterName: 
+    characterClass: 
+    level: 0
+    totalPlayTime: 0
+    positionX: 0
+    positionY: 0
+    positionZ: 0
+    totalDeaths: 0
+    totalEnemiesKilled: 0
+  - characterName: 
+    characterClass: 
+    level: 0
+    totalPlayTime: 0
+    positionX: 0
+    positionY: 0
+    positionZ: 0
+    totalDeaths: 0
+    totalEnemiesKilled: 0
+  - characterName: 
+    characterClass: 
+    level: 0
+    totalPlayTime: 0
+    positionX: 0
+    positionY: 0
+    positionZ: 0
+    totalDeaths: 0
+    totalEnemiesKilled: 0
+  - characterName: 
+    characterClass: 
+    level: 0
+    totalPlayTime: 0
+    positionX: 0
+    positionY: 0
+    positionZ: 0
+    totalDeaths: 0
+    totalEnemiesKilled: 0
+  - characterName: 
+    characterClass: 
+    level: 0
+    totalPlayTime: 0
+    positionX: 0
+    positionY: 0
+    positionZ: 0
+    totalDeaths: 0
+    totalEnemiesKilled: 0
+  playerManager: {fileID: -1757922043949635935, guid: 84aa7fce594c50141be705798234e2c7,
+    type: 3}

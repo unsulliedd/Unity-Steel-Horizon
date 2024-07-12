@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerManager : CharacterManager
@@ -49,6 +47,45 @@ public class PlayerManager : CharacterManager
         {
             PlayerCamera.Instance.playerManager = this;
             PlayerInputManager.Instance.playerManager = this;
+
+            SaveGameEvent.OnSaveGame += OnSaveGameEvent;
+            SaveGameEvent.OnLoadGame += OnLoadGameEvent;
         }
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        base.OnNetworkDespawn();
+
+        if (IsOwner)
+        {
+            SaveGameEvent.OnSaveGame -= OnSaveGameEvent;
+            SaveGameEvent.OnLoadGame -= OnLoadGameEvent;
+        }
+    }
+
+    // Wrapper methods to handle ref parameters
+    private void OnSaveGameEvent(CharacterSaveData data)
+    {
+        SaveCurrentGameData(ref data);
+    }
+
+    private void OnLoadGameEvent(CharacterSaveData data)
+    {
+        LoadCurrentGameData(ref data);
+    }
+
+    public void SaveCurrentGameData(ref CharacterSaveData currentCharacterData)
+    {
+        currentCharacterData.characterName = PlayerNetworkManager.characterName.Value.ToString();
+        currentCharacterData.positionX = transform.position.x;
+        currentCharacterData.positionY = transform.position.y;
+        currentCharacterData.positionZ = transform.position.z;
+    }
+
+    public void LoadCurrentGameData(ref CharacterSaveData currentCharacterData)
+    {
+        PlayerNetworkManager.characterName.Value = currentCharacterData.characterName;
+        transform.position = new Vector3(currentCharacterData.positionX, currentCharacterData.positionY, currentCharacterData.positionZ);
     }
 }
