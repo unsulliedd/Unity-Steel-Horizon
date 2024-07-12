@@ -5,9 +5,9 @@ using UnityEngine;
 public class CharacterSaveData
 {
     [Header("Character Info")]
-    public string characterName;
+    public string characterName = "Character";
     public string characterClass;
-    public int characterLevel;
+    public int characterLevel = 1;
 
     public float totalPlayTime;
 

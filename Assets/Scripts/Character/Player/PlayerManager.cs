@@ -68,10 +68,18 @@ public class PlayerManager : CharacterManager
 
     public void SaveCurrentGameData(ref CharacterSaveData currentCharacterData)
     {
-        currentCharacterData.characterName = PlayerNetworkManager.characterName.Value.ToString();
-        currentCharacterData.positionX = transform.position.x;
-        currentCharacterData.positionY = transform.position.y;
-        currentCharacterData.positionZ = transform.position.z;
+        // Ensure PlayerNetworkManager and its characterName are not null
+        if (PlayerNetworkManager != null)
+        {
+            //currentCharacterData.characterName = PlayerNetworkManager.characterName.Value.ToString();
+            currentCharacterData.positionX = transform.position.x;
+            currentCharacterData.positionY = transform.position.y;
+            currentCharacterData.positionZ = transform.position.z;
+        }
+        else
+        {
+            Debug.LogError("PlayerNetworkManager or its characterName is null");
+        }
     }
 
     public void LoadCurrentGameData(ref CharacterSaveData currentCharacterData)

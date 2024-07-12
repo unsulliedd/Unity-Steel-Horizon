@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -59,6 +60,8 @@ public class SaveGameManager : MonoBehaviour
         saveFileWriter = new SaveFileWriter();
         saveFileWriter.saveFileDirectoryPath = Application.persistentDataPath + "/Saves/";
 
+        bool emptySlotFound = false;
+
         for (int i = 0; i < characterSlots.Count; i++)
         {
             CharacterSlot slot = (CharacterSlot)i;
@@ -69,13 +72,20 @@ public class SaveGameManager : MonoBehaviour
             if (!saveFileWriter.CheckIfSaveFileExists())
             {
                 currentCharacterSlot = slot;
-                currentCharacterData = new CharacterSaveData();
+                currentCharacterData = new CharacterSaveData
+                {
+                    characterName = "Character",
+                    characterClass = null,
+                    characterLevel = 1
+                };
+
                 saveFileWriter.CreateNewSaveFile(currentCharacterData);
+                emptySlotFound = true;
                 break;
             }
         }
 
-        if (currentCharacterData == null)
+        if (!emptySlotFound)
         {
             Debug.LogError("No empty save slots available.");
             return;
@@ -83,6 +93,7 @@ public class SaveGameManager : MonoBehaviour
 
         StartCoroutine(LoadWorldScene());
     }
+
 
     public void SaveGame()
     {
@@ -168,9 +179,13 @@ public class SaveGameManager : MonoBehaviour
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(worldSceneIndex);
 
+        // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
+        {
             yield return null;
+        }
 
+        // Once the scene is loaded, load the game data
         SaveGameCallbacks.LoadGame(ref currentCharacterData);
     }
 }
