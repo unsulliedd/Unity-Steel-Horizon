@@ -47,9 +47,11 @@ public class PlayerManager : CharacterManager
         {
             PlayerCamera.Instance.playerManager = this;
             PlayerInputManager.Instance.playerManager = this;
+            SaveGameManager.Instance.playerManager = this;
 
-            SaveGameEvent.OnSaveGame += OnSaveGameEvent;
-            SaveGameEvent.OnLoadGame += OnLoadGameEvent;
+
+            SaveGameCallbacks.OnSaveGame += SaveCurrentGameData;
+            SaveGameCallbacks.OnLoadGame += LoadCurrentGameData;
         }
     }
 
@@ -59,20 +61,9 @@ public class PlayerManager : CharacterManager
 
         if (IsOwner)
         {
-            SaveGameEvent.OnSaveGame -= OnSaveGameEvent;
-            SaveGameEvent.OnLoadGame -= OnLoadGameEvent;
+            SaveGameCallbacks.OnSaveGame -= SaveCurrentGameData;
+            SaveGameCallbacks.OnLoadGame -= LoadCurrentGameData;
         }
-    }
-
-    // Wrapper methods to handle ref parameters
-    private void OnSaveGameEvent(CharacterSaveData data)
-    {
-        SaveCurrentGameData(ref data);
-    }
-
-    private void OnLoadGameEvent(CharacterSaveData data)
-    {
-        LoadCurrentGameData(ref data);
     }
 
     public void SaveCurrentGameData(ref CharacterSaveData currentCharacterData)

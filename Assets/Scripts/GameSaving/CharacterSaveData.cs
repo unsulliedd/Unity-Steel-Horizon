@@ -7,7 +7,7 @@ public class CharacterSaveData
     [Header("Character Info")]
     public string characterName;
     public string characterClass;
-    public int level;
+    public int characterLevel;
 
     public float totalPlayTime;
 

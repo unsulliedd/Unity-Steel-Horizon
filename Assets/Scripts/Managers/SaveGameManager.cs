@@ -16,13 +16,12 @@ public class SaveGameManager : MonoBehaviour
     [Header("Current Character Data")]
     public CharacterSlot currentCharacterSlot;
     public CharacterSaveData currentCharacterData;
-    private string fileName;
+    private string saveFileName;
 
     [Header("Character Slots")]
     public List<CharacterSaveData> characterSlots = new List<CharacterSaveData>();
 
-    [SerializeField] private PlayerManager playerManager;
-
+    public PlayerManager playerManager;
 
     public static SaveGameManager Instance { get; private set; }
 
@@ -37,6 +36,7 @@ public class SaveGameManager : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        LoadAllCharacterProfiles();
     }
 
     private void Update()
@@ -56,42 +56,76 @@ public class SaveGameManager : MonoBehaviour
 
     public void NewGame()
     {
-        AssignFileNamebyCharacterSlot();
-        currentCharacterData = new CharacterSaveData();
+        saveFileWriter = new SaveFileWriter();
+        saveFileWriter.saveFileDirectoryPath = Application.persistentDataPath + "/Saves/";
+
+        for (int i = 0; i < characterSlots.Count; i++)
+        {
+            CharacterSlot slot = (CharacterSlot)i;
+            saveFileName = AssignFileNamebyCharacterSlot(slot);
+
+            saveFileWriter.saveFileName = saveFileName;
+
+            if (!saveFileWriter.CheckIfSaveFileExists())
+            {
+                currentCharacterSlot = slot;
+                currentCharacterData = new CharacterSaveData();
+                saveFileWriter.CreateNewSaveFile(currentCharacterData);
+                break;
+            }
+        }
+
+        if (currentCharacterData == null)
+        {
+            Debug.LogError("No empty save slots available.");
+            return;
+        }
+
         StartCoroutine(LoadWorldScene());
     }
 
     public void SaveGame()
     {
-        AssignFileNamebyCharacterSlot();
+        saveFileName = AssignFileNamebyCharacterSlot(currentCharacterSlot);
 
         saveFileWriter = new SaveFileWriter();
         saveFileWriter.saveFileDirectoryPath = Application.persistentDataPath + "/Saves/";
-        saveFileWriter.saveFileName = fileName;
+        saveFileWriter.saveFileName = saveFileName;
 
-        SaveGameEvent.SaveGame(currentCharacterData);
+        SaveGameCallbacks.SaveGame(ref currentCharacterData);
 
         saveFileWriter.CreateNewSaveFile(currentCharacterData);
     }
 
     public void LoadGame()
     {
-        AssignFileNamebyCharacterSlot();
+        saveFileName = AssignFileNamebyCharacterSlot(currentCharacterSlot);
 
         saveFileWriter = new SaveFileWriter();
         saveFileWriter.saveFileDirectoryPath = Application.persistentDataPath + "/Saves/";
-        saveFileWriter.saveFileName = fileName;
+        saveFileWriter.saveFileName = saveFileName;
 
         currentCharacterData = saveFileWriter.LoadSaveFile();
-
-        SaveGameEvent.LoadGame(currentCharacterData);
 
         StartCoroutine(LoadWorldScene());
     }
 
-    private void AssignFileNamebyCharacterSlot()
+    public void LoadAllCharacterProfiles()
     {
-        switch (currentCharacterSlot)
+        saveFileWriter = new SaveFileWriter();
+        saveFileWriter.saveFileDirectoryPath = Application.persistentDataPath + "/Saves/";
+        for (int i = 0; i < characterSlots.Count; i++)
+        {
+            saveFileWriter.saveFileName = AssignFileNamebyCharacterSlot((CharacterSlot)i);
+            characterSlots[i] = saveFileWriter.LoadSaveFile();
+        }
+    }
+
+    public string AssignFileNamebyCharacterSlot(CharacterSlot characterSlot)
+    {
+        string fileName = "";
+
+        switch (characterSlot)
         {
             case CharacterSlot.Slot01:
                 fileName = "SH_01";
@@ -126,6 +160,8 @@ public class SaveGameManager : MonoBehaviour
             default:
                 break;
         }
+
+        return fileName;
     }
 
     public IEnumerator LoadWorldScene()
@@ -134,5 +170,7 @@ public class SaveGameManager : MonoBehaviour
 
         while (!asyncLoad.isDone)
             yield return null;
+
+        SaveGameCallbacks.LoadGame(ref currentCharacterData);
     }
 }
