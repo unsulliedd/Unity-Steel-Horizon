@@ -32,11 +32,14 @@ public class PlayerInputManager : MonoBehaviour
     // UI Actions
     [Header("UI Input")]
     public Vector2 navigationInput;
-    public Vector2 pointerPosition;
+    public Vector2 scrollWheelInput;
     public bool submitPerformed;
+    public bool deletePerformed;
     public bool cancelPerformed;
     public bool clickPerformed;
+    public bool rightClickPerformed;
     public bool anyKeyPerformed;
+
 
     [Header("Controller Type")]
     public bool isGamepadActive = false;
@@ -111,14 +114,18 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.UI.Navigate.canceled += ctx => navigationInput = Vector2.zero;
         playerControls.UI.Submit.performed += ctx => submitPerformed = true;
         playerControls.UI.Submit.canceled += ctx => submitPerformed = false;
+        playerControls.UI.Delete.performed += ctx => deletePerformed = true;
+        playerControls.UI.Delete.canceled += ctx => deletePerformed = false;
         playerControls.UI.Cancel.performed += ctx => cancelPerformed = true;
         playerControls.UI.Cancel.canceled += ctx => cancelPerformed = false;
-        playerControls.UI.Point.performed += ctx => pointerPosition = ctx.ReadValue<Vector2>();
-        playerControls.UI.Point.canceled += ctx => pointerPosition = Vector2.zero;
         playerControls.UI.Click.performed += ctx => clickPerformed = true;
         playerControls.UI.Click.canceled += ctx => clickPerformed = false;
+        playerControls.UI.RightClick.performed += ctx => rightClickPerformed = true;
+        playerControls.UI.RightClick.canceled += ctx => rightClickPerformed = false;
         playerControls.UI.AnyKey.performed += ctx => anyKeyPerformed = true;
         playerControls.UI.AnyKey.canceled += ctx => anyKeyPerformed = false;
+        playerControls.UI.ScrollWheel.performed += ctx => scrollWheelInput = ctx.ReadValue<Vector2>();
+        playerControls.UI.ScrollWheel.performed += ctx => scrollWheelInput = Vector2.zero;
     }
 
     private void HandleMoveInput()
