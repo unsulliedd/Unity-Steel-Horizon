@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System;
 
 public class UI_SaveSlots : MonoBehaviour
 {
@@ -33,7 +34,8 @@ public class UI_SaveSlots : MonoBehaviour
 
             characterName.text = characterData.characterName;
             characterLevel.text = "Level: " + characterData.characterLevel.ToString();
-            totalPlayTime.text = "Played Time: " + characterData.totalPlayTime.ToString();
+            TimeSpan playTime = TimeSpan.FromSeconds(characterData.totalPlayTime);
+            totalPlayTime.text = playTime.ToString(@"hh\:mm\:ss");
         }
         else
         {

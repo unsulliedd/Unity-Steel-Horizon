@@ -5,36 +5,20 @@ using UnityEngine.EventSystems;
 public class SubmenuControl : MonoBehaviour
 {
     [SerializeField] GameObject newGameSubmenu;
-    [SerializeField] GameObject startAsHostButton;
-    [SerializeField] GameObject joinAsClientButton;
     [SerializeField] GameObject newGameButton;      
+    [SerializeField] GameObject startAsHostButton;
 
     void Update()
     {
-        if (PlayerInputManager.Instance.submitPerformed && !PlayerInputManager.Instance.isGamepadActive && !IsPointerOverUIObject())
+        if (TitleScreenManager.Instance.titleScreenMenu.activeSelf)
         {
-            startAsHostButton.SetActive(false);
-            joinAsClientButton.SetActive(false);
+            if (PlayerInputManager.Instance.clickPerformed && !IsPointerOverUIObject())
+            {
+                newGameSubmenu.SetActive(false);
+            }
         }
-
-        if (PlayerInputManager.Instance.cancelPerformed)
-        {
-            startAsHostButton.SetActive(false);
-            joinAsClientButton.SetActive(false);
-            StartCoroutine(TitleScreenManager.Instance.SetFirstSelectedButton(newGameButton));
-        }
-    }
-
-    public void ToggleSubMenu()
-    {
-        bool isActive = !startAsHostButton.activeSelf;
-        startAsHostButton.SetActive(isActive);
-        joinAsClientButton.SetActive(isActive);
-
-        if (isActive)
-            StartCoroutine(TitleScreenManager.Instance.SetFirstSelectedButton(startAsHostButton));
         else
-            StartCoroutine(TitleScreenManager.Instance.SetFirstSelectedButton(newGameButton));
+            return;
     }
 
     private bool IsPointerOverUIObject()

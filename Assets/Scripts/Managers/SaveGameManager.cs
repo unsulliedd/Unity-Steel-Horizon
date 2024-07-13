@@ -42,6 +42,7 @@ public class SaveGameManager : MonoBehaviour
 
     private void Update()
     {
+        // Manual in game save/load
         if (saveGame)
         {
             SaveGame();
@@ -91,7 +92,6 @@ public class SaveGameManager : MonoBehaviour
             StartCoroutine(LoadWorldScene());
     }
 
-
     public void SaveGame()
     {
         saveFileName = AssignFileNamebyCharacterSlot(currentCharacterSlot);
@@ -127,6 +127,22 @@ public class SaveGameManager : MonoBehaviour
             saveFileWriter.saveFileName = AssignFileNamebyCharacterSlot((CharacterSlot)i);
             characterSlots[i] = saveFileWriter.LoadSaveFile();
         }
+    }
+
+    public void DeleteSaveGame(CharacterSlot characterSlot)
+    {
+        saveFileWriter = new SaveFileWriter();
+        saveFileWriter.saveFileDirectoryPath = Application.persistentDataPath + "/Saves/";
+        saveFileWriter.saveFileName = AssignFileNamebyCharacterSlot(characterSlot);
+        saveFileWriter.DeleteSaveFile();
+    }
+
+    public bool IsSlotEmpty(CharacterSlot characterSlot)
+    {
+        saveFileWriter = new SaveFileWriter();
+        saveFileWriter.saveFileDirectoryPath = Application.persistentDataPath + "/Saves/";
+        saveFileWriter.saveFileName = AssignFileNamebyCharacterSlot(characterSlot);
+        return !saveFileWriter.CheckIfSaveFileExists();
     }
 
     public string AssignFileNamebyCharacterSlot(CharacterSlot characterSlot)
