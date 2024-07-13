@@ -2,13 +2,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// Controls the visibility of the new game submenu based on player input.
+/// </summary>
 public class SubmenuControl : MonoBehaviour
 {
-    [SerializeField] GameObject newGameSubmenu;
-    [SerializeField] GameObject newGameButton;      
-    [SerializeField] GameObject startAsHostButton;
+    [SerializeField] private GameObject newGameSubmenu;
+    [SerializeField] private GameObject newGameButton;
+    [SerializeField] private GameObject startAsHostButton;
 
-    void Update()
+    private void Update()
     {
         if (TitleScreenManager.Instance.titleScreenMenu.activeSelf)
         {
@@ -17,15 +20,20 @@ public class SubmenuControl : MonoBehaviour
                 newGameSubmenu.SetActive(false);
             }
         }
-        else
-            return;
     }
 
+    /// <summary>
+    /// Checks if the pointer is over a UI object.
+    /// </summary>
+    /// <returns>True if the pointer is over a UI object, false otherwise.</returns>
     private bool IsPointerOverUIObject()
     {
-        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
-        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-        List<RaycastResult> results = new List<RaycastResult>();
+        var eventDataCurrentPosition = new PointerEventData(EventSystem.current)
+        {
+            position = new Vector2(Input.mousePosition.x, Input.mousePosition.y)
+        };
+
+        var results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
         return results.Count > 0;
     }

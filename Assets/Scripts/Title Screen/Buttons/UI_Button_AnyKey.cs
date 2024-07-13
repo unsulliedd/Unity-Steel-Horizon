@@ -1,18 +1,24 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ButtonAnyKey : MonoBehaviour
+/// <summary>
+/// Handles the transition from the title screen to the main menu upon any key press.
+/// </summary>
+public class UI_Button_AnyKey : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject titleScreen;
     [SerializeField] private GameObject newGameButton;
 
-    void Update()
+    private void Update()
     {
-        AnyKeyPressed();
+        CheckForAnyKeyPressed();
     }
 
-    public void AnyKeyPressed()
+    /// <summary>
+    /// Checks if any key is pressed and handles the transition to the main menu.
+    /// </summary>
+    private void CheckForAnyKeyPressed()
     {
         if (PlayerInputManager.Instance.anyKeyPerformed || Input.GetMouseButtonDown(0))
         {
