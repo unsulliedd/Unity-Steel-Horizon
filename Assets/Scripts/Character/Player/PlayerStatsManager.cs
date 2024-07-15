@@ -31,7 +31,7 @@ public class PlayerStatsManager : CharacterStatsManager
     // Calculates stamina based on the strength attribute
     public int CalculateStaminaBasedOnStrength(int strength)
     {
-        int stamina = 100 + (strength * 10); // Base stamina is 100 plus 10 per strength point
+        int stamina = 90 + (strength * 10); // Base stamina is 100 plus 10 per strength point
         return Mathf.RoundToInt(stamina);
     }
 

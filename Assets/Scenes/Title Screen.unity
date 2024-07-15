@@ -4497,7 +4497,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2049698289}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.30468518
+  m_Size: 0.30489296
   m_NumberOfSteps: 1
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8002,7 +8002,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -730.08057}
+  m_AnchoredPosition: {x: 0, y: -729.6445}
   m_SizeDelta: {x: 1000, y: 2100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1925717692
@@ -8399,7 +8399,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1318497700}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.6953148}
+  m_AnchorMin: {x: 0, y: 0.69510704}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -8518,15 +8518,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 912471403327615154, guid: 752fa9a6569f81443aa8a2a70fdc729f,
-        type: 3}
-      propertyPath: characterSlots.Array.size
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 2190508900098316056, guid: 752fa9a6569f81443aa8a2a70fdc729f,
         type: 3}
       propertyPath: m_Name
-      value: SaveGameManager
+      value: Save Game Manager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
