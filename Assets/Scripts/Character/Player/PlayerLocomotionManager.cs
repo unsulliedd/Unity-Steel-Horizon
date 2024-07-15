@@ -15,6 +15,10 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     [SerializeField] private float sprintSpeed = 8;
     [SerializeField] private float rotationSpeed = 10;
 
+    [SerializeField] private int sprintingStaminaCost = 10;
+    [SerializeField] private int rollStaminaCost = 15;
+    [SerializeField] private int backstepStaminaCost = 5;
+
     [Header("Roll Settings")]
     private Vector3 rollDirection;
     [SerializeField] private float sprintingRollSpeed = 8;
@@ -107,7 +111,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     public void AttemptToPerformRoll()
     {
         if (playerManager.isPerformingAction) return;
-
+        if (playerManager.PlayerNetworkManager.stamina.Value <= rollStaminaCost) return;
         if (moveAmount > 0)
         {
             rollDirection = PlayerCamera.Instance.playerCamera.transform.forward * verticalMoveInput +
@@ -125,9 +129,14 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             }
             else
                 playerManager.PlayerAnimationManager.PlayTargetAnimation("Stand To Roll", true, true, false, false);
+
+            playerManager.PlayerNetworkManager.stamina.Value -= rollStaminaCost;
         }
         else
+        {
             playerManager.PlayerAnimationManager.PlayTargetAnimation("Standing Dodge Backward", true, true, false, false);
+            playerManager.PlayerNetworkManager.stamina.Value -= backstepStaminaCost;
+        }
 
     }
 
@@ -153,9 +162,17 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         {
             playerManager.PlayerNetworkManager.isSprinting.Value = false;
         }
-        else
+        else if (playerManager.PlayerNetworkManager.stamina.Value <= 0)
         {
+            playerManager.PlayerNetworkManager.isSprinting.Value = false;
+            return;
+        }
+        else
             playerManager.PlayerNetworkManager.isSprinting.Value = moveAmount >= 0.5f && PlayerInputManager.Instance.sprintInput;
+
+        if (playerManager.PlayerNetworkManager.isSprinting.Value)
+        {
+            playerManager.PlayerNetworkManager.stamina.Value -= sprintingStaminaCost * Time.deltaTime;
         }
     }
 }

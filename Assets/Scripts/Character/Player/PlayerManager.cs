@@ -5,6 +5,7 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
     [HideInInspector] public PlayerAnimationManager PlayerAnimationManager;
     [HideInInspector] public PlayerNetworkManager PlayerNetworkManager;
+    [HideInInspector] public PlayerStatsManager PlayerStatsManager;
 
     protected override void Awake()
     {
@@ -13,6 +14,7 @@ public class PlayerManager : CharacterManager
         playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
         PlayerAnimationManager = GetComponent<PlayerAnimationManager>();
         PlayerNetworkManager = GetComponent<PlayerNetworkManager>();
+        PlayerStatsManager = GetComponent<PlayerStatsManager>();
     }
 
     protected override void Start()
@@ -28,6 +30,7 @@ public class PlayerManager : CharacterManager
         if (!IsOwner) return;
 
         playerLocomotionManager.HandleAllMovement();
+        PlayerStatsManager.RegenerateStamina();
     }
 
     protected override void LateUpdate()
@@ -49,6 +52,12 @@ public class PlayerManager : CharacterManager
             PlayerInputManager.Instance.playerManager = this;
             SaveGameManager.Instance.playerManager = this;
 
+            PlayerNetworkManager.stamina.OnValueChanged += PlayerUIManager.Instance.playerHUDManager.SetNewStaminaValue;
+            PlayerNetworkManager.stamina.OnValueChanged += PlayerStatsManager.ResetStaminaTimer;
+            
+            PlayerNetworkManager.maxStamina.Value = PlayerStatsManager.CalculateStaminaBasedOnStrength(PlayerNetworkManager.strength.Value);
+            PlayerNetworkManager.stamina.Value = PlayerStatsManager.CalculateStaminaBasedOnStrength(PlayerNetworkManager.strength.Value);
+            PlayerUIManager.Instance.playerHUDManager.SetMaxStaminaValue(PlayerNetworkManager.maxStamina.Value);
 
             SaveGameCallbacks.OnSaveGame += SaveCurrentGameData;
             SaveGameCallbacks.OnLoadGame += LoadCurrentGameData;
@@ -77,9 +86,7 @@ public class PlayerManager : CharacterManager
             currentCharacterData.positionZ = transform.position.z;
         }
         else
-        {
             Debug.LogError("PlayerNetworkManager or its characterName is null");
-        }
     }
 
     public void LoadCurrentGameData(ref CharacterSaveData currentCharacterData)
