@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 602706960846054497}
   - component: {fileID: 912471403327615154}
   m_Layer: 0
-  m_Name: SaveGameManager
+  m_Name: Save Game Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,7 +51,7 @@ MonoBehaviour:
   currentCharacterData:
     characterName: 
     characterClass: 
-    level: 0
+    characterLevel: 1
     totalPlayTime: 0
     positionX: 0
     positionY: 0
@@ -61,7 +61,7 @@ MonoBehaviour:
   characterSlots:
   - characterName: 
     characterClass: 
-    level: 0
+    characterLevel: 1
     totalPlayTime: 0
     positionX: 0
     positionY: 0
@@ -70,7 +70,7 @@ MonoBehaviour:
     totalEnemiesKilled: 0
   - characterName: 
     characterClass: 
-    level: 0
+    characterLevel: 1
     totalPlayTime: 0
     positionX: 0
     positionY: 0
@@ -79,7 +79,7 @@ MonoBehaviour:
     totalEnemiesKilled: 0
   - characterName: 
     characterClass: 
-    level: 0
+    characterLevel: 1
     totalPlayTime: 0
     positionX: 0
     positionY: 0
@@ -88,7 +88,7 @@ MonoBehaviour:
     totalEnemiesKilled: 0
   - characterName: 
     characterClass: 
-    level: 0
+    characterLevel: 1
     totalPlayTime: 0
     positionX: 0
     positionY: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
     totalEnemiesKilled: 0
   - characterName: 
     characterClass: 
-    level: 0
+    characterLevel: 1
     totalPlayTime: 0
     positionX: 0
     positionY: 0
@@ -106,7 +106,7 @@ MonoBehaviour:
     totalEnemiesKilled: 0
   - characterName: 
     characterClass: 
-    level: 0
+    characterLevel: 1
     totalPlayTime: 0
     positionX: 0
     positionY: 0
@@ -115,7 +115,7 @@ MonoBehaviour:
     totalEnemiesKilled: 0
   - characterName: 
     characterClass: 
-    level: 0
+    characterLevel: 1
     totalPlayTime: 0
     positionX: 0
     positionY: 0
@@ -124,7 +124,7 @@ MonoBehaviour:
     totalEnemiesKilled: 0
   - characterName: 
     characterClass: 
-    level: 0
+    characterLevel: 1
     totalPlayTime: 0
     positionX: 0
     positionY: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
     totalEnemiesKilled: 0
   - characterName: 
     characterClass: 
-    level: 0
+    characterLevel: 1
     totalPlayTime: 0
     positionX: 0
     positionY: 0
@@ -142,7 +142,7 @@ MonoBehaviour:
     totalEnemiesKilled: 0
   - characterName: 
     characterClass: 
-    level: 0
+    characterLevel: 1
     totalPlayTime: 0
     positionX: 0
     positionY: 0
