@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ResetActionFlag : StateMachineBehaviour
@@ -12,6 +10,7 @@ public class ResetActionFlag : StateMachineBehaviour
             characterManager = animator.GetComponent<CharacterManager>();
 
         characterManager.isPerformingAction = false;
+        characterManager.isJumping = false;
         characterManager.canMove = true;
         characterManager.canRotate = true;
         characterManager.applyRootMotion = false;

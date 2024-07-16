@@ -58,7 +58,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0
-        functionName: PreventMovementWhenHardFall
+        functionName: PreventMovementWhenLanding
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: f64d04990d027cf4fa478745d2f62085,
           type: 3}

@@ -58,23 +58,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0
-        functionName: PreventMovementWhenHardFall
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: f64d04990d027cf4fa478745d2f62085,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0
-        functionName: PreventMovementWhenHardFall
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: bfcb7045c3726c64fb12a3d1a87c73e2,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.83639854
-        functionName: AllowMovementAfterHardFall
+        functionName: PreventMovementWhenLanding
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: f64d04990d027cf4fa478745d2f62085,
           type: 3}
