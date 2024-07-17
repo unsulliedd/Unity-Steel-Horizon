@@ -23,6 +23,7 @@ public class PlayerInputManager : MonoBehaviour
     [Header("Action Input")]
     public bool rollInput;
     public bool sprintInput;
+    public bool jumpInput;
 
     [Header("Look Input")]
     [SerializeField] private Vector2 lookInput;
@@ -84,6 +85,7 @@ public class PlayerInputManager : MonoBehaviour
         HandleLookInput();
         HandleDodgeInput();
         HandleSprintInput();
+        HandleJumpInput();
     }
 
     // Assign Movement Inputs
@@ -99,6 +101,8 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.PlayerActions.Roll.canceled += ctx => rollInput = false;
         playerControls.PlayerActions.Sprint.performed += ctx => sprintInput = true;
         playerControls.PlayerActions.Sprint.canceled += ctx => sprintInput = false;
+        playerControls.PlayerActions.Jump.performed += ctx => jumpInput = true;
+        playerControls.PlayerActions.Jump.canceled += ctx => jumpInput = false;
     }
 
     private void AssignCameraInput()
@@ -173,6 +177,16 @@ public class PlayerInputManager : MonoBehaviour
             playerManager.PlayerNetworkManager.isSprinting.Value = false;
         }
     }
+
+    private void HandleJumpInput()
+    {
+        if (jumpInput)
+        {
+            jumpInput = false;
+            playerManager.playerLocomotionManager.AttemptToPerformJump();
+        }
+    }
+
 
     // Enable/Disable Player Movement Input based on the current scene
     private void OnSceneChanged(Scene oldScene, Scene newScene)
