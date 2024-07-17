@@ -171,9 +171,10 @@ MonoBehaviour:
   groundCheckLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  inAirVelocity: {x: 0, y: 0, z: 0}
   groundedYVelocity: -20
   fallStartingVelocity: -5
-  gravity: -9.81
+  gravity: -60
   fallingVelocityHasBeenSet: 0
   horizontalMoveInput: 0
   verticalMoveInput: 0
@@ -183,6 +184,9 @@ MonoBehaviour:
   sprintSpeed: 8
   rotationSpeed: 10
   sprintingRollSpeed: 8
+  jumpHeight: 2
+  jumpDistance: 8
+  freeFallMoveSpeed: 8
   sprintingStaminaCost: 10
   rollStaminaCost: 15
   backstepStaminaCost: 5

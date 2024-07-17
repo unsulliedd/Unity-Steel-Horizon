@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class CharacterLocomotionManager : MonoBehaviour
@@ -13,11 +12,11 @@ public class CharacterLocomotionManager : MonoBehaviour
     [SerializeField] protected LayerMask groundCheckLayerMask;
 
     [Header("Velocity")]
-    protected Vector3 yVelocity;
+    protected Vector3 inAirVelocity;
     protected float inAirTimer = 0f;
     [SerializeField] protected float groundedYVelocity = -20f;
     [SerializeField] protected float fallStartingVelocity = -5f;
-    [SerializeField] protected float gravity = -9.81f;
+    [SerializeField] protected float gravity = -60f;
     [SerializeField] protected bool fallingVelocityHasBeenSet = false;
 
     // Initialize characterManager
@@ -36,10 +35,9 @@ public class CharacterLocomotionManager : MonoBehaviour
     protected virtual void Update()
     {
         // Handle ground and air states
-        HandleGrounding();
-        HandleAirborne();
-
-        characterManager.CharacterController.Move(yVelocity * Time.deltaTime);
+        ApplyGravity();
+        if (!characterManager.isGrounded || characterManager.Animator.GetCurrentAnimatorStateInfo(1).IsName("Big Jump"))
+            characterManager.CharacterController.Move(inAirVelocity * Time.deltaTime);
     }
 
     // FixedUpdate is called at fixed intervals for physics updates
@@ -49,34 +47,29 @@ public class CharacterLocomotionManager : MonoBehaviour
     }
 
     // Handle the grounding logic
-    private void HandleGrounding()
+    private void ApplyGravity()
     {
         if (characterManager.isGrounded)
         {
-            if (yVelocity.y < 0)
+            if (inAirVelocity.y < 0)
             {
                 inAirTimer = 0;
                 fallingVelocityHasBeenSet = false;
-                yVelocity.y = groundedYVelocity;
+                inAirVelocity.y = groundedYVelocity;
             }
         }
-    }
-
-    // Handle the airborne logic
-    private void HandleAirborne()
-    {
-        if (!characterManager.isGrounded)
+        else
         {
-            if (characterManager.isJumping && !fallingVelocityHasBeenSet)
+            if (!characterManager.isJumping && !fallingVelocityHasBeenSet)
             {
-                yVelocity.y = fallStartingVelocity;
                 fallingVelocityHasBeenSet = true;
+                inAirVelocity.y = fallStartingVelocity;
             }
 
             inAirTimer += Time.deltaTime;
             characterManager.Animator.SetFloat("InAirTimer", inAirTimer);
 
-            yVelocity.y += gravity * Time.deltaTime;
+            inAirVelocity.y += gravity * Time.deltaTime;
         }
     }
 
@@ -84,6 +77,11 @@ public class CharacterLocomotionManager : MonoBehaviour
     private void CheckGround()
     {
         characterManager.isGrounded = Physics.CheckSphere(groundCheckSphere.position, groundCheckSphereRadius, groundCheckLayerMask);
+    }
+
+    public Vector3 GetGroundCheckSphere()
+    {
+        return groundCheckSphere.position;
     }
 
     // Draw ground check sphere in the editor

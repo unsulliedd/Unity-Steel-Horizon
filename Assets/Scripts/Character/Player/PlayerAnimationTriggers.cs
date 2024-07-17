@@ -2,24 +2,25 @@ using UnityEngine;
 
 public class PlayerAnimationTriggers : MonoBehaviour
 {
-    private PlayerManager playerManager;
+    private CharacterManager characterManager;
 
-    void Awake() => playerManager = GetComponent<PlayerManager>();
+    void Awake() => characterManager = GetComponent<CharacterManager>();
 
     private void ApplyRootMotion()
     {
-        playerManager.applyRootMotion = true;
+        characterManager.applyRootMotion = true;
     }
 
-    private void DisableMoveAndRotate()
+    public void EnableMoveAndRotate()
     {
-        playerManager.canMove = false;
-        playerManager.canRotate = false;
+        characterManager.canMove = true;
+        characterManager.canRotate = true;
     }
 
-    public void PreventMovementWhenLanding()
+    public void DisableMoveAndRotate()
     {
-        DisableMoveAndRotate();
+        characterManager.canMove = false;
+        characterManager.canRotate = false;
     }
 
     public void FallToRoll() 
