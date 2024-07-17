@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4f8fe0d9b7c77304484b721450931b9f
+guid: 10ef8e28879c24544b96992277aaa656
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,38 +33,30 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Hard Landing
+      name: Jumping Down
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 18
-      lastFrame: 75
+      firstFrame: 0
+      lastFrame: 1.3
       wrapMode: 0
       orientationOffsetY: 0
-      level: 0.01
+      level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 1
-      keepOriginalPositionY: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
-      heightFromFeet: 1
+      heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0
-        functionName: PreventMovementWhenLanding
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: f64d04990d027cf4fa478745d2f62085,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
