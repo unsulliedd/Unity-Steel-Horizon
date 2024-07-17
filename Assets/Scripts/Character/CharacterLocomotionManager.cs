@@ -40,7 +40,6 @@ public class CharacterLocomotionManager : MonoBehaviour
             characterManager.CharacterController.Move(inAirVelocity * Time.deltaTime);
 
         characterManager.Animator.SetBool("IsGrounded", characterManager.isGrounded);
-
     }
 
     // FixedUpdate is called at fixed intervals for physics updates

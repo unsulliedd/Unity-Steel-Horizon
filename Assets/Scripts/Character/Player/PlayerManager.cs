@@ -62,6 +62,8 @@ public class PlayerManager : CharacterManager
             SaveGameCallbacks.OnSaveGame += SaveCurrentGameData;
             SaveGameCallbacks.OnLoadGame += LoadCurrentGameData;
         }
+
+
     }
 
     public override void OnNetworkDespawn()
