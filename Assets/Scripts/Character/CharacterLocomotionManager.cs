@@ -38,6 +38,9 @@ public class CharacterLocomotionManager : MonoBehaviour
         ApplyGravity();
         if (!characterManager.isGrounded || characterManager.Animator.GetCurrentAnimatorStateInfo(1).IsName("Big Jump"))
             characterManager.CharacterController.Move(inAirVelocity * Time.deltaTime);
+
+        characterManager.Animator.SetBool("IsGrounded", characterManager.isGrounded);
+
     }
 
     // FixedUpdate is called at fixed intervals for physics updates
@@ -60,7 +63,7 @@ public class CharacterLocomotionManager : MonoBehaviour
         }
         else
         {
-            if (!characterManager.isJumping && !fallingVelocityHasBeenSet)
+            if (!characterManager.CharacterNetworkManager.isJumping.Value && !fallingVelocityHasBeenSet)
             {
                 fallingVelocityHasBeenSet = true;
                 inAirVelocity.y = fallStartingVelocity;
@@ -77,11 +80,6 @@ public class CharacterLocomotionManager : MonoBehaviour
     private void CheckGround()
     {
         characterManager.isGrounded = Physics.CheckSphere(groundCheckSphere.position, groundCheckSphereRadius, groundCheckLayerMask);
-    }
-
-    public Vector3 GetGroundCheckSphere()
-    {
-        return groundCheckSphere.position;
     }
 
     // Draw ground check sphere in the editor

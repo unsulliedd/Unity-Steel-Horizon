@@ -22,7 +22,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     [Header("Jump Settings")]
     [SerializeField] private float jumpHeight = 2;
     [SerializeField] private float jumpDistance = 8;
-    [SerializeField] private float freeFallMoveSpeed = 8;
+    [SerializeField] private float inAirMoveSpeed = 8;
     private Vector3 inAirMovementDirection;
 
     [Header("Stamina Settings")]
@@ -49,7 +49,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     private void UpdateNetworkValues()
     {
         if (playerManager.IsOwner)
-            playerManager.CharacterNetworkManager.UpdateNetworkAnimationParams(verticalMoveInput, horizontalMoveInput, moveAmount);
+            playerManager.CharacterNetworkManager.UpdateNetworkAnimationParams(verticalMoveInput, horizontalMoveInput, moveAmount, inAirTimer, playerManager.isGrounded);
         else
             ApplyNetworkValues();
     }
@@ -60,6 +60,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         verticalMoveInput = playerManager.CharacterNetworkManager.networkAnimationParamVertical.Value;
         horizontalMoveInput = playerManager.CharacterNetworkManager.networkAnimationParamHorizontal.Value;
         moveAmount = playerManager.CharacterNetworkManager.networkMoveAmount.Value;
+        inAirTimer = playerManager.CharacterNetworkManager.networkInAirTimer.Value;
+        playerManager.isGrounded = playerManager.CharacterNetworkManager.networkIsGrounded.Value;
 
         playerManager.PlayerAnimationManager.MovementAnimations(0, moveAmount, playerManager.PlayerNetworkManager.isSprinting.Value);
     }
@@ -125,7 +127,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
             inAirMovementDirection.Normalize();
 
-            playerManager.CharacterController.Move(freeFallMoveSpeed * Time.deltaTime * inAirMovementDirection);
+            playerManager.CharacterController.Move(inAirMoveSpeed * Time.deltaTime * inAirMovementDirection);
         }
     }
 
@@ -198,8 +200,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         if (playerManager.isPerformingAction) return;
         if (playerManager.PlayerNetworkManager.stamina.Value <= jumpStaminaCost) return;
         if (!playerManager.isGrounded) return;
-        if (playerManager.isJumping) return;
-
+        if (playerManager.PlayerNetworkManager.isJumping.Value) return;
 
         if (playerManager.PlayerNetworkManager.isSprinting.Value)
             playerManager.PlayerAnimationManager.PlayTargetAnimation("Big Jump", true, true);
@@ -208,7 +209,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         else
             playerManager.PlayerAnimationManager.PlayTargetAnimation("Jump", true, true);
 
-        playerManager.isJumping = true;
+        playerManager.CharacterNetworkManager.isJumping.Value = true;
         playerManager.PlayerNetworkManager.stamina.Value -= jumpStaminaCost;
     }
 

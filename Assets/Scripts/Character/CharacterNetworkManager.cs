@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CharacterNetworkManager : NetworkBehaviour
 {
-    #region    
+    #region References
     private CharacterManager characterManager;
     #endregion
 
@@ -20,9 +20,12 @@ public class CharacterNetworkManager : NetworkBehaviour
     public NetworkVariable<float> networkAnimationParamHorizontal = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<float> networkAnimationParamVertical = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<float> networkMoveAmount = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<float> networkInAirTimer = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<bool> networkIsGrounded = new NetworkVariable<bool>(true, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     [Header("Flags")]
     public NetworkVariable<bool> isSprinting = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<bool> isJumping = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     [Header("Stats")]
     public NetworkVariable<float> stamina = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -34,15 +37,15 @@ public class CharacterNetworkManager : NetworkBehaviour
         characterManager = GetComponent<CharacterManager>();
     }
 
-    // Update network animation parameters
-    public void UpdateNetworkAnimationParams(float vertical, float horizontal, float moveAmount)
+    public void UpdateNetworkAnimationParams(float vertical, float horizontal, float moveAmount, float inAirTimer, bool isGrounded)
     {
         networkAnimationParamVertical.Value = vertical;
         networkAnimationParamHorizontal.Value = horizontal;
         networkMoveAmount.Value = moveAmount;
+        networkInAirTimer.Value = inAirTimer;
+        networkIsGrounded.Value = isGrounded;
     }
 
-    // Notify the server of action animations
     [Rpc(SendTo.Server)]
     public void NotifyServerOfActionAnimationsRpc(ulong clientId, string animationName, bool applyRootMotion)
     {
@@ -50,7 +53,6 @@ public class CharacterNetworkManager : NetworkBehaviour
             PlayActionAnimationsForAllClientsRpc(clientId, animationName, applyRootMotion);
     }
 
-    // Play action animations for all clients
     [Rpc(SendTo.Everyone)]
     public void PlayActionAnimationsForAllClientsRpc(ulong clientId, string animationName, bool applyRootMotion)
     {
@@ -58,7 +60,6 @@ public class CharacterNetworkManager : NetworkBehaviour
             PerformActionAnimationsFromServer(animationName, applyRootMotion);
     }
 
-    // Perform action animations received from the server
     private void PerformActionAnimationsFromServer(string animationId, bool applyRootMotion)
     {
         characterManager.Animator.applyRootMotion = applyRootMotion;
