@@ -200,7 +200,7 @@ public class SaveGameManager : MonoBehaviour
     /// <returns>An enumerator for coroutine support.</returns>
     public IEnumerator LoadWorldScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(worldSceneIndex);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(2);
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
