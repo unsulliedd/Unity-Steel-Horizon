@@ -90,11 +90,96 @@ Steel Horizon, 4 oyuncunun birlikte açık dünya içerisinde çeşitli görevle
 
 
 
+
   **Sprint Retrospective:**
   
 - Tasarımcılar ve yazılımcılar birlikte düzenli olarak fikir alışverişinde bulunarak toplantılar sürdürülmüştür.
 - Karakterin hareket animasyonları ve mekanikleri eklenmiştir.
 - İhtiyaç duyulan temel modeller hazırlanmıştır ve animasyonlar eklenmiştir.
 - Envanter sistemi eklenmiştir.
+
+# **SPRINT 2**
+- Sprint içi puan değerlendirmesi 150 olarak belirlenmiştir.
+- İkinci Sprint için bitirilmesi istenilen puan sayısı 150 olarak belirlenmiştir ve istenilen hedefe 140/150 oranında hedefler gerçekleştirilmiştir.
+
+  Sprint 2 Screenshot
+
+![Screenshot 2024-07-21 162745](https://github.com/user-attachments/assets/a96c6cfd-07da-4df6-adf4-b04496f76a8f)
+
+
+
+- **Ürün Durumu**: Ekran Görüntüleri:
+
+
+![ps](https://github.com/user-attachments/assets/edd27887-f7a5-4f39-ac44-71268e51ffcb)
+
+![Gif0001-0133_1](https://github.com/user-attachments/assets/8466b6b2-fc8a-43c4-ab5f-963593fe77cc)
+
+## Sprint Review
+
+**Sprint Hedefleri ve Gerçekleşenler**
+Bu sprintte aşağıdaki hedefler belirlenmiş ve başarıyla tamamlanmıştır:
+
+**Stamina ve Health Sistemleri:**
+Karaktere stamina ve health sistemleri eklendi. Bu sistemler, oyunun temel mekaniklerini destekleyecek şekilde çalışmaktadır.
+
+**Animasyonlar ve Combat Sistemi:**
+Karakter için gerekli animasyonlar ve combat sistemi eklendi. Bu sayede karakterin hareketleri ve saldırıları daha akıcı ve etkileyici hale getirildi.
+
+**Yeni Düşmanlar:**
+Oyuna 1 normal düşman ve 2 yapay zeka ile eğitilmiş düşman eklendi. Bu düşmanlar, oyunun zorluk seviyesini ve oynanabilirliğini artıracak şekilde tasarlandı.
+
+**Oyun Modelleri:**
+Oyun için gerekli tüm modeller tamamlandı. Bu modeller, oyun dünyasının görsel kalitesini ve çeşitliliğini artırdı.
+
+**Level Design Taslağı:**
+Oyunun level design taslağı oluşturuldu. Bu taslak, oyun dünyasının genel yapısını ve oyuncunun deneyimleyeceği ortamları belirlemek için kullanıldı.
+
+**HUD (Heads-Up Display):**
+Oyun için HUD tamamlandı. Bu, oyuncuların oyun sırasında ihtiyaç duyacakları bilgileri (sağlık, stamina, mermi sayısı vb.) etkili bir şekilde görmelerini sağlar.
+
+**Save/Load Sistemi:**
+Oyun için bir save/load sistemi eklendi. Bu sistem, oyuncuların oyun ilerlemelerini kaydedip daha sonra kaldıkları yerden devam edebilmelerini sağlar.
+
+**Demonstrasyon**
+Sprint boyunca geliştirilen özelliklerin ve işlerin demonstrasyonu yapıldı. Bu demonstrasyon sırasında:
+
+Karakterin stamina ve health sistemleri gösterildi.
+Animasyonlar ve combat sistemi üzerinde çalışmanın sonuçları sergilendi.
+Yeni düşmanlar ve bunların oyundaki davranışları gözlemlendi.
+Tamamlanan oyun modelleri ve level design taslağı incelendi.
+HUD’ın nasıl çalıştığı ve oyunculara nasıl bilgi sağladığı gösterildi.
+Save/load sisteminin işleyişi test edildi.
+
+**İyileştirme Alanları**
+Animasyonların daha da iyileştirilmesi ve daha akıcı hale getirilmesi için çalışmalar yapılabilir.
+Yapay zeka ile eğitilen düşmanların davranışlarının daha gerçekçi hale getirilmesi üzerinde çalışılabilir.
+
+**Geribildirim**
+Ekip üyelerinden olumlu geribildirimler alındı.
+Oyun modelleri ve HUD’ın oyuncu deneyimini artırdığı belirtildi.
+Save/load sistemi, kullanıcı deneyimini önemli ölçüde geliştirdi.
+
+**Sonraki Adımlar**
+Bir sonraki sprintte yapılması planlanan işler:
+
+Yeni level tasarımlarının tamamlanması.
+Oyun içi görev ve hikaye akışının oluşturulması.
+Daha fazla düşman tipi ve karakter animasyonlarının eklenmesi.
+Oyunun genel performansının ve optimizasyonunun artırılması.
+
+- Sprint Review katılımcıları: Berk Karakaş,Barış Çetin,Damla Akkuş,Beyza Sürücü,Barış Onur Yıldız
+
+## Sprint Retrospective
+
+- Stamine ve health sistemleri eklenmiştir.
+- Karaktere animasyonlar ve combat sistemi eklenmiştir.
+- 1 normal düşman ve 2 tane yapay zeka ile eğitilmiş düşman eklenmiştir.
+- Oyun için yapılması gereken modeller tamamlanmıştır.
+- Level design taslağı oluşturuldu.
+- Oyun için HUD tamamlanmıştır.
+- Save/Load sistemi eklenmiştir.
+
+
 
 
