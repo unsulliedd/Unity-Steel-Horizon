@@ -173,6 +173,21 @@ Steel Horizon, 4 oyuncunun birlikte açık dünya içerisinde çeşitli görevle
 - Level design taslağı oluşturuldu.
 - Oyun için HUD tamamlanmıştır.
 - Save/Load sistemi eklenmiştir.
+- Bu sprint yeterince özverili çalıştık.Yazılımcı rolündeki arkadaşımız tasarıma katkıda bulundu.
+- Animation rigging bazı ayarları entegre sıkıntılar yaşadık.Ama bu kısımda tasarımcı ve yazılım tarafındaki arkadaşlarımız bu konu hakkında birlikte yardımcı olmaya çalıştık.
+ 
+- Boss modelinde mixamoda sorunla karşılaşıldı.Model tekrar düzenlendi.
+- Sahne ışıklandırmasında sorun yaşandı.Ambient lightning ile sorunu çözdük.
+- AI modellerinde çeşitli animasyonlardan dolayı eğitim sonucu model verimsiz oldu.Animasyonları buna göre düzenleyerek eğitim tekrar yapıldı ve sorun çözüldü.
+- Animasyonlar arası geçişlerin daha yumuşak olması için animation controller tekrar yapıldı.
+-Terrain kısmında farklı metotlar kullanılarak yeniden yapıldı.Daha doğal bir oyun ortamı oluşturuldu.
+  
+- Yapılan texturalar detaylandırıldı.
+- AI modelleme kısmında temel yapı oluşturulduğu için yapım süreci hızlandı.
+-Shadera uyumlu olması için HUD içerisindeki elementler tekrar düzenlendi.
+
+-Bu sprint ekip olarak birbirimize karşı daha samimi ve yardımcı biçimede yaklaştık.Tekil olarak çalışmaktan ziyade birbirimizle aktif iletişimde kalarak bütün sorunları çözmeye odaklandık.
+
 
 
 
