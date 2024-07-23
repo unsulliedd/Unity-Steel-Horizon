@@ -157,6 +157,12 @@ Steel Horizon, 4 oyuncunun birlikte açık dünya içerisinde çeşitli görevle
 - Berk Karakaş
 - Beyza Sürücü
 - Damla Akkuş
+  
+  **DAILY SCRUM SS**
+  
+<img src="https://github.com/user-attachments/assets/2f03130d-1ab8-4226-943a-03b48b4f0421" alt="takım2" width="393.5" height="421"><img src="https://github.com/user-attachments/assets/9afe5ee1-e281-4f7a-88b5-dd3c58b145c0" alt="takım" width="620" height="363.5">
+
+
 
 ## Sprint Retrospective
 
