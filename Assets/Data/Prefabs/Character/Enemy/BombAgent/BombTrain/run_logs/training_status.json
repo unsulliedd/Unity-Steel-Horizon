@@ -1,0 +1,65 @@
+{
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0.dev0",
+        "torch_version": "2.3.0+cpu"
+    },
+    "Shooter": {
+        "checkpoints": [
+            {
+                "steps": 24549965,
+                "file_path": "results\\BombTrain\\Shooter\\Shooter-24549965.onnx",
+                "reward": 305.85185185185185,
+                "creation_time": 1721451028.268544,
+                "auxillary_file_paths": [
+                    "results\\BombTrain\\Shooter\\Shooter-24549965.pt"
+                ]
+            },
+            {
+                "steps": 24599964,
+                "file_path": "results\\BombTrain\\Shooter\\Shooter-24599964.onnx",
+                "reward": 299.6261682242991,
+                "creation_time": 1721451144.1911907,
+                "auxillary_file_paths": [
+                    "results\\BombTrain\\Shooter\\Shooter-24599964.pt"
+                ]
+            },
+            {
+                "steps": 24649979,
+                "file_path": "results\\BombTrain\\Shooter\\Shooter-24649979.onnx",
+                "reward": 308.5014836795252,
+                "creation_time": 1721451219.1042953,
+                "auxillary_file_paths": [
+                    "results\\BombTrain\\Shooter\\Shooter-24649979.pt"
+                ]
+            },
+            {
+                "steps": 24699998,
+                "file_path": "results\\BombTrain\\Shooter\\Shooter-24699998.onnx",
+                "reward": 321.9230769230769,
+                "creation_time": 1721451305.6073349,
+                "auxillary_file_paths": [
+                    "results\\BombTrain\\Shooter\\Shooter-24699998.pt"
+                ]
+            },
+            {
+                "steps": 24710205,
+                "file_path": "results\\BombTrain\\Shooter\\Shooter-24710205.onnx",
+                "reward": 317.271186440678,
+                "creation_time": 1721451378.9602802,
+                "auxillary_file_paths": [
+                    "results\\BombTrain\\Shooter\\Shooter-24710205.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 24710205,
+            "file_path": "results\\BombTrain\\Shooter.onnx",
+            "reward": 317.271186440678,
+            "creation_time": 1721451378.9602802,
+            "auxillary_file_paths": [
+                "results\\BombTrain\\Shooter\\Shooter-24710205.pt"
+            ]
+        }
+    }
+}
