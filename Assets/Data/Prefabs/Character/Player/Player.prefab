@@ -130,7 +130,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPerformingAction: 0
-  isJumping: 0
   isGrounded: 1
   applyRootMotion: 0
   canMove: 1
@@ -171,7 +170,6 @@ MonoBehaviour:
   groundCheckLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  inAirVelocity: {x: 0, y: 0, z: 0}
   groundedYVelocity: -20
   fallStartingVelocity: -5
   gravity: -60
@@ -186,7 +184,7 @@ MonoBehaviour:
   sprintingRollSpeed: 8
   jumpHeight: 2
   jumpDistance: 8
-  freeFallMoveSpeed: 8
+  inAirMoveSpeed: 8
   sprintingStaminaCost: 10
   rollStaminaCost: 15
   backstepStaminaCost: 5
@@ -216,7 +214,13 @@ MonoBehaviour:
     m_InternalValue: 0
   networkMoveAmount:
     m_InternalValue: 0
+  networkInAirTimer:
+    m_InternalValue: 0
+  networkIsGrounded:
+    m_InternalValue: 1
   isSprinting:
+    m_InternalValue: 0
+  isJumping:
     m_InternalValue: 0
   stamina:
     m_InternalValue: 0
@@ -3038,6 +3042,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5520140177218533052}
     m_Modifications:
+    - target: {fileID: 1574227885049048653, guid: cff4462aac8d5ba408539c722292d455,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 4117790229808890911, guid: cff4462aac8d5ba408539c722292d455,
         type: 3}
       propertyPath: m_AnchorMax.x
