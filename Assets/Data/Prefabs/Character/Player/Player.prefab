@@ -3042,6 +3042,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5520140177218533052}
     m_Modifications:
+    - target: {fileID: 1574227885049048653, guid: cff4462aac8d5ba408539c722292d455,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 4117790229808890911, guid: cff4462aac8d5ba408539c722292d455,
         type: 3}
       propertyPath: m_AnchorMax.x
