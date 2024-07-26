@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.SceneManagement;
 
@@ -29,6 +30,13 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] private Vector2 lookInput;
     public float horizontalLookInput;
     public float verticalLookInput;
+    
+    [Header("Drive Input")]
+    [SerializeField] private Vector2 driveInput;
+    public float horizontalDriveInput;
+    public float verticalDriveInput;
+    public bool enterVehicleInput;
+    public bool brakeVehicleInput;
 
     // UI Actions
     [Header("UI Input")]
@@ -65,12 +73,16 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.PlayerMovement.Disable();
         playerControls.PlayerActions.Disable();
         playerControls.PlayerCamera.Disable();
+        playerControls.VehicleControls.Disable();
         playerControls.UI.Enable();
+        playerControls.Interactions.Disable();
 
         AssignMovementInputs();
         AssignActionInputs();
         AssignCameraInput();
         AssignUIInputs();
+        AssignDriveInputs();
+        AssignInteractionInputs();
     }
 
     void OnDestroy()
@@ -86,6 +98,7 @@ public class PlayerInputManager : MonoBehaviour
         HandleDodgeInput();
         HandleSprintInput();
         HandleJumpInput();
+        HandleDriveInput();
     }
 
     // Assign Movement Inputs
@@ -110,7 +123,19 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.PlayerCamera.Look.performed += ctx => lookInput = ctx.ReadValue<Vector2>();
         playerControls.PlayerCamera.Look.canceled += ctx => lookInput = Vector2.zero;
     }
+    private void AssignInteractionInputs()
+    {
+        playerControls.Interactions.EnterVehicle.performed += ctx => enterVehicleInput = true;
+        playerControls.Interactions.EnterVehicle.canceled += ctx => enterVehicleInput = false;
+    }
 
+    private void AssignDriveInputs()
+    {
+        playerControls.VehicleControls.Drive.performed += ctx => driveInput = ctx.ReadValue<Vector2>();
+        playerControls.VehicleControls.Drive.canceled += ctx => driveInput = Vector2.zero;
+        playerControls.VehicleControls.Brake.performed += ctx => brakeVehicleInput = true;
+        playerControls.VehicleControls.Brake.canceled += ctx => brakeVehicleInput = false;
+    }
     // Assign UI Inputs
     private void AssignUIInputs()
     {
@@ -157,6 +182,11 @@ public class PlayerInputManager : MonoBehaviour
         verticalLookInput = lookInput.y;
     }
 
+    private void HandleDriveInput()
+    {
+        horizontalDriveInput = driveInput.x;
+        verticalDriveInput = driveInput.y;
+    }
     private void HandleDodgeInput()
     {
         if (rollInput)
@@ -196,6 +226,7 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerMovement.Enable();
             playerControls.PlayerActions.Enable();
             playerControls.PlayerCamera.Enable();
+            playerControls.Interactions.Enable();
             playerControls.UI.Disable();
         }
         else
@@ -203,6 +234,7 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerMovement.Disable();
             playerControls.PlayerActions.Disable();
             playerControls.PlayerCamera.Disable();
+            playerControls.Interactions.Disable();
             playerControls.UI.Enable();
         }
     }
