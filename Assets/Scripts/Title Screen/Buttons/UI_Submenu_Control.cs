@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// Controls the visibility of the new game submenu based on player input.
 /// </summary>
-public class SubmenuControl : MonoBehaviour
+public class UI_Submenu_Control : MonoBehaviour
 {
     [SerializeField] private GameObject newGameSubmenu;
     [SerializeField] private GameObject newGameButton;

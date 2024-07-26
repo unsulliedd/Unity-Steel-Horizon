@@ -48,6 +48,8 @@ public class TitleScreenManager : MonoBehaviour
     #endregion
 
     public CharacterSlot currentCharacterSlot = CharacterSlot.NO_SLOT; // Current selected character slot
+    public bool startAsHost = false; // Flag to start as host
+    public bool startAsClient = false; // Flag to start as client
 
     #region Singleton
     public static TitleScreenManager Instance { get; private set; } // Singleton instance of TitleScreenManager
@@ -106,18 +108,12 @@ public class TitleScreenManager : MonoBehaviour
     /// <summary>
     /// Starts the network as host.
     /// </summary>
-    public void StartNetworkAsHost()
-    {
-        NetworkManager.Singleton.StartHost();
-    }
+    public void StartNetworkAsHost() => startAsHost = true;
 
     /// <summary>
     /// Starts the network as client.
     /// </summary>
-    public void StartNetworkAsClient()
-    {
-        NetworkManager.Singleton.StartClient();
-    }
+    public void StartNetworkAsClient() => startAsClient = true;
 
     /// <summary>
     /// Shuts down the server.

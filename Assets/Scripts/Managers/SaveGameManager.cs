@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -208,5 +209,10 @@ public class SaveGameManager : MonoBehaviour
 
         // Once the scene is loaded, load the game data
         SaveGameCallbacks.LoadGame(ref currentCharacterData);
+        yield return new WaitForSeconds(2f);
+        if (TitleScreenManager.Instance.startAsHost)
+            NetworkManager.Singleton.StartHost();
+        else if (TitleScreenManager.Instance.startAsClient)
+            NetworkManager.Singleton.StartClient();
     }
 }
