@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - OverlayCamera
+  - Ground
+  - Wall
+  - Weapons
   layers:
   - Default
   - TransparentFX
@@ -14,7 +17,7 @@ TagManager:
   - UI
   - Ground
   - Wall
-  - 
+  - Player
   - 
   - 
   - 

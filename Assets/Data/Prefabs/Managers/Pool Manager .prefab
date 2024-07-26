@@ -1,0 +1,175 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3579854176820556290
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6289845136177105920}
+  m_Layer: 0
+  m_Name: Bullet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6289845136177105920
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3579854176820556290}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8595107472974617133}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4665357729485692323
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8595107472974617133}
+  - component: {fileID: 76390936749577121}
+  m_Layer: 0
+  m_Name: 'Pool Manager '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8595107472974617133
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4665357729485692323}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6289845136177105920}
+  - {fileID: 6016903347323547083}
+  - {fileID: 2432108326783454757}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &76390936749577121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4665357729485692323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cac99650b4f0f8488f04f0a0c6eb964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pools:
+  - poolTag: Bullet
+    prefabVariants:
+    - {fileID: 2218815212312371281, guid: d5bd7652ea5154744aa837c8a00c7153, type: 3}
+    poolSize: 50
+    disableDelay: 3
+    parentTransform: {fileID: 6289845136177105920}
+  - poolTag: BulletHole
+    prefabVariants:
+    - {fileID: 100000, guid: 1c0dce8919b251d41842711db86342f0, type: 3}
+    - {fileID: 100000, guid: b70d6fd18250bb8499464c3434311310, type: 3}
+    - {fileID: 100000, guid: 2dc2d86236479b4428b2023663b4d411, type: 3}
+    - {fileID: 100000, guid: b1e375631a4a3fb42a8d2842d82a5dd3, type: 3}
+    - {fileID: 100000, guid: d9f28cf20af3a5346b4213274e54aa74, type: 3}
+    - {fileID: 100000, guid: 350d9aee5330d2247901da1a0557a4c2, type: 3}
+    - {fileID: 100000, guid: 3cddb9cce01bd5e4b909603b22269ee5, type: 3}
+    - {fileID: 100000, guid: 843945ca3ccc0d246adcecb95efff4fd, type: 3}
+    - {fileID: 100000, guid: 348ca72c2e3eec544994fb80cf116d1f, type: 3}
+    poolSize: 50
+    disableDelay: 25
+    parentTransform: {fileID: 6016903347323547083}
+  - poolTag: BulletHoleSmoke
+    prefabVariants:
+    - {fileID: 100002, guid: 518a9139f5a91d34d9e26016b735c350, type: 3}
+    poolSize: 25
+    disableDelay: 5
+    parentTransform: {fileID: 2432108326783454757}
+  - poolTag: BulletHit
+    prefabVariants:
+    - {fileID: 100000, guid: 21c587be1a1d1914c99c2a982d5ead8d, type: 3}
+    poolSize: 25
+    disableDelay: 3
+    parentTransform: {fileID: 2432108326783454757}
+--- !u!1 &5400750932515077989
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6016903347323547083}
+  m_Layer: 0
+  m_Name: Bullet Hole
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6016903347323547083
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5400750932515077989}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8595107472974617133}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8765626896915127294
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2432108326783454757}
+  m_Layer: 0
+  m_Name: Bullet Impact Smoke
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2432108326783454757
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8765626896915127294}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8595107472974617133}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
