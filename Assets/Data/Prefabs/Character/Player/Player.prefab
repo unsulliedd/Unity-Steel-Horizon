@@ -223,11 +223,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapons:
+  - {fileID: 11400000, guid: d131f5f239faf7149a026070741cbda9, type: 2}
   - {fileID: 11400000, guid: 7f3382e286c8e1f409798eac945316f7, type: 2}
   - {fileID: 11400000, guid: de51d8a72644b9f40995e6f5a7415a9c, type: 2}
   - {fileID: 11400000, guid: eb0bb12ae2b15c74ebdb38162738eeae, type: 2}
   - {fileID: 11400000, guid: 2fa0744f2c7da89479ec0d12bcd20363, type: 2}
   - {fileID: 11400000, guid: e5a54a3f9aa47834886f249a37586755, type: 2}
+  - {fileID: 11400000, guid: 3a22037bbb5145a4e93900fbedb91784, type: 2}
   weaponHolder: {fileID: 9130653543639726652}
 --- !u!114 &9138719188275267424
 MonoBehaviour:

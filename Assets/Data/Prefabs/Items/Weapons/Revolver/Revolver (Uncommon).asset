@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponID: 000102
   weaponName: Revolver (UnCommon)
-  weaponPrefab: {fileID: 5395231561945451098, guid: 6561b8ae900b34142924148ecd77e42c,
+  weaponPrefab: {fileID: 2910390057228400487, guid: c2433245824948a4ba94d290f9f01065,
     type: 3}
   fireRate: 0.75
   damage: 38

@@ -37,7 +37,7 @@ public class WeaponManager : MonoBehaviour
         currentWeapon = Instantiate(weaponToEquip.weaponPrefab, weaponHolder);
         // Set the weapon's position and rotation
         currentWeapon.transform.SetLocalPositionAndRotation(weaponToEquip.idlePosition, weaponToEquip.idleRotation);
-
+        currentWeapon.transform.localScale = new Vector3(0.015f, 0.015f, 0.015f);
         // Get the muzzle
         GetMuzzle(weaponToEquip);
 

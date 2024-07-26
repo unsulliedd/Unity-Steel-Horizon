@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponID: 000104
   weaponName: Revolver (Epic)
-  weaponPrefab: {fileID: 5395231561945451098, guid: 73f120f9bbaef2344af20ddd86ee1c30,
+  weaponPrefab: {fileID: 4044515116956682427, guid: 0607fa5067835154c80931e0ff45907a,
     type: 3}
   fireRate: 0.6
   damage: 42
