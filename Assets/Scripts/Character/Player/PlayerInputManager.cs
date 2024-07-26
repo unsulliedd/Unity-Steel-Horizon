@@ -27,16 +27,21 @@ public class PlayerInputManager : MonoBehaviour
     public bool jumpInput;
 
     [Header("Look Input")]
-    [SerializeField] private Vector2 lookInput;
+    [SerializeField] public Vector2 lookInput;
     public float horizontalLookInput;
     public float verticalLookInput;
-    
+
     [Header("Drive Input")]
     [SerializeField] private Vector2 driveInput;
     public float horizontalDriveInput;
     public float verticalDriveInput;
     public bool enterVehicleInput;
     public bool brakeVehicleInput;
+
+    [Header("Combat Input")]
+    public bool fireInput;
+    public bool aimInput;
+    public bool combatMode;
 
     // UI Actions
     [Header("UI Input")]
@@ -74,12 +79,14 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.PlayerActions.Disable();
         playerControls.PlayerCamera.Disable();
         playerControls.VehicleControls.Disable();
+        playerControls.PlayerCombat.Disable();
         playerControls.UI.Enable();
         playerControls.Interactions.Disable();
 
         AssignMovementInputs();
         AssignActionInputs();
         AssignCameraInput();
+        AssignCombatInput();
         AssignUIInputs();
         AssignDriveInputs();
         AssignInteractionInputs();
@@ -99,6 +106,8 @@ public class PlayerInputManager : MonoBehaviour
         HandleSprintInput();
         HandleJumpInput();
         HandleDriveInput();
+        HandleAimInput();
+        HandleFireInput();
     }
 
     // Assign Movement Inputs
@@ -136,6 +145,15 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.VehicleControls.Brake.performed += ctx => brakeVehicleInput = true;
         playerControls.VehicleControls.Brake.canceled += ctx => brakeVehicleInput = false;
     }
+    private void AssignCombatInput()
+    {
+        playerControls.PlayerCombat.Fire.performed += ctx => fireInput = true;
+        playerControls.PlayerCombat.Fire.canceled += ctx => fireInput = false;
+        playerControls.PlayerCombat.Aim.performed += ctx => aimInput = true;
+        playerControls.PlayerCombat.Aim.canceled += ctx => aimInput = false;
+        playerControls.PlayerCombat.CombatMode.performed += ctx => ToggleCombatMode();
+    }
+
     // Assign UI Inputs
     private void AssignUIInputs()
     {
@@ -217,6 +235,23 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
+    private void HandleAimInput()
+    {
+        if (aimInput && combatMode)
+            playerManager.PlayerCombatManager.HandleAiming();
+    }
+
+    private void HandleFireInput()
+    {
+        if (fireInput)
+        {
+            fireInput = false;
+            playerManager.PlayerCombatManager.HandleShooting();
+        }
+    }
+
+    private void ToggleCombatMode() => combatMode = !combatMode;
+
 
     // Enable/Disable Player Movement Input based on the current scene
     private void OnSceneChanged(Scene oldScene, Scene newScene)
@@ -227,6 +262,7 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.Enable();
             playerControls.PlayerCamera.Enable();
             playerControls.Interactions.Enable();
+            playerControls.PlayerCombat.Enable();
             playerControls.UI.Disable();
         }
         else
@@ -235,6 +271,7 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.Disable();
             playerControls.PlayerCamera.Disable();
             playerControls.Interactions.Disable();
+            playerControls.PlayerCombat.Disable();
             playerControls.UI.Enable();
         }
     }

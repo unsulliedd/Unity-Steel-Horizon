@@ -32,6 +32,13 @@ public class CharacterNetworkManager : NetworkBehaviour
     public NetworkVariable<int> maxStamina = new NetworkVariable<int>(100, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<int> strength = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
+    [Header("Combat")]
+    public NetworkVariable<bool> isInCombatMode = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<bool> isAiming = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<bool> isCrosshairVisible = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<float> aimRifleRigWeight = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<Vector3> aimPoint = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
     protected virtual void Awake()
     {
         characterManager = GetComponent<CharacterManager>();
@@ -64,5 +71,23 @@ public class CharacterNetworkManager : NetworkBehaviour
     {
         characterManager.Animator.applyRootMotion = applyRootMotion;
         characterManager.Animator.CrossFade(animationId, 0.2f);
+    }
+
+    [Rpc(SendTo.Server)]
+
+    public void ShootBulletServerRpc(Vector3 position, Quaternion rotation)
+    {
+        ShootBulletClientRpc(position, rotation);
+    }
+
+    [Rpc(SendTo.Everyone)]
+    public void ShootBulletClientRpc(Vector3 position, Quaternion rotation)
+    {
+        characterManager.WeaponManager.GetMuzzleFlashParticle().Play();
+
+        GameObject bulletGameobject = ObjectPoolManager.Instance.SpawnFromPool("Bullet", position, rotation);
+        Bullet bullet = bulletGameobject.GetComponent<Bullet>();
+        bullet.rb.isKinematic = false;
+        bullet.rb.velocity = bullet.transform.forward * bullet.bulletSpeed;
     }
 }

@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class CharacterManager : NetworkBehaviour
 {
-    public CharacterController CharacterController { get; private set; }
     public Animator Animator { get; private set; }
+    public CharacterController CharacterController { get; private set; }
     public CharacterNetworkManager CharacterNetworkManager { get; private set; }
+    public WeaponManager WeaponManager { get; private set; }
 
     [Header("Flags")]
     public bool isPerformingAction = false;
@@ -18,12 +19,12 @@ public class CharacterManager : NetworkBehaviour
 
     protected virtual void Awake()
     {
-        // This will make sure that the character manager is not destroyed when loading a new scene
         DontDestroyOnLoad(gameObject);
-
+        
         Animator = GetComponent<Animator>();
         CharacterController = GetComponent<CharacterController>();
         CharacterNetworkManager = GetComponent<CharacterNetworkManager>();
+        WeaponManager = GetComponent<WeaponManager>();
     }
 
     protected virtual void Start()
@@ -33,17 +34,6 @@ public class CharacterManager : NetworkBehaviour
 
     protected virtual void Update()
     {
-
-    }
-
-    protected virtual void LateUpdate()
-    {
-
-    }
-
-    protected virtual void FixedUpdate()
-    {
-        ///// Disable NetworkTransform first
         //If the player is the owner of the character, then update the network position
         if (IsOwner)
         {

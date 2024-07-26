@@ -43,6 +43,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     {
         base.Update();
         UpdateNetworkValues();
+        HandleAllMovement();
     }
 
     // Update network values for animation parameters if the player is the owner, otherwise apply network values from other players
@@ -69,6 +70,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     // Handle all movement operations
     public void HandleAllMovement()
     {
+        if (!playerManager.IsOwner) return;
         HandleMovement();
         HandleRotation();
         HandleInAirMovement();
@@ -89,8 +91,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
         GetMovementInput();
 
-        moveDirection = PlayerCamera.Instance.transform.forward * verticalMoveInput +
-                        PlayerCamera.Instance.transform.right * horizontalMoveInput;
+        moveDirection = PlayerCamera.Instance.mainCamera.transform.forward * verticalMoveInput +
+                        PlayerCamera.Instance.mainCamera.transform.right * horizontalMoveInput;
         moveDirection.Normalize();
         moveDirection.y = 0;
 
@@ -102,19 +104,33 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     private void HandleRotation()
     {
         if (!playerManager.canRotate) return;
-
-        targetRotation = Vector3.zero;
-        targetRotation = PlayerCamera.Instance.playerCamera.transform.forward * verticalMoveInput +
-                         PlayerCamera.Instance.playerCamera.transform.right * horizontalMoveInput;
-        targetRotation.Normalize();
-        targetRotation.y = 0;
-
-        if (targetRotation == Vector3.zero)
-            targetRotation = transform.forward;
+        if (playerManager.PlayerNetworkManager.isAiming.Value)
+        {
+            // While aiming, rotate the character to face the same direction as the camera
+            Vector3 cameraForward = PlayerCamera.Instance.mainCamera.transform.forward;
+            cameraForward.y = 0; // Keep the rotation horizontal
+            if (cameraForward != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            }
+        }
         else
         {
-            Quaternion newRotation = Quaternion.LookRotation(targetRotation);
-            transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
+            // Normal rotation based on movement direction
+            targetRotation = Vector3.zero;
+            targetRotation = PlayerCamera.Instance.mainCamera.transform.forward * verticalMoveInput +
+                             PlayerCamera.Instance.mainCamera.transform.right * horizontalMoveInput;
+            targetRotation.Normalize();
+            targetRotation.y = 0;
+
+            if (targetRotation == Vector3.zero)
+                targetRotation = transform.forward;
+            else
+            {
+                Quaternion newRotation = Quaternion.LookRotation(targetRotation);
+                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
+            }
         }
     }
 
@@ -122,8 +138,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     {
         if (!playerManager.isGrounded)
         {
-            inAirMovementDirection = PlayerCamera.Instance.transform.forward * verticalMoveInput +
-                                     PlayerCamera.Instance.transform.right * horizontalMoveInput;
+            inAirMovementDirection = PlayerCamera.Instance.mainCamera.transform.forward * verticalMoveInput +
+                                     PlayerCamera.Instance.mainCamera.transform.right * horizontalMoveInput;
 
             inAirMovementDirection.Normalize();
 
@@ -139,8 +155,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
         if (moveAmount > 0)
         {
-            rollDirection = PlayerCamera.Instance.playerCamera.transform.forward * verticalMoveInput +
-                            PlayerCamera.Instance.playerCamera.transform.right * horizontalMoveInput;
+            rollDirection = PlayerCamera.Instance.mainCamera.transform.forward * verticalMoveInput +
+                            PlayerCamera.Instance.mainCamera.transform.right * horizontalMoveInput;
             rollDirection.Normalize();
             rollDirection.y = 0;
 
@@ -199,8 +215,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     {
         if (playerManager.isPerformingAction) return;
         if (playerManager.PlayerNetworkManager.stamina.Value <= jumpStaminaCost) return;
-        if (!playerManager.isGrounded) return;
         if (playerManager.PlayerNetworkManager.isJumping.Value) return;
+        if (!playerManager.isGrounded) return;
 
         if (playerManager.PlayerNetworkManager.isSprinting.Value)
             playerManager.PlayerAnimationManager.PlayTargetAnimation("Big Jump", true, true);
@@ -217,7 +233,6 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     public void ApplyJumpVelocity()
     {
         inAirVelocity = moveDirection * jumpDistance;
-
         // Calculate vertical velocity for the jump
         inAirVelocity.y = Mathf.Sqrt(2 * jumpHeight * Mathf.Abs(gravity));
     }
