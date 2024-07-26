@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - OverlayCamera
+  - Tank
+  - Wall
   layers:
   - Default
   - TransparentFX
