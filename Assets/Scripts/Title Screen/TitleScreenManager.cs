@@ -14,6 +14,7 @@ public class TitleScreenManager : MonoBehaviour
     [Header("Title Screen Menu")]
     public GameObject titleScreenMenu;                              // Main title screen menu
     [SerializeField] private GameObject titleScreenLoadMenu;        // Load menu screen
+    public GameObject titleScreenBackground;        
     #endregion
 
     #region Submenu
@@ -60,7 +61,7 @@ public class TitleScreenManager : MonoBehaviour
         if (Instance == null)
             Instance = this;
         else
-            Destroy(gameObject); 
+            Destroy(gameObject);
     }
 
     private void Update()
@@ -68,7 +69,7 @@ public class TitleScreenManager : MonoBehaviour
         if (titleScreenLoadMenu.activeSelf)
         {
             // Update delete info based on input type
-            SelectDeleteInfoProvider(); 
+            SelectDeleteInfoProvider();
             if (PlayerInputManager.Instance.deletePerformed || PlayerInputManager.Instance.rightClickPerformed)
                 TryShowSaveFileDeleteConfirmationPanel();
         }
@@ -137,7 +138,6 @@ public class TitleScreenManager : MonoBehaviour
     public void LoadGame()
     {
         SaveGameManager.Instance.LoadGame();
-        StartNetworkAsHost();
     }
 
     /// <summary>

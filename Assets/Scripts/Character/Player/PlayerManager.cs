@@ -46,34 +46,38 @@ public class PlayerManager : CharacterManager
         {
 
             StartCoroutine(InitializeSingletons());
+            // Set the camera to follow the player
+            PlayerCamera.Instance.SetCameraFollowAndLookAt(transform);
+            PlayerCamera.Instance.Enable3rdPersonCamera();
+
+            // Register the player manager to the singletons
+            PlayerCamera.Instance.playerManager = this;
+            PlayerInputManager.Instance.playerManager = this;
+            SaveGameManager.Instance.playerManager = this;
+            MonoWheelManager.Instance.playerManager = this;
+
+            // Health
+
+
+            // Stamina
+            PlayerNetworkManager.stamina.OnValueChanged += PlayerUIManager.Instance.playerHUDManager.SetNewStaminaValue;
+            PlayerNetworkManager.stamina.OnValueChanged += PlayerStatsManager.ResetStaminaTimer;
+            PlayerNetworkManager.maxStamina.Value = PlayerStatsManager.CalculateStaminaBasedOnStrength(PlayerNetworkManager.strength.Value);
+            PlayerNetworkManager.stamina.Value = PlayerStatsManager.CalculateStaminaBasedOnStrength(PlayerNetworkManager.strength.Value);
+            PlayerUIManager.Instance.playerHUDManager.SetMaxStaminaValue(PlayerNetworkManager.maxStamina.Value);
+
+            SaveGameCallbacks.OnSaveGame += SaveCurrentGameData;
+            SaveGameCallbacks.OnLoadGame += LoadCurrentGameData;
+
+            // Load the game data if the player is not the server
+            if (IsOwner && !IsServer)
+                LoadCurrentGameData(ref SaveGameManager.Instance.currentCharacterData);
         }
     }
 
     private IEnumerator InitializeSingletons()
     {
         yield return new WaitUntil(() => PlayerCamera.Instance != null && PlayerInputManager.Instance != null && PlayerUIManager.Instance != null && SaveGameManager.Instance != null);
-        // Set the camera to follow the player
-        PlayerCamera.Instance.SetCameraFollowAndLookAt(transform);
-        PlayerCamera.Instance.Enable3rdPersonCamera();
-
-        // Register the player manager to the singletons
-        PlayerCamera.Instance.playerManager = this;
-        PlayerInputManager.Instance.playerManager = this;
-        SaveGameManager.Instance.playerManager = this;
-        MonoWheelManager.Instance.playerManager = this;
-
-        // Health
-
-
-        // Stamina
-        PlayerNetworkManager.stamina.OnValueChanged += PlayerUIManager.Instance.playerHUDManager.SetNewStaminaValue;
-        PlayerNetworkManager.stamina.OnValueChanged += PlayerStatsManager.ResetStaminaTimer;
-        PlayerNetworkManager.maxStamina.Value = PlayerStatsManager.CalculateStaminaBasedOnStrength(PlayerNetworkManager.strength.Value);
-        PlayerNetworkManager.stamina.Value = PlayerStatsManager.CalculateStaminaBasedOnStrength(PlayerNetworkManager.strength.Value);
-        PlayerUIManager.Instance.playerHUDManager.SetMaxStaminaValue(PlayerNetworkManager.maxStamina.Value);
-
-        SaveGameCallbacks.OnSaveGame += SaveCurrentGameData;
-        SaveGameCallbacks.OnLoadGame += LoadCurrentGameData;
     }
 
     public override void OnNetworkDespawn()

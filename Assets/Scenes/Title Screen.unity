@@ -2987,6 +2987,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   titleScreenMenu: {fileID: 1150243392}
   titleScreenLoadMenu: {fileID: 50582933}
+  titleScreenBackground: {fileID: 1514888135}
   newGameSubmenu: {fileID: 607559049}
   newGameButton: {fileID: 1129925809}
   startAsHostButton: {fileID: 1777309283}
@@ -8455,7 +8456,7 @@ PrefabInstance:
     - target: {fileID: 912471403327615154, guid: 752fa9a6569f81443aa8a2a70fdc729f,
         type: 3}
       propertyPath: worldSceneIndex
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2190508900098316056, guid: 752fa9a6569f81443aa8a2a70fdc729f,
         type: 3}

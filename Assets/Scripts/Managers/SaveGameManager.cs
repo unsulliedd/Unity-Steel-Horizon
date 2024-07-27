@@ -10,7 +10,8 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class SaveGameManager : MonoBehaviour
 {
-    [SerializeField] private int worldSceneIndex = 1; // Index of the world scene to load
+    [SerializeField] private int worldSceneIndex = 2; // Index of the world scene to load
+    public int loadingScreenIndex = 1; // Index of the loading screen scene
 
     private SaveFileWriter saveFileWriter; // Handles the writing and reading of save files
 
@@ -29,6 +30,8 @@ public class SaveGameManager : MonoBehaviour
     public PlayerManager playerManager; // Reference to the PlayerManager
 
     public static SaveGameManager Instance { get; private set; } // Singleton instance of SaveGameManager
+
+    public AsyncOperation WorldSceneOperation { get; private set; } // AsyncOperation for world scene
 
     private void Awake()
     {
@@ -92,7 +95,7 @@ public class SaveGameManager : MonoBehaviour
                 };
 
                 // Create a new save file for the character
-                saveFileWriter.CreateNewSaveFile(currentCharacterData); 
+                saveFileWriter.CreateNewSaveFile(currentCharacterData);
                 emptySlotFound = true;
                 break;
             }
@@ -100,7 +103,7 @@ public class SaveGameManager : MonoBehaviour
 
         // Show no empty slot message
         if (!emptySlotFound)
-            TitleScreenManager.Instance.NoEmptySlotPanelPopUp(); 
+            TitleScreenManager.Instance.NoEmptySlotPanelPopUp();
         else
             StartCoroutine(LoadWorldScene());
     }
@@ -116,10 +119,10 @@ public class SaveGameManager : MonoBehaviour
 
         saveFileWriter.saveFileName = saveFileName;
         // Call save game callbacks
-        SaveGameCallbacks.SaveGame(ref currentCharacterData); 
+        SaveGameCallbacks.SaveGame(ref currentCharacterData);
 
         // Save the current character data
-        saveFileWriter.CreateNewSaveFile(currentCharacterData); 
+        saveFileWriter.CreateNewSaveFile(currentCharacterData);
     }
 
     /// <summary>
@@ -129,13 +132,13 @@ public class SaveGameManager : MonoBehaviour
     {
         saveFileName = AssignFileNamebyCharacterSlot(currentCharacterSlot);
 
-        InitializeSaveFileWriter(); 
+        InitializeSaveFileWriter();
         saveFileWriter.saveFileName = saveFileName;
 
         // Load the character data from the save file
-        currentCharacterData = saveFileWriter.LoadSaveFile(); 
-        
-        StartCoroutine(LoadWorldScene()); 
+        currentCharacterData = saveFileWriter.LoadSaveFile();
+
+        StartCoroutine(LoadWorldScene());
     }
 
     /// <summary>
@@ -148,7 +151,7 @@ public class SaveGameManager : MonoBehaviour
         {
             // Load each character slot data
             saveFileWriter.saveFileName = AssignFileNamebyCharacterSlot((CharacterSlot)i);
-            characterSlots[i] = saveFileWriter.LoadSaveFile(); 
+            characterSlots[i] = saveFileWriter.LoadSaveFile();
         }
     }
 
@@ -171,7 +174,7 @@ public class SaveGameManager : MonoBehaviour
         saveFileWriter.saveFileName = AssignFileNamebyCharacterSlot(characterSlot);
 
         // Check if the save file exists for the specified slot
-        return !saveFileWriter.CheckIfSaveFileExists(); 
+        return !saveFileWriter.CheckIfSaveFileExists();
     }
 
     /// <summary>
@@ -180,7 +183,7 @@ public class SaveGameManager : MonoBehaviour
     public string AssignFileNamebyCharacterSlot(CharacterSlot characterSlot)
     {
         // Return the appropriate file name based on the character slot
-        return $"SH_{(int)characterSlot + 1:00}"; 
+        return $"SH_{(int)characterSlot + 1:00}";
     }
 
     /// <summary>
@@ -201,23 +204,26 @@ public class SaveGameManager : MonoBehaviour
     /// <returns>An enumerator for coroutine support.</returns>
     public IEnumerator LoadWorldScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(worldSceneIndex);
+        AsyncOperation loadingSceneOperation = SceneManager.LoadSceneAsync(loadingScreenIndex, LoadSceneMode.Additive);
+        yield return new WaitUntil(() => loadingSceneOperation.isDone);
 
-        // Wait until the asynchronous scene fully loads
-        while (!asyncLoad.isDone)
-            yield return null;
+        Scene loadingScene = SceneManager.GetSceneByBuildIndex(loadingScreenIndex);
+        SceneManager.SetActiveScene(loadingScene);
 
-        // Once the scene is loaded, load the game data
-        SaveGameCallbacks.LoadGame(ref currentCharacterData);
-        yield return new WaitForSeconds(2f);
+        WorldSceneOperation = SceneManager.LoadSceneAsync(worldSceneIndex, LoadSceneMode.Single);
+        yield return new WaitUntil(() => WorldSceneOperation.isDone);
+
+
         if (TitleScreenManager.Instance.startAsHost)
             NetworkManager.Singleton.StartHost();
         else if (TitleScreenManager.Instance.startAsClient)
             NetworkManager.Singleton.StartClient();
         else
             NetworkManager.Singleton.StartHost();
+        
+        // Once the scene is loaded, load the game data
+        SaveGameCallbacks.LoadGame(ref currentCharacterData);
     }
-
 
     public int GetWorldSceneIndex() => worldSceneIndex;
 }

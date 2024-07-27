@@ -19,17 +19,6 @@ public class EnemyAgentController : Agent, INetworkSerializable
     private NetworkVariable<Vector3> networkedPosition = new NetworkVariable<Vector3>();
     private NetworkVariable<Quaternion> networkedRotation = new NetworkVariable<Quaternion>();
 
-    [Header("Patrol Points")]
-    [SerializeField] private Transform[] patrolPoints;
-    private int patrolPointIndexA;
-    private int patrolPointIndexB;
-    private bool movingToA = true;
-
-    [Header("Detection Parameters")]
-    [SerializeField] private float detectionRange = 10f;
-    [SerializeField] private float attackRange = 5f;
-    private Transform targetPlayer;
-
     public override void Initialize()
     {
         _animator = GetComponent<Animator>();
@@ -104,7 +93,7 @@ public class EnemyAgentController : Agent, INetworkSerializable
 
     private void FixedUpdate()
     {
-        if (!IsServer) return; // Ensure only the server processes FixedUpdate
+        //if (!IsServer) return; // Ensure only the server processes FixedUpdate
 
         if (has_shot)
         {
@@ -114,8 +103,6 @@ public class EnemyAgentController : Agent, INetworkSerializable
                 has_shot = false;
             }
         }
-
-        PatrolOrChase();
     }
 
     private void Update()
@@ -134,60 +121,6 @@ public class EnemyAgentController : Agent, INetworkSerializable
             // Update position and rotation based on the networked values
             transform.position = networkedPosition.Value;
             transform.rotation = networkedRotation.Value;
-        }
-    }
-
-    private void PatrolOrChase()
-    {
-        if (targetPlayer == null || Vector3.Distance(transform.position, targetPlayer.position) > detectionRange)
-        {
-            Patrol();
-            CheckForPlayersInRange();
-        }
-        else
-        {
-            ChasePlayer();
-        }
-    }
-
-    private void Patrol()
-    {
-        if (patrolPoints.Length < 2) return;
-
-        Transform patrolPoint = movingToA ? patrolPoints[patrolPointIndexA] : patrolPoints[patrolPointIndexB];
-        Vector3 direction = (patrolPoint.position - transform.position).normalized;
-        enemyMovement.Move(direction * moveSpeed * Time.deltaTime);
-
-        if (Vector3.Distance(transform.position, patrolPoint.position) < 0.5f)
-        {
-            movingToA = !movingToA;
-        }
-    }
-
-    private void CheckForPlayersInRange()
-    {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRange);
-        foreach (Collider collider in colliders)
-        {
-            if (collider.CompareTag("Player"))
-            {
-                targetPlayer = collider.transform;
-                break;
-            }
-        }
-    }
-
-    private void ChasePlayer()
-    {
-        if (targetPlayer == null) return;
-
-        Vector3 direction = (targetPlayer.position - transform.position).normalized;
-        enemyMovement.Move(direction * moveSpeed * Time.deltaTime);
-
-        if (Vector3.Distance(transform.position, targetPlayer.position) <= attackRange)
-        {
-            // Saldýrýya geç
-            can_shoot = true;
         }
     }
 
@@ -226,37 +159,4 @@ public class EnemyAgentController : Agent, INetworkSerializable
     }
 
     private bool IsServer => NetworkManager.Singleton.IsServer;
-
-    private (int, int) GetNearestTwoPatrolPoints(Vector3 position)
-    {
-        int nearestIndexA = 0;
-        int nearestIndexB = 1;
-        float nearestDistanceA = Vector3.Distance(position, patrolPoints[0].position);
-        float nearestDistanceB = Vector3.Distance(position, patrolPoints[1].position);
-
-        for (int i = 2; i < patrolPoints.Length; i++)
-        {
-            float distance = Vector3.Distance(position, patrolPoints[i].position);
-            if (distance < nearestDistanceA)
-            {
-                nearestIndexB = nearestIndexA;
-                nearestDistanceB = nearestDistanceA;
-                nearestIndexA = i;
-                nearestDistanceA = distance;
-            }
-            else if (distance < nearestDistanceB)
-            {
-                nearestIndexB = i;
-                nearestDistanceB = distance;
-            }
-        }
-
-        return (nearestIndexA, nearestIndexB);
-    }
-
-    public void ResumePatrol()
-    {
-        (patrolPointIndexA, patrolPointIndexB) = GetNearestTwoPatrolPoints(transform.position);
-        Patrol();
-    }
 }

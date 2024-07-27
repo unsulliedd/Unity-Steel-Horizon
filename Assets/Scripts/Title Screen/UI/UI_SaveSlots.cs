@@ -54,7 +54,7 @@ public class UI_SaveSlots : MonoBehaviour
         SaveGameManager.Instance.currentCharacterSlot = characterSlot;
 
         // Trigger the game load process
-        TitleScreenManager.Instance.LoadGame();
+        SaveGameManager.Instance.LoadGame();
     }
 
     /// <summary>
