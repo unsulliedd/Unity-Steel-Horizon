@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Prototype Arena.unity
     guid: d90833395b2cad24c8bc70cb1b95e811
   - enabled: 1
-    path: Assets/BTest/btest 1.unity
+    path: Assets/Scenes/World Scene.unity
     guid: fc5919fa726117a4f898b5b4fac97696
   m_configObjects: {}

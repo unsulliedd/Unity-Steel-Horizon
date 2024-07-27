@@ -55,6 +55,9 @@ public class PlayerCombatManager : CharacterCombatManager
         UpdateCombatAnimations();           // Update combat animations
         UpdateNetworkAimPoint();            // Update aim point over the network
         HandleAiming();                     // Handle aiming actions
+
+        if (isAiming)
+            isInCombatMode = true;
     }
 
     /// <summary>
@@ -130,7 +133,7 @@ public class PlayerCombatManager : CharacterCombatManager
     public void HandleAiming()
     {
         if (!playerManager.IsOwner) return;
-
+       
         if (playerManager.PlayerNetworkManager.isAiming.Value)
         {
             playerCamera.crosshair.enabled = true;

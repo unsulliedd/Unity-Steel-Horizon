@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: -8683167659688576255}
   - component: {fileID: -5401659857905159073}
   m_Layer: 0
-  m_Name: bomby
+  m_Name: Bomby
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

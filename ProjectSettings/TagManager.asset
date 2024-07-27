@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - OverlayCamera
-  - Tank
-  - Wall
   - Ground
   - Wall
   - Weapons
+  - FxTemporaire
+  - Fire
+  - Tank
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Ground
   - Wall
   - Player
-  - 
+  - Enemy
   - 
   - 
   - 

@@ -423,6 +423,181 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ]
         },
         {
+            ""name"": ""Vehicle Controls"",
+            ""id"": ""078903f2-3b1e-423c-b328-0dabb8d51548"",
+            ""actions"": [
+                {
+                    ""name"": ""Drive"",
+                    ""type"": ""Value"",
+                    ""id"": ""7a8c19b4-3d0d-433d-a1fe-1b485d4d25f7"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Brake"",
+                    ""type"": ""Button"",
+                    ""id"": ""6296e117-10d8-4ac2-89ab-57bf7f128e8c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""2af0331b-19d2-479b-934b-3e70229a90b8"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Drive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""WASD"",
+                    ""id"": ""1817f2b2-053d-43fd-8b02-5041195f7209"",
+                    ""path"": ""Dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drive"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""5567a607-34d3-4e1c-a6f3-ff1ab7aac31a"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Drive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""0f747a57-1287-4c89-a489-0b21e3713f59"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Drive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""af62e04f-7295-4c5d-95c6-c9224d1b8d89"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Drive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""a826c495-8925-441f-80b4-c71040c46502"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Drive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""4d8df123-05fb-4e08-a580-92cd20aee2e5"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Drive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""d1bb035e-d024-471b-bd86-7b6f2871a83e"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Drive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""b20b77b5-61d2-466b-81d6-a025cbf1b6d5"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Drive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""c2358762-9789-4e29-b623-31eb8329f0f5"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Drive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1f26468e-4468-4a5b-bd2a-897079a3a40a"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Brake"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Interactions"",
+            ""id"": ""b2deccf4-9271-490c-9ced-6571326d5e7f"",
+            ""actions"": [
+                {
+                    ""name"": ""EnterVehicle"",
+                    ""type"": ""Button"",
+                    ""id"": ""e0a6612a-e4b2-4d56-aedf-14a18387cbb4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""20a67dec-6171-4fb0-8a99-ac698dedd395"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EnterVehicle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
             ""name"": ""UI"",
             ""id"": ""b2863ff5-c300-46cd-8143-939f1fc34230"",
             ""actions"": [
@@ -1047,181 +1222,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
-        },
-        {
-            ""name"": ""Vehicle Controls"",
-            ""id"": ""078903f2-3b1e-423c-b328-0dabb8d51548"",
-            ""actions"": [
-                {
-                    ""name"": ""Drive"",
-                    ""type"": ""Value"",
-                    ""id"": ""7a8c19b4-3d0d-433d-a1fe-1b485d4d25f7"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Brake"",
-                    ""type"": ""Button"",
-                    ""id"": ""6296e117-10d8-4ac2-89ab-57bf7f128e8c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""2af0331b-19d2-479b-934b-3e70229a90b8"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Drive"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""WASD"",
-                    ""id"": ""1817f2b2-053d-43fd-8b02-5041195f7209"",
-                    ""path"": ""Dpad"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Drive"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""5567a607-34d3-4e1c-a6f3-ff1ab7aac31a"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Drive"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""0f747a57-1287-4c89-a489-0b21e3713f59"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Drive"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""af62e04f-7295-4c5d-95c6-c9224d1b8d89"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Drive"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""a826c495-8925-441f-80b4-c71040c46502"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Drive"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""4d8df123-05fb-4e08-a580-92cd20aee2e5"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Drive"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""d1bb035e-d024-471b-bd86-7b6f2871a83e"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Drive"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""b20b77b5-61d2-466b-81d6-a025cbf1b6d5"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Drive"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""c2358762-9789-4e29-b623-31eb8329f0f5"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Drive"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""1f26468e-4468-4a5b-bd2a-897079a3a40a"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Brake"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Interactions"",
-            ""id"": ""b2deccf4-9271-490c-9ced-6571326d5e7f"",
-            ""actions"": [
-                {
-                    ""name"": ""EnterVehicle"",
-                    ""type"": ""Button"",
-                    ""id"": ""e0a6612a-e4b2-4d56-aedf-14a18387cbb4"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""20a67dec-6171-4fb0-8a99-ac698dedd395"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""EnterVehicle"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
         }
     ],
     ""controlSchemes"": [
@@ -1304,6 +1304,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerCombat_Aim = m_PlayerCombat.FindAction("Aim", throwIfNotFound: true);
         m_PlayerCombat_CombatMode = m_PlayerCombat.FindAction("Combat Mode", throwIfNotFound: true);
         m_PlayerCombat_ChangeWeapon = m_PlayerCombat.FindAction("Change Weapon", throwIfNotFound: true);
+        // Vehicle Controls
+        m_VehicleControls = asset.FindActionMap("Vehicle Controls", throwIfNotFound: true);
+        m_VehicleControls_Drive = m_VehicleControls.FindAction("Drive", throwIfNotFound: true);
+        m_VehicleControls_Brake = m_VehicleControls.FindAction("Brake", throwIfNotFound: true);
+        // Interactions
+        m_Interactions = asset.FindActionMap("Interactions", throwIfNotFound: true);
+        m_Interactions_EnterVehicle = m_Interactions.FindAction("EnterVehicle", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1316,13 +1323,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_UI_ScrollWheel = m_UI.FindAction("ScrollWheel", throwIfNotFound: true);
         m_UI_MiddleClick = m_UI.FindAction("MiddleClick", throwIfNotFound: true);
         m_UI_AnyKey = m_UI.FindAction("AnyKey", throwIfNotFound: true);
-        // Vehicle Controls
-        m_VehicleControls = asset.FindActionMap("Vehicle Controls", throwIfNotFound: true);
-        m_VehicleControls_Drive = m_VehicleControls.FindAction("Drive", throwIfNotFound: true);
-        m_VehicleControls_Brake = m_VehicleControls.FindAction("Brake", throwIfNotFound: true);
-        // Interactions
-        m_Interactions = asset.FindActionMap("Interactions", throwIfNotFound: true);
-        m_Interactions_EnterVehicle = m_Interactions.FindAction("EnterVehicle", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1605,6 +1605,106 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     }
     public PlayerCombatActions @PlayerCombat => new PlayerCombatActions(this);
 
+    // Vehicle Controls
+    private readonly InputActionMap m_VehicleControls;
+    private List<IVehicleControlsActions> m_VehicleControlsActionsCallbackInterfaces = new List<IVehicleControlsActions>();
+    private readonly InputAction m_VehicleControls_Drive;
+    private readonly InputAction m_VehicleControls_Brake;
+    public struct VehicleControlsActions
+    {
+        private @PlayerControls m_Wrapper;
+        public VehicleControlsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Drive => m_Wrapper.m_VehicleControls_Drive;
+        public InputAction @Brake => m_Wrapper.m_VehicleControls_Brake;
+        public InputActionMap Get() { return m_Wrapper.m_VehicleControls; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(VehicleControlsActions set) { return set.Get(); }
+        public void AddCallbacks(IVehicleControlsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_VehicleControlsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_VehicleControlsActionsCallbackInterfaces.Add(instance);
+            @Drive.started += instance.OnDrive;
+            @Drive.performed += instance.OnDrive;
+            @Drive.canceled += instance.OnDrive;
+            @Brake.started += instance.OnBrake;
+            @Brake.performed += instance.OnBrake;
+            @Brake.canceled += instance.OnBrake;
+        }
+
+        private void UnregisterCallbacks(IVehicleControlsActions instance)
+        {
+            @Drive.started -= instance.OnDrive;
+            @Drive.performed -= instance.OnDrive;
+            @Drive.canceled -= instance.OnDrive;
+            @Brake.started -= instance.OnBrake;
+            @Brake.performed -= instance.OnBrake;
+            @Brake.canceled -= instance.OnBrake;
+        }
+
+        public void RemoveCallbacks(IVehicleControlsActions instance)
+        {
+            if (m_Wrapper.m_VehicleControlsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IVehicleControlsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_VehicleControlsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_VehicleControlsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public VehicleControlsActions @VehicleControls => new VehicleControlsActions(this);
+
+    // Interactions
+    private readonly InputActionMap m_Interactions;
+    private List<IInteractionsActions> m_InteractionsActionsCallbackInterfaces = new List<IInteractionsActions>();
+    private readonly InputAction m_Interactions_EnterVehicle;
+    public struct InteractionsActions
+    {
+        private @PlayerControls m_Wrapper;
+        public InteractionsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @EnterVehicle => m_Wrapper.m_Interactions_EnterVehicle;
+        public InputActionMap Get() { return m_Wrapper.m_Interactions; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InteractionsActions set) { return set.Get(); }
+        public void AddCallbacks(IInteractionsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_InteractionsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_InteractionsActionsCallbackInterfaces.Add(instance);
+            @EnterVehicle.started += instance.OnEnterVehicle;
+            @EnterVehicle.performed += instance.OnEnterVehicle;
+            @EnterVehicle.canceled += instance.OnEnterVehicle;
+        }
+
+        private void UnregisterCallbacks(IInteractionsActions instance)
+        {
+            @EnterVehicle.started -= instance.OnEnterVehicle;
+            @EnterVehicle.performed -= instance.OnEnterVehicle;
+            @EnterVehicle.canceled -= instance.OnEnterVehicle;
+        }
+
+        public void RemoveCallbacks(IInteractionsActions instance)
+        {
+            if (m_Wrapper.m_InteractionsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IInteractionsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_InteractionsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_InteractionsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public InteractionsActions @Interactions => new InteractionsActions(this);
+
     // UI
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
@@ -1722,106 +1822,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
-
-    // Vehicle Controls
-    private readonly InputActionMap m_VehicleControls;
-    private List<IVehicleControlsActions> m_VehicleControlsActionsCallbackInterfaces = new List<IVehicleControlsActions>();
-    private readonly InputAction m_VehicleControls_Drive;
-    private readonly InputAction m_VehicleControls_Brake;
-    public struct VehicleControlsActions
-    {
-        private @PlayerControls m_Wrapper;
-        public VehicleControlsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Drive => m_Wrapper.m_VehicleControls_Drive;
-        public InputAction @Brake => m_Wrapper.m_VehicleControls_Brake;
-        public InputActionMap Get() { return m_Wrapper.m_VehicleControls; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(VehicleControlsActions set) { return set.Get(); }
-        public void AddCallbacks(IVehicleControlsActions instance)
-        {
-            if (instance == null || m_Wrapper.m_VehicleControlsActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_VehicleControlsActionsCallbackInterfaces.Add(instance);
-            @Drive.started += instance.OnDrive;
-            @Drive.performed += instance.OnDrive;
-            @Drive.canceled += instance.OnDrive;
-            @Brake.started += instance.OnBrake;
-            @Brake.performed += instance.OnBrake;
-            @Brake.canceled += instance.OnBrake;
-        }
-
-        private void UnregisterCallbacks(IVehicleControlsActions instance)
-        {
-            @Drive.started -= instance.OnDrive;
-            @Drive.performed -= instance.OnDrive;
-            @Drive.canceled -= instance.OnDrive;
-            @Brake.started -= instance.OnBrake;
-            @Brake.performed -= instance.OnBrake;
-            @Brake.canceled -= instance.OnBrake;
-        }
-
-        public void RemoveCallbacks(IVehicleControlsActions instance)
-        {
-            if (m_Wrapper.m_VehicleControlsActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IVehicleControlsActions instance)
-        {
-            foreach (var item in m_Wrapper.m_VehicleControlsActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_VehicleControlsActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public VehicleControlsActions @VehicleControls => new VehicleControlsActions(this);
-
-    // Interactions
-    private readonly InputActionMap m_Interactions;
-    private List<IInteractionsActions> m_InteractionsActionsCallbackInterfaces = new List<IInteractionsActions>();
-    private readonly InputAction m_Interactions_EnterVehicle;
-    public struct InteractionsActions
-    {
-        private @PlayerControls m_Wrapper;
-        public InteractionsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @EnterVehicle => m_Wrapper.m_Interactions_EnterVehicle;
-        public InputActionMap Get() { return m_Wrapper.m_Interactions; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(InteractionsActions set) { return set.Get(); }
-        public void AddCallbacks(IInteractionsActions instance)
-        {
-            if (instance == null || m_Wrapper.m_InteractionsActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_InteractionsActionsCallbackInterfaces.Add(instance);
-            @EnterVehicle.started += instance.OnEnterVehicle;
-            @EnterVehicle.performed += instance.OnEnterVehicle;
-            @EnterVehicle.canceled += instance.OnEnterVehicle;
-        }
-
-        private void UnregisterCallbacks(IInteractionsActions instance)
-        {
-            @EnterVehicle.started -= instance.OnEnterVehicle;
-            @EnterVehicle.performed -= instance.OnEnterVehicle;
-            @EnterVehicle.canceled -= instance.OnEnterVehicle;
-        }
-
-        public void RemoveCallbacks(IInteractionsActions instance)
-        {
-            if (m_Wrapper.m_InteractionsActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IInteractionsActions instance)
-        {
-            foreach (var item in m_Wrapper.m_InteractionsActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_InteractionsActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public InteractionsActions @Interactions => new InteractionsActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -1888,6 +1888,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnCombatMode(InputAction.CallbackContext context);
         void OnChangeWeapon(InputAction.CallbackContext context);
     }
+    public interface IVehicleControlsActions
+    {
+        void OnDrive(InputAction.CallbackContext context);
+        void OnBrake(InputAction.CallbackContext context);
+    }
+    public interface IInteractionsActions
+    {
+        void OnEnterVehicle(InputAction.CallbackContext context);
+    }
     public interface IUIActions
     {
         void OnNavigate(InputAction.CallbackContext context);
@@ -1900,14 +1909,5 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnScrollWheel(InputAction.CallbackContext context);
         void OnMiddleClick(InputAction.CallbackContext context);
         void OnAnyKey(InputAction.CallbackContext context);
-    }
-    public interface IVehicleControlsActions
-    {
-        void OnDrive(InputAction.CallbackContext context);
-        void OnBrake(InputAction.CallbackContext context);
-    }
-    public interface IInteractionsActions
-    {
-        void OnEnterVehicle(InputAction.CallbackContext context);
     }
 }

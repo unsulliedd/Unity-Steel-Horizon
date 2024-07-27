@@ -201,7 +201,7 @@ public class SaveGameManager : MonoBehaviour
     /// <returns>An enumerator for coroutine support.</returns>
     public IEnumerator LoadWorldScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(2);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(worldSceneIndex);
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
@@ -214,5 +214,10 @@ public class SaveGameManager : MonoBehaviour
             NetworkManager.Singleton.StartHost();
         else if (TitleScreenManager.Instance.startAsClient)
             NetworkManager.Singleton.StartClient();
+        else
+            NetworkManager.Singleton.StartHost();
     }
+
+
+    public int GetWorldSceneIndex() => worldSceneIndex;
 }

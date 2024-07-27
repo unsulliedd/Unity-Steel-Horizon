@@ -256,7 +256,7 @@ public class PlayerInputManager : MonoBehaviour
     // Enable/Disable Player Movement Input based on the current scene
     private void OnSceneChanged(Scene oldScene, Scene newScene)
     {
-        if (newScene.buildIndex == 2)
+        if (newScene.buildIndex == SaveGameManager.Instance.GetWorldSceneIndex())
         {
             playerControls.PlayerMovement.Enable();
             playerControls.PlayerActions.Enable();
