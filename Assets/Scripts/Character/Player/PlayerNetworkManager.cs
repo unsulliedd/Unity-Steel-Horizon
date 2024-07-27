@@ -76,6 +76,17 @@ public class PlayerNetworkManager : CharacterNetworkManager
         playerManager.InventoryManager.OnWeaponAdded(weaponData.weaponID.ToString()); 
     }
 
+    public void SetNewHealthValue(int oldValue, int newValue)
+    {
+        maxHealth.Value = playerManager.PlayerStatsManager.CalculateHealthBasedOnVitalityLevel(newValue);
+        currentHealth.Value = maxHealth.Value;
+    }
+    public void SetNewStaminaValue(int oldValue, int newValue)
+    {
+        maxStamina.Value = playerManager.PlayerStatsManager.CalculateStaminaBasedOnStrength(newValue);
+        stamina.Value = maxStamina.Value;
+    }
+
     /// <summary>
     /// Cleans up network collections when the object is destroyed.
     /// </summary>

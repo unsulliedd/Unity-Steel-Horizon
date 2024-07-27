@@ -19,6 +19,8 @@ public class PlayerStatsManager : CharacterStatsManager
     override protected void Start()
     {
         base.Start();
+        CalculateHealthBasedOnVitalityLevel(playerManager.PlayerNetworkManager.vitality.Value);
+        CalculateStaminaBasedOnStrength(playerManager.PlayerNetworkManager.strength.Value);
     }
 
     // Update is called once per frame
@@ -67,5 +69,10 @@ public class PlayerStatsManager : CharacterStatsManager
     {         
         if (previousStamina < currentStamina)
             staminaRegenTimer = 0;
+    }
+    public int CalculateHealthBasedOnVitalityLevel(int vitality)
+    {
+        int health = 90 + (vitality * 10); // Base stamina is 100 plus 10 per strength point
+        return Mathf.RoundToInt(health);
     }
 }

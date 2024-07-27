@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class CharacterStatsManager : MonoBehaviour
 {
+    private CharacterManager character;
+    
+ 
     protected virtual void Awake()
     {
         
