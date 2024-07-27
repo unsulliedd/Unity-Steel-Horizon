@@ -44,7 +44,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1370073766560706280}
   serializedVersion: 4
-  m_Mass: 10
+  m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -56,7 +56,7 @@ Rigidbody:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_ImplicitCom: 0
+  m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -96,25 +96,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e0b524cd5608294abb700a910b44712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vehicleCamera: {fileID: 0}
   playerTransform: {fileID: 7015796192386358738}
   seatPosition: {fileID: 6595666963789780965}
   exitPosition: {fileID: 4304188327394756289}
-  vehicleSpeed: 14
-  vehicleTurningSpeed: 80
-  maxSpeed: 60
-  stabilizationForce: 0
-  wheelTransform: {fileID: 5154492923941416990}
+  monoWheelSpeed: 14
+  monoWheelTurningSpeed: 50
+  monoWheelMaxSpeed: 120
+  stabilizationForce: 26
   wheelRadius: 0.5
-  wheel: {fileID: 7494834096601466976}
-  groundCheck: {fileID: 167060061567831698}
+  wheelTransform: {fileID: 5154492923941416990}
+  isDriving: 0
+  distanceToPlayer: 0
+  cooldownTime: 0.5
+  nextActionTime: 0
   groundCheckSphereRadius: 0.3
+  isGrounded: 0
+  groundCheck: {fileID: 167060061567831698}
   groundCheckLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  smokeEffect1: {fileID: 6608531596915202745}
-  smokeEffect2: {fileID: 2886468951631577307}
+  smokeEffectLeft: {fileID: 6608531596915202745}
+  smokeEffectRight: {fileID: 2886468951631577307}
   volume: {fileID: 0}
+  motionBlurEffect: {fileID: 0}
 --- !u!114 &5012675004289042354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 320910667
+  GlobalObjectIdHash: 1162845679
   InScenePlacedSourceGlobalObjectIdHash: 593042837
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -233,7 +237,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 759
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0

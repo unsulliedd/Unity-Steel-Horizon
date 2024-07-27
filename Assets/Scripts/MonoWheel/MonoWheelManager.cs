@@ -1,61 +1,67 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using System.Collections;
 
 /// <summary>
 /// Manages the MonoWheel vehicle, including driving mechanics and player interactions.
 /// </summary>
 public class MonoWheelManager : MonoBehaviour
 {
-    public static MonoWheelManager Instance;
+    #region References
+    [Header("References")]
+    private PlayerManager playerManager;
+    private Rigidbody rigidBody;
+    #endregion
 
     [Header("Player Settings")]
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Transform seatPosition;
     [SerializeField] private Transform exitPosition;
 
-    [Header("Vehicle Settings")]
-    [SerializeField] private float vehicleSpeed;
-    [SerializeField] private float vehicleTurningSpeed;
-    [SerializeField] private float maxSpeed = 120f;
+    [Header("MonoWheel Settings")]
+    [SerializeField] private float monoWheelSpeed;
+    [SerializeField] private float monoWheelTurningSpeed;
+    [SerializeField] private float monoWheelMaxSpeed = 120f;
     [SerializeField] private float stabilizationForce;
-    [SerializeField] private Transform wheelTransform;
     [SerializeField] private float wheelRadius = 0.5f;
-    [SerializeField] private GameObject wheel;
+    [SerializeField] private Transform wheelTransform;
+
+    [SerializeField] private bool isDriving = false;
+    [SerializeField] private float distanceToPlayer;
+    [SerializeField] private float cooldownTime = 0.5f;
+    [SerializeField] private float nextActionTime;
 
     [Header("Ground Check Settings")]
-    [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckSphereRadius = 0.1f;
+    [SerializeField] private bool isGrounded;
+    [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundCheckLayerMask;
-    private bool isGrounded;
 
     [Header("Effects")]
-    [SerializeField] private ParticleSystem smokeEffect1;
-    [SerializeField] private ParticleSystem smokeEffect2;
+    [SerializeField] private ParticleSystem smokeEffectLeft;
+    [SerializeField] private ParticleSystem smokeEffectRight;
 
     [Header("Volume Settings")]
     [SerializeField] private Volume volume;
-    private MotionBlur motionBlurEffect;
+    [SerializeField] private MotionBlur motionBlurEffect;
 
-    public PlayerManager playerManager;
-    private Rigidbody rigidBody;
-
-    private bool isDriving;
-    private float distanceToPlayer;
-    private const float cooldownTime = 0.5f;
-    private float nextActionTime;
 
     private void Awake()
     {
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
         rigidBody = GetComponent<Rigidbody>();
     }
 
+    private void Start()
+    {
+        StartCoroutine(FindPlayer());
+        volume.profile.TryGet<MotionBlur>(out motionBlurEffect);
+    }
     private void Update()
     {
+        if (playerManager == null)
+            return;
+
         if (Time.time > nextActionTime)
         {
             if (PlayerInputManager.Instance.enterVehicleInput)
@@ -64,19 +70,11 @@ public class MonoWheelManager : MonoBehaviour
                 {
                     ExitVehicle();
                     StopSmokeEffects();
-                    playerManager.transform.SetParent(null);
                 }
                 else if (IsPlayerNearVehicle())
-                {
                     EnterVehicle();
-                    playerManager.transform.SetParent(transform);
-                }
-                nextActionTime = Time.time + cooldownTime;
-            }
 
-            if (volume.profile.TryGet(out motionBlurEffect) && volume != null)
-            {
-                motionBlurEffect.active = false;
+                nextActionTime = Time.time + cooldownTime;
             }
         }
 
@@ -92,40 +90,24 @@ public class MonoWheelManager : MonoBehaviour
         CheckGround();
 
         if (!isGrounded)
-        {
             ApplyAirControl();
-        }
     }
 
-    private void CheckGround()
-    {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckSphereRadius, groundCheckLayerMask);
-    }
-
-    private void ApplyAirControl()
-    {
-        Vector3 stabilizationForceVector = Vector3.down * stabilizationForce;
-        rigidBody.AddForce(stabilizationForceVector, ForceMode.Acceleration);
-        rigidBody.angularVelocity = Vector3.Lerp(rigidBody.angularVelocity, Vector3.zero, Time.fixedDeltaTime * 2f);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(groundCheck.position, groundCheckSphereRadius);
-    }
 
     private void Drive()
     {
-        playerManager.Animator.SetBool("isDrive", true);
+        if (playerManager == null)
+            return;
 
-        if (rigidBody.velocity.magnitude < maxSpeed)
+        playerManager.Animator.SetBool("isDrive", isDriving);
+
+        if (rigidBody.velocity.magnitude < monoWheelMaxSpeed)
         {
-            rigidBody.AddForce(transform.forward * PlayerInputManager.Instance.verticalDriveInput * vehicleSpeed, ForceMode.Acceleration);
+            rigidBody.AddForce(monoWheelSpeed * PlayerInputManager.Instance.verticalDriveInput * transform.forward, ForceMode.Acceleration);
             StartSmokeEffects();
         }
 
-        Quaternion rotation = Quaternion.Euler(0, PlayerInputManager.Instance.horizontalDriveInput * Time.deltaTime * vehicleTurningSpeed, 0);
+        Quaternion rotation = Quaternion.Euler(0, PlayerInputManager.Instance.horizontalDriveInput * Time.deltaTime * monoWheelTurningSpeed, 0);
         rigidBody.MoveRotation(rotation * rigidBody.rotation);
 
         RotateWheel();
@@ -134,12 +116,18 @@ public class MonoWheelManager : MonoBehaviour
             ApplyBrakes();
     }
 
+    private void ApplyAirControl()
+    {
+        Vector3 stabilizationForceVector = Vector3.down * stabilizationForce;
+        rigidBody.AddForce(stabilizationForceVector, ForceMode.Acceleration);
+        rigidBody.angularVelocity = Vector3.Lerp(rigidBody.angularVelocity, Vector3.zero, Time.fixedDeltaTime * 2f);
+    }
     private void RotateWheel()
     {
         float speed = rigidBody.velocity.magnitude;
         float wheelCircumference = 2 * Mathf.PI * wheelRadius;
         float rotationAngle = (speed * 360) / wheelCircumference;
-        wheel.transform.Rotate(Vector3.back, rotationAngle * Time.deltaTime);
+        wheelTransform.Rotate(Vector3.back, rotationAngle * Time.deltaTime);
     }
 
     private void ApplyBrakes()
@@ -147,12 +135,21 @@ public class MonoWheelManager : MonoBehaviour
         rigidBody.velocity = Vector3.Lerp(rigidBody.velocity, Vector3.zero, Time.deltaTime);
         rigidBody.angularVelocity = Vector3.zero;
     }
+    private void EnterVehicle()
+    {
+        isDriving = true;
+        playerManager.CharacterController.enabled = false;
+        DisablePlayerControls();
+        motionBlurEffect.active = false;
+    }
 
     private void ExitVehicle()
     {
         isDriving = false;
+        playerManager.CharacterController.enabled = true;
         EnablePlayerControls();
-        playerManager.Animator.SetBool("isDrive", false);
+        motionBlurEffect.active = true;
+        playerManager.Animator.SetBool("isDrive", isDriving);
         playerManager.transform.SetPositionAndRotation(exitPosition.position, exitPosition.rotation);
     }
 
@@ -162,12 +159,6 @@ public class MonoWheelManager : MonoBehaviour
         return distanceToPlayer < 2.0f;
     }
 
-    private void EnterVehicle()
-    {
-        isDriving = true;
-        DisablePlayerControls();
-    }
-
     private void PositionPlayerInSeat()
     {
         playerManager.transform.SetPositionAndRotation(seatPosition.position, seatPosition.rotation);
@@ -175,35 +166,40 @@ public class MonoWheelManager : MonoBehaviour
 
     private void StartSmokeEffects()
     {
-        if (!smokeEffect1.isPlaying)
-            smokeEffect1.Play();
-        if (!smokeEffect2.isPlaying)
-            smokeEffect2.Play();
+        if (!smokeEffectLeft.isPlaying)
+            smokeEffectLeft.Play();
+        if (!smokeEffectRight.isPlaying)
+            smokeEffectRight.Play();
     }
 
     private void StopSmokeEffects()
     {
-        smokeEffect1.Stop();
-        smokeEffect2.Stop();
+        smokeEffectLeft.Stop();
+        smokeEffectRight.Stop();
     }
 
     private void EnablePlayerControls()
     {
-        var controls = PlayerInputManager.Instance.playerControls;
-        controls.PlayerMovement.Enable();
-        controls.PlayerCamera.Enable();
-        controls.PlayerActions.Enable();
-        controls.PlayerCombat.Enable();
-        controls.VehicleControls.Disable();
+        PlayerInputManager.Instance.playerControls.PlayerMovement.Enable();
+        PlayerInputManager.Instance.playerControls.PlayerCamera.Enable();
+        PlayerInputManager.Instance.playerControls.PlayerActions.Enable();
+        PlayerInputManager.Instance.playerControls.PlayerCombat.Enable();
+        PlayerInputManager.Instance.playerControls.VehicleControls.Disable();
     }
 
     private void DisablePlayerControls()
     {
-        var controls = PlayerInputManager.Instance.playerControls;
-        controls.PlayerMovement.Disable();
-        controls.PlayerCamera.Disable();
-        controls.PlayerActions.Disable();
-        controls.PlayerCombat.Disable();
-        controls.VehicleControls.Enable();
+        PlayerInputManager.Instance.playerControls.PlayerMovement.Disable();
+        PlayerInputManager.Instance.playerControls.PlayerCamera.Disable();
+        PlayerInputManager.Instance.playerControls.PlayerActions.Disable();
+        PlayerInputManager.Instance.playerControls.PlayerCombat.Disable();
+        PlayerInputManager.Instance.playerControls.VehicleControls.Enable();
+    }
+    private void CheckGround() => isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckSphereRadius, groundCheckLayerMask);
+
+    IEnumerator FindPlayer()
+    {
+        yield return new WaitForSeconds(5f);
+        playerManager = GameObject.FindWithTag("Player").GetComponent<PlayerManager>();
     }
 }

@@ -54,7 +54,6 @@ public class PlayerManager : CharacterManager
             PlayerCamera.Instance.playerManager = this;
             PlayerInputManager.Instance.playerManager = this;
             SaveGameManager.Instance.playerManager = this;
-            MonoWheelManager.Instance.playerManager = this;
 
             // Health
 
