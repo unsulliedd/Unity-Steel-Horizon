@@ -14,6 +14,7 @@ public class CharacterEffectsManager : MonoBehaviour
 
     public virtual void ProcessInstantEffect(InstantCharacterEffect effect)
     {
+        
         effect.ProcessEffect(character);
     }
 }

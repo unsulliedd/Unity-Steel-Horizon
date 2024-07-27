@@ -22,6 +22,6 @@ public class CharacterSaveData
     [Header("PlayerStats")] 
     public int vitality;
     public int strenght;
-    public float currentHealth;
+    public int currentHealth;
     public float currentStamina;
 }

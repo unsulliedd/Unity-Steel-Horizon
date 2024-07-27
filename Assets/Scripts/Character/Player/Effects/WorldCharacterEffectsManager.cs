@@ -5,6 +5,7 @@ using UnityEngine;
 public class WorldCharacterEffectsManager : MonoBehaviour
 {
     public static WorldCharacterEffectsManager instance;
+    [Header("Damage")] public TakeDamageEffect TakeDamageEffect;
 
     [SerializeField] private List<InstantCharacterEffect> _instantCharacterEffects;
     // Start is called before the first frame update

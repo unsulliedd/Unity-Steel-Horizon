@@ -4,6 +4,7 @@ using UnityEngine.Rendering;
 
 public class PlayerManager : CharacterManager
 {
+    [Header("DebugMenu")] [SerializeField] private bool respawnCharacter = false;
     [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
     [HideInInspector] public PlayerAnimationManager PlayerAnimationManager;
     [HideInInspector] public PlayerNetworkManager PlayerNetworkManager;
@@ -63,7 +64,7 @@ public class PlayerManager : CharacterManager
             PlayerNetworkManager.maxHealth.Value = PlayerStatsManager.CalculateHealthBasedOnVitalityLevel(PlayerNetworkManager.vitality.Value);
             PlayerNetworkManager.currentHealth.Value = PlayerStatsManager.CalculateHealthBasedOnVitalityLevel(PlayerNetworkManager.vitality.Value);
             PlayerUIManager.Instance.playerHUDManager.SetMaxHealthValue(PlayerNetworkManager.maxHealth.Value);
-
+            PlayerNetworkManager.currentHealth.OnValueChanged += PlayerNetworkManager.CheckHPDeath;
             // Stamina
             PlayerNetworkManager.strength.OnValueChanged += PlayerNetworkManager.SetNewStaminaValue;
             PlayerNetworkManager.stamina.OnValueChanged += PlayerUIManager.Instance.playerHUDManager.SetNewStaminaValue;
@@ -87,6 +88,18 @@ public class PlayerManager : CharacterManager
         yield return new WaitUntil(() => PlayerCamera.Instance != null && PlayerInputManager.Instance != null && PlayerUIManager.Instance != null && SaveGameManager.Instance != null);
     }
 
+    public override void ReviveCharacter()
+    {
+        base.ReviveCharacter();
+        if (IsOwner)
+        {
+            isDead.Value=false;
+            PlayerNetworkManager.currentHealth.Value = PlayerNetworkManager.maxHealth.Value;
+            PlayerNetworkManager.stamina.Value = PlayerNetworkManager.maxStamina.Value;
+            Debug.Log("doğdum ab");
+        }
+    }
+
     public override void OnNetworkDespawn()
     {
         base.OnNetworkDespawn();
@@ -98,7 +111,26 @@ public class PlayerManager : CharacterManager
         }
     }
 
+    public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
+    {
+        return base.ProcessDeathEvent(manuallySelectDeathAnimation);
+        if (IsOwner)
+        {
+      
+        }
+    }
+
+    private void DebugMenu()
+    {
+        if (respawnCharacter)
+        {
+            respawnCharacter = false;
+            ReviveCharacter();
+        }
+    }
+
     public void SaveCurrentGameData(ref CharacterSaveData currentCharacterData)
+    
     {
         // Ensure PlayerNetworkManager and its characterName are not null
         if (PlayerNetworkManager != null)

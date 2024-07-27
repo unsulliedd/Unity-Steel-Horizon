@@ -9,6 +9,6 @@ public class PlayerHUDManager : MonoBehaviour
     public void SetNewStaminaValue(float oldValue, float newValue) => staminaSlider.SetStats(Mathf.RoundToInt(newValue));
 
     public void SetMaxStaminaValue(int maxValue) => staminaSlider.SetMaxValue(maxValue);
-    public void SetNewHealthValue(float oldValue, float newValue) => healthBar.SetStats(Mathf.RoundToInt(newValue));
+    public void SetNewHealthValue(int oldValue, int newValue) => healthBar.SetStats(newValue);
     public void SetMaxHealthValue(int maxValue) => healthBar.SetMaxValue(maxValue);
 }
