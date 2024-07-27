@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class LoadingScreen : MonoBehaviour
 {
     [SerializeField] private Slider progressBar;
-    [SerializeField] private float fakeLoadSpeed = 0.45f; // Bu deðer yüklenme hýzýný ayarlar
+    [SerializeField] private float fakeLoadSpeed = 0.45f;
 
     private void Start()
     {

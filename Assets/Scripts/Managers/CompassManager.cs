@@ -10,6 +10,8 @@ public class CompassManager : MonoBehaviour
     public RectTransform objectiveMarkerTransform;
     public RectTransform northMarkerTransform;
     public RectTransform southMarkerTransform;
+    public RectTransform westMakerTrasform;
+    public RectTransform eastMakerTrasform;
 
     public Transform cameraObjectTransform;
     public Transform objectiveObjectTransform;
@@ -23,6 +25,8 @@ public class CompassManager : MonoBehaviour
     {
         SetMarkerPosition(objectiveMarkerTransform, objectiveObjectTransform.position);
         SetMarkerPosition(northMarkerTransform, cameraObjectTransform.position + Vector3.forward * 1000);
+        SetMarkerPosition(westMakerTrasform, cameraObjectTransform.position + Vector3.left * 1000);
+        SetMarkerPosition(eastMakerTrasform, cameraObjectTransform.position + Vector3.right * 1000);
         SetMarkerPosition(southMarkerTransform, cameraObjectTransform.position + Vector3.back * 1000);
     }
 
