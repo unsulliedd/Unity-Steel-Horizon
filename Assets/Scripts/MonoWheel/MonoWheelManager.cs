@@ -64,7 +64,7 @@ public class MonoWheelManager : MonoBehaviour
 
         if (Time.time > nextActionTime)
         {
-            if (PlayerInputManager.Instance.enterVehicleInput)
+            if (PlayerInputManager.Instance.interactInput)
             {
                 if (isDriving)
                 {
