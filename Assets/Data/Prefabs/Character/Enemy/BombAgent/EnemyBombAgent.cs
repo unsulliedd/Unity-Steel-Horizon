@@ -44,8 +44,7 @@ public class EnemyBombAgent : Agent, INetworkSerializable
 
     public override void OnEpisodeBegin()
     {
-        if (IsServer)
-        {
+     
             enemyMovement.velocity = Vector3.zero;
             transform.localPosition = Vector3.zero;
             StopAllCoroutines();
@@ -55,19 +54,19 @@ public class EnemyBombAgent : Agent, INetworkSerializable
 
             // Player referansını güncelle
             UpdateNearestPlayer();
-        }
+       
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(transform.localPosition);
-        sensor.AddObservation(player.localPosition);
-        sensor.AddObservation(Vector3.Distance(transform.localPosition, player.localPosition));
+        //sensor.AddObservation(player.localPosition);
+        //sensor.AddObservation(Vector3.Distance(transform.localPosition, player.localPosition));
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        if (!IsServer) return;
+       // if (!IsServer) return;
 
         float move_Rotate = actions.ContinuousActions[0];
         float move_Forward = actions.ContinuousActions[1];
@@ -80,17 +79,21 @@ public class EnemyBombAgent : Agent, INetworkSerializable
         networkedPosition.Value = transform.position;
         networkedRotation.Value = transform.rotation;
 
-        if (Vector3.Distance(transform.position, player.position) < 2)
+        if (player != null)
         {
-            if (shoot)
+            if (Vector3.Distance(transform.position, player.position) < 2)
             {
-                TriggerBombClientRpc();
+                if (shoot)
+                {
+                    TriggerBombClient();
+                }
             }
-        }
+        } 
+   
     }
 
-    [ClientRpc]
-    private void TriggerBombClientRpc()
+  
+    private void TriggerBombClient()
     {
         StartCoroutine(TriggerBomb());
     }
@@ -152,7 +155,7 @@ public class EnemyBombAgent : Agent, INetworkSerializable
 
     private void FixedUpdate()
     {
-        if (!IsServer) return;
+       // if (!IsServer) return;
 
         bombTimer -= Time.fixedDeltaTime;
         if (bombTimer <= 0)
@@ -162,20 +165,21 @@ public class EnemyBombAgent : Agent, INetworkSerializable
             material.color = originalColor;
             EndEpisode();
         }
+        enemyMovement.AddForce(Physics.gravity, ForceMode.Acceleration);
+        UpdateNearestPlayer();
     }
 
     private void Update()
     {
-        if (!IsServer)
+       /* if (IsServer)
         {
             transform.position = networkedPosition.Value;
             transform.rotation = networkedRotation.Value;
-        }
+        }*/
 
-        if (IsServer)
-        {
-            UpdateNearestPlayer();
-        }
+     
+          
+        
     }
 
     private void UpdateNearestPlayer()

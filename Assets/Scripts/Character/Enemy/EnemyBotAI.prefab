@@ -178,8 +178,8 @@ MonoBehaviour:
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 5022602860645237092, guid: 812d2b22dd0cf81499aa86f78fd2c33e, type: 3}
-  m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_InferenceDevice: 1
+  m_BehaviorType: 2
   m_BehaviorName: Shooter
   TeamId: 0
   m_UseChildSensors: 1
@@ -202,14 +202,9 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
   moveSpeed: 2
+  gravity: -9.81
+  jumpHeight: 1
   gunObject: {fileID: 8761147200942512587}
-  patrolPoints:
-  - {fileID: 54083228892789485, guid: 476e9022fd5f918489f1c86e31204bde, type: 3}
-  - {fileID: 2028637338708139416, guid: 904848151ee9d114597bdda8acbd8212, type: 3}
-  - {fileID: 2418478294789842732, guid: c0dde3e0a506d4645abc7d7816937027, type: 3}
-  - {fileID: 7304747712737006724, guid: e38b01d96aad3be4b9db921fab256d7e, type: 3}
-  detectionRange: 10
-  attackRange: 5
 --- !u!114 &1550502859915801778
 MonoBehaviour:
   m_ObjectHideFlags: 0

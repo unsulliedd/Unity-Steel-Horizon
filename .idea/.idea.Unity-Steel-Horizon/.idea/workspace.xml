@@ -7,22 +7,16 @@
     <list default="true" id="61dd8044-5626-4490-8aee-1b1e203dbe96" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Unity-Steel-Horizon/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Unity-Steel-Horizon/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/Particles Materials/Blue.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/Particles Materials/Blue.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Textures/Video Render/Title Video.renderTexture" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Textures/Video Render/Title Video.renderTexture" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Data/Prefabs/Character/Enemy/BulletPrefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Prefabs/Character/Enemy/BulletPrefab.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Data/Prefabs/Character/Player/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Prefabs/Character/Player/Player.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Data/Prefabs/Managers/WorldAIManager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Prefabs/Managers/WorldAIManager.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/BTest/Cloud/UnityVolumetricCloudsURP-main/Assets/VolumetricClouds/VolumetricClouds.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BTest/Cloud/UnityVolumetricCloudsURP-main/Assets/VolumetricClouds/VolumetricClouds.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/Prefabs/Character/Enemy/BombAgent/EnemyBombAgent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Prefabs/Character/Enemy/BombAgent/EnemyBombAgent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/Prefabs/Character/Enemy/BombAgent/bomby.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Prefabs/Character/Enemy/BombAgent/bomby.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/DefaultNetworkPrefabs.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DefaultNetworkPrefabs.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Prototype Arena.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Prototype Arena.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Title Screen.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Title Screen.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Settings/URP-Balanced.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/URP-Balanced.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Settings/URP-HighFidelity.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/URP-HighFidelity.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Settings/URP-Performant.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/URP-Performant.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ML-Agents/Timers/Title Screen_timers.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ML-Agents/Timers/Title Screen_timers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/World Scene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/World Scene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Enemy/EnemyAgentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/Enemy/EnemyAgentController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Enemy/EnemyBotAI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/Enemy/EnemyBotAI.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Enemy/GunController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/Enemy/GunController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.polybrush/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.polybrush/Settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +27,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Data/Prefabs/Character/Enemy/AISystem/EnemyAgentController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/EffectHealth/Character/CharacterManager.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -50,7 +44,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "ai-systems",
+    "git-widget-placeholder": "aiLevelDesign",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -126,6 +120,7 @@
       <workItem from="1721032551620" duration="6271000" />
       <workItem from="1721062857426" duration="13977000" />
       <workItem from="1721993177188" duration="14117000" />
+      <workItem from="1722276075697" duration="6182000" />
     </task>
     <servers />
   </component>

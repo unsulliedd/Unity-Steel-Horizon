@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: -8683167659688576255}
   - component: {fileID: -5401659857905159073}
   m_Layer: 0
-  m_Name: Bomby
+  m_Name: bomby
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -206,8 +206,8 @@ MonoBehaviour:
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 5022602860645237092, guid: b0c7bdb2c1897634d99220c14bc99c7b, type: 3}
-  m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_InferenceDevice: 1
+  m_BehaviorType: 2
   m_BehaviorName: Shooter
   TeamId: 0
   m_UseChildSensors: 1
@@ -235,7 +235,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
@@ -279,6 +279,7 @@ MonoBehaviour:
   MaxStep: 0
   moveSpeed: 300
   detectionRadius: 20
+  player: {fileID: 0}
   explodeDuration: 3
   material: {fileID: 2100000, guid: 056b8378eaa9abc4099799b460ca1f78, type: 2}
   targetColor: {r: 1, g: 0, b: 0, a: 1}
@@ -296,7 +297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2781774652
+  GlobalObjectIdHash: 1489008251
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1

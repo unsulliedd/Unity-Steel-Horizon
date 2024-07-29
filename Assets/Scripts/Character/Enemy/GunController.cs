@@ -31,7 +31,7 @@ public class GunController : NetworkBehaviour
             bulletController.SetTarget(hit.point);
 
             // Lazer çizgisini senkronize bir şekilde çiz
-            DrawLaserClientRpc(hit.point);
+            DrawLaserClient(hit.point);
 
             if (hit.transform.gameObject.CompareTag("Player"))
             {
@@ -42,18 +42,16 @@ public class GunController : NetworkBehaviour
         else
         {
             // Lazer çizgisini hedef olmadan senkronize bir şekilde çiz
-            DrawLaserClientRpc(spawnPoint.position + transform.right * laserRange);
+            DrawLaserClient(spawnPoint.position + transform.right * laserRange);
         }
 
         return false;
     }
 
-    [ClientRpc]
-    private void DrawLaserClientRpc(Vector3 endPoint)
+
+    private void DrawLaserClient(Vector3 endPoint)
     {
-        laserLine.enabled = true;
-        laserLine.SetPosition(0, spawnPoint.position);
-        laserLine.SetPosition(1, endPoint);
+       
         StartCoroutine(ShootLaser());
     }
 
@@ -65,7 +63,7 @@ public class GunController : NetworkBehaviour
 
     private void Update()
     {
-        Debug.DrawRay(spawnPoint.position, transform.right * laserRange, Color.yellow);
+       
 
    
     }
