@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
@@ -30,6 +31,54 @@ public class Weapon : ScriptableObject
     public Quaternion aimRotation;
 
     public Transform muzzleTransform;
+
+    public Sprite weaponIcon;
+
+    [Header("Upgrade Costs")]
+    [SerializeField]
+    private List<UpgradeCost> upgradeCosts;
+
+    public MaterialCost GetUpgradeCost(WeaponRarity currentRarity)
+    {
+        foreach (var upgradeCost in upgradeCosts)
+        {
+            if (upgradeCost.fromRarity == currentRarity)
+                return upgradeCost.cost;
+        }
+        return default;
+    }
+}
+
+[Serializable]
+public struct MaterialCost
+{
+    public int chips;
+    public int cables;
+    public int gears;
+    public int pipes;
+
+    public MaterialCost(int chips, int cables, int gears, int pipes)
+    {
+        this.chips = chips;
+        this.cables = cables;
+        this.gears = gears;
+        this.pipes = pipes;
+    }
+}
+
+[Serializable]
+public struct UpgradeCost
+{
+    public WeaponRarity fromRarity;
+    public WeaponRarity toRarity;
+    public MaterialCost cost;
+
+    public UpgradeCost(WeaponRarity fromRarity, WeaponRarity toRarity, MaterialCost cost)
+    {
+        this.fromRarity = fromRarity;
+        this.toRarity = toRarity;
+        this.cost = cost;
+    }
 }
 
 public struct WeaponData : INetworkSerializable, IEquatable<WeaponData>

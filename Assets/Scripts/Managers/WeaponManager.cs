@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,17 +23,35 @@ public class WeaponManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Equips a weapon by index.
+    /// Equips initial weapon by index.
     /// </summary>
-    public void EquipWeapon(int index)
+    public void EquipInitialWeapon(int index)
+    {
+        EquipWeaponByIndex(index);
+    }
+
+    /// <summary>
+    /// Equips crafted weapon by index.
+    /// </summary>
+    public void EquipCraftedWeapon(string weaponId)
+    {
+        EquipWeaponByID(weaponId);
+    }
+
+    public void EquipWeapon(string weaponId)
+    {
+        EquipWeaponByID(weaponId);
+    }
+
+    public void EquipWeaponByIndex(int index)
     {
         if (index < 0 || index >= weapons.Count) return;
 
+        // Destroy the currently equipped weapon
         if (currentWeapon != null)
-            Destroy(currentWeapon); // Destroy the currently equipped weapon
+            Destroy(currentWeapon);
 
         Weapon weaponToEquip = weapons[index];
-
         // Instantiate the new weapon
         currentWeapon = Instantiate(weaponToEquip.weaponPrefab, weaponHolder);
         // Set the weapon's position and rotation
@@ -45,6 +64,23 @@ public class WeaponManager : MonoBehaviour
         GetMuzzleFlash(weaponToEquip);
     }
 
+    private void EquipWeaponByID(string weaponID)
+    {
+        int index = weapons.FindIndex(w => w.weaponID == weaponID);
+        if (index != -1)
+        {
+            if (playerNetworkManager.IsOwner)
+                playerNetworkManager.currentWeaponIndex.Value = index;
+            else
+                index = playerNetworkManager.currentWeaponIndex.Value;
+
+            playerNetworkManager.EquipWeaponServerRpc(playerNetworkManager.currentWeaponIndex.Value);
+        }
+    }
+
+    /// <summary>
+    /// Equips a weapon by index.
+    /// </summary>
     private void GetMuzzleFlash(Weapon weaponToEquip)
     {
         if (currentMuzzle != null)
@@ -64,36 +100,35 @@ public class WeaponManager : MonoBehaviour
     /// <summary>
     /// Switches to the next weapon in the list.
     /// </summary>
-    public void NextWeapon()
-    {
-        if (playerNetworkManager.IsOwner)
-        {
-            int newIndex = (playerNetworkManager.currentWeaponIndex.Value + 1) % weapons.Count;
-            playerNetworkManager.EquipWeaponServerRpc(newIndex); // Request the server to equip the new weapon
-        }
-    }
+    //public void NextWeapon()
+    //{
+    //    if (playerNetworkManager.IsOwner)
+    //    {
+    //        int newIndex = (playerNetworkManager.currentWeaponIndex.Value + 1) % weapons.Count;
+    //        playerNetworkManager.EquipWeaponServerRpc(newIndex); // Request the server to equip the new weapon
+    //    }
+    //}
 
     /// <summary>
     /// Switches to the previous weapon in the list.
     /// </summary>
-    public void PreviousWeapon()
-    {
-        if (playerNetworkManager.IsOwner)
-        {
-            int newIndex = (playerNetworkManager.currentWeaponIndex.Value - 1 + weapons.Count) % weapons.Count;
-            playerNetworkManager.EquipWeaponServerRpc(newIndex); // Request the server to equip the new weapon
-        }
-    }
+    //public void PreviousWeapon()
+    //{
+    //    if (playerNetworkManager.IsOwner)
+    //    {
+    //        int newIndex = (playerNetworkManager.currentWeaponIndex.Value - 1 + weapons.Count) % weapons.Count;
+    //        playerNetworkManager.EquipWeaponServerRpc(newIndex); // Request the server to equip the new weapon
+    //    }
+    //}
 
     /// <summary>
     /// Gets the currently equipped weapon.
     /// </summary>
-    public GameObject GetCurrentWeapon() => currentWeapon;
+    public GameObject GetCurrentWeaponGameObject() => currentWeapon;
 
     /// <summary>
     /// Gets the muzzle transform of the currently equipped weapon.
     /// </summary>
-    /// <returns>The muzzle transform of the currently equipped weapon.</returns>
     public Transform GetCurrentMuzzle() => currentMuzzle;
 
     /// <summary>
@@ -105,6 +140,15 @@ public class WeaponManager : MonoBehaviour
     /// Gets the index of the currently equipped weapon.
     /// </summary>
     public int GetCurrentWeaponIndex() => playerNetworkManager.currentWeaponIndex.Value;
+
+    public Weapon GetCurrentWeapon()
+    {
+        if (GetCurrentWeaponIndex() >= 0 && GetCurrentWeaponIndex() < weapons.Count)
+        {
+            return weapons[GetCurrentWeaponIndex()];
+        }
+        return null;
+    }
 
     /// <summary>
     /// Updates the networked transform of the equipped weapon.
