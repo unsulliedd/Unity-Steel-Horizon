@@ -3,7 +3,12 @@ using UnityEngine;
 public class PlayerUIManager : MonoBehaviour
 {
     public static PlayerUIManager Instance { get; private set; }
-    [HideInInspector] public PlayerHUDManager playerHUDManager;
+
+    [HideInInspector] public PlayerManager playerManager;
+    public PlayerHUDManager playerHUDManager;
+    public PlayerMenuManager playerMenuManager;
+    public PlayerInventoryMenu_UI playerInventoryUI;
+    public PlayerInfoMenu_UI playerInfoUI;
 
     private void Awake()
     {
@@ -11,7 +16,5 @@ public class PlayerUIManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
-
-        playerHUDManager = GetComponentInChildren<PlayerHUDManager>();
     }
 }

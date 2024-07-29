@@ -35,13 +35,20 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] private Vector2 driveInput;
     public float horizontalDriveInput;
     public float verticalDriveInput;
-    public bool enterVehicleInput;
     public bool brakeVehicleInput;
+
+    [Header("Interaction Input")]
+    public bool interactInput;
 
     [Header("Combat Input")]
     public bool fireInput;
     public bool aimInput;
     public bool combatMode;
+
+    [Header("Player UI Input")]
+    public bool openCharacterMenuInput;
+    public bool openInventoryMenuInput;
+    public bool openSkillMenuInput;
 
     // UI Actions
     [Header("UI Input")]
@@ -78,10 +85,11 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.PlayerMovement.Disable();
         playerControls.PlayerActions.Disable();
         playerControls.PlayerCamera.Disable();
-        playerControls.VehicleControls.Disable();
         playerControls.PlayerCombat.Disable();
+        playerControls.PlayerInteractions.Disable();
+        playerControls.PlayerUI.Disable();
+        playerControls.VehicleControls.Disable();
         playerControls.UI.Enable();
-        playerControls.Interactions.Disable();
 
         AssignMovementInputs();
         AssignActionInputs();
@@ -90,6 +98,7 @@ public class PlayerInputManager : MonoBehaviour
         AssignUIInputs();
         AssignDriveInputs();
         AssignInteractionInputs();
+        AssignPlayerUIInputs();
     }
 
     void OnDestroy()
@@ -132,10 +141,11 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.PlayerCamera.Look.performed += ctx => lookInput = ctx.ReadValue<Vector2>();
         playerControls.PlayerCamera.Look.canceled += ctx => lookInput = Vector2.zero;
     }
+
     private void AssignInteractionInputs()
     {
-        playerControls.Interactions.EnterVehicle.performed += ctx => enterVehicleInput = true;
-        playerControls.Interactions.EnterVehicle.canceled += ctx => enterVehicleInput = false;
+        playerControls.PlayerInteractions.Interact.performed += ctx => interactInput = true;
+        playerControls.PlayerInteractions.Interact.canceled += ctx => interactInput = false;
     }
 
     private void AssignDriveInputs()
@@ -152,6 +162,13 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.PlayerCombat.Aim.performed += ctx => aimInput = true;
         playerControls.PlayerCombat.Aim.canceled += ctx => aimInput = false;
         playerControls.PlayerCombat.CombatMode.performed += ctx => ToggleCombatMode();
+    }
+
+    private void AssignPlayerUIInputs()
+    {
+        playerControls.PlayerUI.OpenMenu.performed += ctx => ToggleOpenCharacterMenu();
+        playerControls.PlayerUI.OpenInventory.performed += ctx => ToggleInventoryMenu();
+        playerControls.PlayerUI.OpenSkills.performed += ctx => ToggleSkillMenu();
     }
 
     // Assign UI Inputs
@@ -187,11 +204,8 @@ public class PlayerInputManager : MonoBehaviour
         else if (moveAmount > 0.5f)
             moveAmount = 1;     // Run
 
-        // No strafe movement
         if (playerManager)
             playerManager.PlayerAnimationManager.MovementAnimations(0, moveAmount, playerManager.PlayerNetworkManager.isSprinting.Value);
-
-        //// TODO: Enemy locked strafe movement
     }
 
     private void HandleLookInput()
@@ -205,6 +219,7 @@ public class PlayerInputManager : MonoBehaviour
         horizontalDriveInput = driveInput.x;
         verticalDriveInput = driveInput.y;
     }
+
     private void HandleDodgeInput()
     {
         if (rollInput)
@@ -217,13 +232,9 @@ public class PlayerInputManager : MonoBehaviour
     private void HandleSprintInput()
     {
         if (sprintInput)
-        {
             playerManager.playerLocomotionManager.HandleSprinting();
-        }
         else if (playerManager != null)
-        {
             playerManager.PlayerNetworkManager.isSprinting.Value = false;
-        }
     }
 
     private void HandleJumpInput()
@@ -252,6 +263,9 @@ public class PlayerInputManager : MonoBehaviour
 
     private void ToggleCombatMode() => combatMode = !combatMode;
 
+    private void ToggleOpenCharacterMenu() => openCharacterMenuInput = !openCharacterMenuInput;
+    private void ToggleInventoryMenu() => openInventoryMenuInput = !openInventoryMenuInput;
+    private void ToggleSkillMenu() => openSkillMenuInput = !openSkillMenuInput;
 
     // Enable/Disable Player Movement Input based on the current scene
     private void OnSceneChanged(Scene oldScene, Scene newScene)
@@ -261,8 +275,9 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerMovement.Enable();
             playerControls.PlayerActions.Enable();
             playerControls.PlayerCamera.Enable();
-            playerControls.Interactions.Enable();
             playerControls.PlayerCombat.Enable();
+            playerControls.PlayerInteractions.Enable();
+            playerControls.PlayerUI.Enable();
             playerControls.UI.Disable();
         }
         else
@@ -270,8 +285,9 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerMovement.Disable();
             playerControls.PlayerActions.Disable();
             playerControls.PlayerCamera.Disable();
-            playerControls.Interactions.Disable();
             playerControls.PlayerCombat.Disable();
+            playerControls.PlayerInteractions.Disable();
+            playerControls.PlayerUI.Disable();
             playerControls.UI.Enable();
         }
     }
@@ -283,13 +299,13 @@ public class PlayerInputManager : MonoBehaviour
         {
             isGamepadActive = true;
             Cursor.visible = false;
-            Debug.Log("Gamepad connected");
+            //Debug.Log("Gamepad connected");
         }
         else if (device is Pointer)
         {
             isGamepadActive = false;
             Cursor.visible = true;
-            Debug.Log("Mouse connected");
+            //Debug.Log("Mouse connected");
         }
     }
 }

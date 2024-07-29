@@ -118,7 +118,7 @@ public class PlayerCombatManager : CharacterCombatManager
     /// </summary>
     private void EnableCurrentWeapon()
     {
-        GameObject currentWeapon = playerManager.WeaponManager.GetCurrentWeapon();
+        GameObject currentWeapon = playerManager.WeaponManager.GetCurrentWeaponGameObject();
         if (currentWeapon != null)
         {
             currentWeapon.SetActive(playerManager.PlayerNetworkManager.isInCombatMode.Value);

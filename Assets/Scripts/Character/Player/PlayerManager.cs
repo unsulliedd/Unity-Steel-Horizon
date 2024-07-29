@@ -9,6 +9,8 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerStatsManager PlayerStatsManager;
     [HideInInspector] public PlayerCombatManager PlayerCombatManager;
     [HideInInspector] public InventoryManager InventoryManager;
+    [HideInInspector] public CraftingManager CraftingManager;
+    public PlayerClass playerClass;
 
     protected override void Awake()
     {
@@ -20,11 +22,15 @@ public class PlayerManager : CharacterManager
         PlayerStatsManager = GetComponent<PlayerStatsManager>();
         PlayerCombatManager = GetComponent<PlayerCombatManager>();
         InventoryManager = GetComponent<InventoryManager>();
+        CraftingManager = GetComponent<CraftingManager>();
     }
 
     protected override void Start()
     {
         base.Start();
+
+        if (IsOwner)
+            InitializePlayerStats();
     }
 
     protected override void Update()
@@ -44,8 +50,8 @@ public class PlayerManager : CharacterManager
 
         if (IsOwner)
         {
-
             StartCoroutine(InitializeSingletons());
+
             // Set the camera to follow the player
             PlayerCamera.Instance.SetCameraFollowAndLookAt(transform);
             PlayerCamera.Instance.Enable3rdPersonCamera();
@@ -53,6 +59,7 @@ public class PlayerManager : CharacterManager
             // Register the player manager to the singletons
             PlayerCamera.Instance.playerManager = this;
             PlayerInputManager.Instance.playerManager = this;
+            PlayerUIManager.Instance.playerManager = this;
             SaveGameManager.Instance.playerManager = this;
 
             // Health
@@ -90,6 +97,17 @@ public class PlayerManager : CharacterManager
         }
     }
 
+    private void InitializePlayerStats()
+    {
+        PlayerNetworkManager.strength.Value = playerClass.baseStrength;
+        PlayerNetworkManager.stamina.Value = playerClass.stamina;
+        PlayerNetworkManager.maxStamina.Value = playerClass.stamina;
+        PlayerNetworkManager.strength.Value = playerClass.baseStrength;
+        PlayerNetworkManager.vitality.Value = playerClass.baseVitality;
+        PlayerNetworkManager.health.Value = playerClass.health;
+        PlayerNetworkManager.luck.Value = playerClass.baseLuck;
+    }
+
     public void SaveCurrentGameData(ref CharacterSaveData currentCharacterData)
     {
         // Ensure PlayerNetworkManager and its characterName are not null
@@ -99,6 +117,8 @@ public class PlayerManager : CharacterManager
             currentCharacterData.positionX = transform.position.x;
             currentCharacterData.positionY = transform.position.y;
             currentCharacterData.positionZ = transform.position.z;
+
+            currentCharacterData.characterClass = playerClass.className;
         }
         else
             Debug.LogError("PlayerNetworkManager or its characterName is null");

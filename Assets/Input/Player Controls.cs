@@ -423,6 +423,124 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ]
         },
         {
+            ""name"": ""Player Interactions"",
+            ""id"": ""b2deccf4-9271-490c-9ced-6571326d5e7f"",
+            ""actions"": [
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""e0a6612a-e4b2-4d56-aedf-14a18387cbb4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""20a67dec-6171-4fb0-8a99-ac698dedd395"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Player UI"",
+            ""id"": ""b220326d-55af-4515-b5be-a94a4e97942d"",
+            ""actions"": [
+                {
+                    ""name"": ""Open Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""5002f30e-129a-4141-a227-520e6e5e38a4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Open Skills"",
+                    ""type"": ""Button"",
+                    ""id"": ""6808e099-15f6-485e-9b40-665181b0442a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Open Menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""61ad064b-8415-4e48-832c-8ddbb5a497bf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""b87e40e9-a6a0-47ab-b588-e394a977b7f0"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Open Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ca47af33-699a-49ca-8b2e-b84669601bdc"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Open Skills"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0e8fd0c7-89ea-4811-8ff9-64d8b6e47283"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Open Skills"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bb18073a-4370-413e-a2fb-42143f2d3636"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Open Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a5d648e5-f5c5-4daf-a068-0f4891aa7af2"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Open Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
             ""name"": ""Vehicle Controls"",
             ""id"": ""078903f2-3b1e-423c-b328-0dabb8d51548"",
             ""actions"": [
@@ -564,34 +682,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Brake"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Interactions"",
-            ""id"": ""b2deccf4-9271-490c-9ced-6571326d5e7f"",
-            ""actions"": [
-                {
-                    ""name"": ""EnterVehicle"",
-                    ""type"": ""Button"",
-                    ""id"": ""e0a6612a-e4b2-4d56-aedf-14a18387cbb4"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""20a67dec-6171-4fb0-8a99-ac698dedd395"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""EnterVehicle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1304,13 +1394,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerCombat_Aim = m_PlayerCombat.FindAction("Aim", throwIfNotFound: true);
         m_PlayerCombat_CombatMode = m_PlayerCombat.FindAction("Combat Mode", throwIfNotFound: true);
         m_PlayerCombat_ChangeWeapon = m_PlayerCombat.FindAction("Change Weapon", throwIfNotFound: true);
+        // Player Interactions
+        m_PlayerInteractions = asset.FindActionMap("Player Interactions", throwIfNotFound: true);
+        m_PlayerInteractions_Interact = m_PlayerInteractions.FindAction("Interact", throwIfNotFound: true);
+        // Player UI
+        m_PlayerUI = asset.FindActionMap("Player UI", throwIfNotFound: true);
+        m_PlayerUI_OpenInventory = m_PlayerUI.FindAction("Open Inventory", throwIfNotFound: true);
+        m_PlayerUI_OpenSkills = m_PlayerUI.FindAction("Open Skills", throwIfNotFound: true);
+        m_PlayerUI_OpenMenu = m_PlayerUI.FindAction("Open Menu", throwIfNotFound: true);
         // Vehicle Controls
         m_VehicleControls = asset.FindActionMap("Vehicle Controls", throwIfNotFound: true);
         m_VehicleControls_Drive = m_VehicleControls.FindAction("Drive", throwIfNotFound: true);
         m_VehicleControls_Brake = m_VehicleControls.FindAction("Brake", throwIfNotFound: true);
-        // Interactions
-        m_Interactions = asset.FindActionMap("Interactions", throwIfNotFound: true);
-        m_Interactions_EnterVehicle = m_Interactions.FindAction("EnterVehicle", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1605,6 +1700,114 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     }
     public PlayerCombatActions @PlayerCombat => new PlayerCombatActions(this);
 
+    // Player Interactions
+    private readonly InputActionMap m_PlayerInteractions;
+    private List<IPlayerInteractionsActions> m_PlayerInteractionsActionsCallbackInterfaces = new List<IPlayerInteractionsActions>();
+    private readonly InputAction m_PlayerInteractions_Interact;
+    public struct PlayerInteractionsActions
+    {
+        private @PlayerControls m_Wrapper;
+        public PlayerInteractionsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Interact => m_Wrapper.m_PlayerInteractions_Interact;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerInteractions; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerInteractionsActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerInteractionsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PlayerInteractionsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerInteractionsActionsCallbackInterfaces.Add(instance);
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
+        }
+
+        private void UnregisterCallbacks(IPlayerInteractionsActions instance)
+        {
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
+        }
+
+        public void RemoveCallbacks(IPlayerInteractionsActions instance)
+        {
+            if (m_Wrapper.m_PlayerInteractionsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPlayerInteractionsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PlayerInteractionsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PlayerInteractionsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PlayerInteractionsActions @PlayerInteractions => new PlayerInteractionsActions(this);
+
+    // Player UI
+    private readonly InputActionMap m_PlayerUI;
+    private List<IPlayerUIActions> m_PlayerUIActionsCallbackInterfaces = new List<IPlayerUIActions>();
+    private readonly InputAction m_PlayerUI_OpenInventory;
+    private readonly InputAction m_PlayerUI_OpenSkills;
+    private readonly InputAction m_PlayerUI_OpenMenu;
+    public struct PlayerUIActions
+    {
+        private @PlayerControls m_Wrapper;
+        public PlayerUIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @OpenInventory => m_Wrapper.m_PlayerUI_OpenInventory;
+        public InputAction @OpenSkills => m_Wrapper.m_PlayerUI_OpenSkills;
+        public InputAction @OpenMenu => m_Wrapper.m_PlayerUI_OpenMenu;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerUI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerUIActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PlayerUIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerUIActionsCallbackInterfaces.Add(instance);
+            @OpenInventory.started += instance.OnOpenInventory;
+            @OpenInventory.performed += instance.OnOpenInventory;
+            @OpenInventory.canceled += instance.OnOpenInventory;
+            @OpenSkills.started += instance.OnOpenSkills;
+            @OpenSkills.performed += instance.OnOpenSkills;
+            @OpenSkills.canceled += instance.OnOpenSkills;
+            @OpenMenu.started += instance.OnOpenMenu;
+            @OpenMenu.performed += instance.OnOpenMenu;
+            @OpenMenu.canceled += instance.OnOpenMenu;
+        }
+
+        private void UnregisterCallbacks(IPlayerUIActions instance)
+        {
+            @OpenInventory.started -= instance.OnOpenInventory;
+            @OpenInventory.performed -= instance.OnOpenInventory;
+            @OpenInventory.canceled -= instance.OnOpenInventory;
+            @OpenSkills.started -= instance.OnOpenSkills;
+            @OpenSkills.performed -= instance.OnOpenSkills;
+            @OpenSkills.canceled -= instance.OnOpenSkills;
+            @OpenMenu.started -= instance.OnOpenMenu;
+            @OpenMenu.performed -= instance.OnOpenMenu;
+            @OpenMenu.canceled -= instance.OnOpenMenu;
+        }
+
+        public void RemoveCallbacks(IPlayerUIActions instance)
+        {
+            if (m_Wrapper.m_PlayerUIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPlayerUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PlayerUIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PlayerUIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PlayerUIActions @PlayerUI => new PlayerUIActions(this);
+
     // Vehicle Controls
     private readonly InputActionMap m_VehicleControls;
     private List<IVehicleControlsActions> m_VehicleControlsActionsCallbackInterfaces = new List<IVehicleControlsActions>();
@@ -1658,52 +1861,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public VehicleControlsActions @VehicleControls => new VehicleControlsActions(this);
-
-    // Interactions
-    private readonly InputActionMap m_Interactions;
-    private List<IInteractionsActions> m_InteractionsActionsCallbackInterfaces = new List<IInteractionsActions>();
-    private readonly InputAction m_Interactions_EnterVehicle;
-    public struct InteractionsActions
-    {
-        private @PlayerControls m_Wrapper;
-        public InteractionsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @EnterVehicle => m_Wrapper.m_Interactions_EnterVehicle;
-        public InputActionMap Get() { return m_Wrapper.m_Interactions; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(InteractionsActions set) { return set.Get(); }
-        public void AddCallbacks(IInteractionsActions instance)
-        {
-            if (instance == null || m_Wrapper.m_InteractionsActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_InteractionsActionsCallbackInterfaces.Add(instance);
-            @EnterVehicle.started += instance.OnEnterVehicle;
-            @EnterVehicle.performed += instance.OnEnterVehicle;
-            @EnterVehicle.canceled += instance.OnEnterVehicle;
-        }
-
-        private void UnregisterCallbacks(IInteractionsActions instance)
-        {
-            @EnterVehicle.started -= instance.OnEnterVehicle;
-            @EnterVehicle.performed -= instance.OnEnterVehicle;
-            @EnterVehicle.canceled -= instance.OnEnterVehicle;
-        }
-
-        public void RemoveCallbacks(IInteractionsActions instance)
-        {
-            if (m_Wrapper.m_InteractionsActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IInteractionsActions instance)
-        {
-            foreach (var item in m_Wrapper.m_InteractionsActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_InteractionsActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public InteractionsActions @Interactions => new InteractionsActions(this);
 
     // UI
     private readonly InputActionMap m_UI;
@@ -1888,14 +2045,20 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnCombatMode(InputAction.CallbackContext context);
         void OnChangeWeapon(InputAction.CallbackContext context);
     }
+    public interface IPlayerInteractionsActions
+    {
+        void OnInteract(InputAction.CallbackContext context);
+    }
+    public interface IPlayerUIActions
+    {
+        void OnOpenInventory(InputAction.CallbackContext context);
+        void OnOpenSkills(InputAction.CallbackContext context);
+        void OnOpenMenu(InputAction.CallbackContext context);
+    }
     public interface IVehicleControlsActions
     {
         void OnDrive(InputAction.CallbackContext context);
         void OnBrake(InputAction.CallbackContext context);
-    }
-    public interface IInteractionsActions
-    {
-        void OnEnterVehicle(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

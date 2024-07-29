@@ -401,6 +401,124 @@
             ]
         },
         {
+            "name": "Player Interactions",
+            "id": "b2deccf4-9271-490c-9ced-6571326d5e7f",
+            "actions": [
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "e0a6612a-e4b2-4d56-aedf-14a18387cbb4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "20a67dec-6171-4fb0-8a99-ac698dedd395",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Player UI",
+            "id": "b220326d-55af-4515-b5be-a94a4e97942d",
+            "actions": [
+                {
+                    "name": "Open Inventory",
+                    "type": "Button",
+                    "id": "5002f30e-129a-4141-a227-520e6e5e38a4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Open Skills",
+                    "type": "Button",
+                    "id": "6808e099-15f6-485e-9b40-665181b0442a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Open Menu",
+                    "type": "Button",
+                    "id": "61ad064b-8415-4e48-832c-8ddbb5a497bf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b87e40e9-a6a0-47ab-b588-e394a977b7f0",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Open Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ca47af33-699a-49ca-8b2e-b84669601bdc",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Open Skills",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0e8fd0c7-89ea-4811-8ff9-64d8b6e47283",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Open Skills",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bb18073a-4370-413e-a2fb-42143f2d3636",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Open Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a5d648e5-f5c5-4daf-a068-0f4891aa7af2",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Open Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
             "name": "Vehicle Controls",
             "id": "078903f2-3b1e-423c-b328-0dabb8d51548",
             "actions": [
@@ -542,34 +660,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Brake",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "Interactions",
-            "id": "b2deccf4-9271-490c-9ced-6571326d5e7f",
-            "actions": [
-                {
-                    "name": "EnterVehicle",
-                    "type": "Button",
-                    "id": "e0a6612a-e4b2-4d56-aedf-14a18387cbb4",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "20a67dec-6171-4fb0-8a99-ac698dedd395",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "EnterVehicle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

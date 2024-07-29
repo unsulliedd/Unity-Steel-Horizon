@@ -22,7 +22,6 @@ public class PlayerNetworkManager : CharacterNetworkManager
     public NetworkVariable<Vector3> weaponPosition = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<Quaternion> weaponRotation = new NetworkVariable<Quaternion>(Quaternion.identity, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
-
     /// <summary>
     /// Initializes references and network lists.
     /// </summary>
@@ -33,7 +32,7 @@ public class PlayerNetworkManager : CharacterNetworkManager
         playerManager = GetComponent<PlayerManager>();
 
         // Initialize the network list for owned weapons
-        ownedWeaponData = new NetworkList<WeaponData>(); 
+        ownedWeaponData = new NetworkList<WeaponData>();
     }
 
     /// <summary>
@@ -42,8 +41,7 @@ public class PlayerNetworkManager : CharacterNetworkManager
     [Rpc(SendTo.Server)]
     public void EquipWeaponServerRpc(int index)
     {
-        currentWeaponIndex.Value = index;   // Update the current weapon index on the server
-        EquipWeaponClientRpc(index);        // Notify clients to equip the weapon
+        EquipWeaponClientRpc(index); // Notify clients to equip the weapon
     }
 
     /// <summary>
@@ -53,7 +51,7 @@ public class PlayerNetworkManager : CharacterNetworkManager
     private void EquipWeaponClientRpc(int index)
     {
         // Equip the weapon locally on clients
-        playerManager.WeaponManager.EquipWeapon(index); 
+        playerManager.WeaponManager.EquipWeaponByIndex(index);
     }
 
     /// <summary>
@@ -63,7 +61,7 @@ public class PlayerNetworkManager : CharacterNetworkManager
     public void AddWeaponServerRpc(WeaponData weaponData)
     {
         ownedWeaponData.Add(weaponData); // Add the weapon data to the network list on the server
-        AddWeaponClientRpc(weaponData);  // Notify clients to add the weapon to their inventory
+        AddWeaponClientRpc(weaponData); // Notify clients to add the weapon to their inventory
     }
 
     /// <summary>
@@ -73,7 +71,21 @@ public class PlayerNetworkManager : CharacterNetworkManager
     private void AddWeaponClientRpc(WeaponData weaponData)
     {
         // Add the weapon to the local inventory on clients
-        playerManager.InventoryManager.OnWeaponAdded(weaponData.weaponID.ToString()); 
+        playerManager.InventoryManager.OnWeaponAdded(weaponData.weaponID.ToString());
+    }
+
+    [Rpc(SendTo.Server)]
+    public void RemoveWeaponServerRpc(WeaponData weaponData)
+    {
+        ownedWeaponData.Remove(weaponData); // Remove the weapon data from the network list on the server
+        RemoveWeaponClientRpc(weaponData); // Notify clients to remove the weapon from their inventory
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void RemoveWeaponClientRpc(WeaponData weaponData)
+    {
+        // Remove the weapon from the local inventory on clients
+        playerManager.InventoryManager.OnWeaponRemoved(weaponData.weaponID.ToString());
     }
 
     /// <summary>
@@ -81,6 +93,7 @@ public class PlayerNetworkManager : CharacterNetworkManager
     /// </summary>
     public override void OnDestroy()
     {
+        ownedWeaponData.Dispose();
         base.OnDestroy();
     }
 }
