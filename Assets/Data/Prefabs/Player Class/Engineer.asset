@@ -36,20 +36,20 @@ MonoBehaviour:
   classInGameImage: {fileID: 21300000, guid: 53cd1c94968eec145b15cb04f9c1b348, type: 3}
   weaponPositions:
   - weaponName: Revolver
-    idlePosition: {x: -0.001702, y: 0.002864, z: 0.000296}
-    idleRotation: {x: 0, y: 0, z: 0, w: 0}
-    aimPosition: {x: 0, y: 0, z: 0}
-    aimRotation: {x: 0, y: 0, z: 0, w: 0}
+    idlePosition: {x: -0.1281, y: 0.2415, z: 0.0011}
+    idleRotation: {x: -0.6006177, y: 0.4811573, z: 0.507285, w: 0.38782477}
+    aimPosition: {x: -0.127, y: 0.219, z: -0.083}
+    aimRotation: {x: -0.6315694, y: 0.61383903, z: 0.3884846, w: 0.27092692}
     scale: {x: 1.25, y: 1.25, z: 1.25}
   - weaponName: TommyGun
-    idlePosition: {x: -0.001702, y: 0.002864, z: 0.000296}
-    idleRotation: {x: 0, y: 0, z: 0, w: 0}
-    aimPosition: {x: 0, y: 0, z: 0}
-    aimRotation: {x: 0, y: 0, z: 0, w: 0}
+    idlePosition: {x: -0.0709, y: 0.1033, z: 0.0157}
+    idleRotation: {x: -0.6041907, y: 0.48612797, z: 0.50156033, w: 0.38349771}
+    aimPosition: {x: -0.061, y: 0.114, z: 0.009}
+    aimRotation: {x: -0.57450306, y: 0.5849687, z: 0.4483984, w: 0.35594505}
     scale: {x: 1.25, y: 1.25, z: 1.25}
   - weaponName: CrossGun
-    idlePosition: {x: -0.001702, y: 0.002864, z: 0.000296}
-    idleRotation: {x: 0, y: 0, z: 0, w: 0}
-    aimPosition: {x: 0, y: 0, z: 0}
-    aimRotation: {x: 0, y: 0, z: 0, w: 0}
+    idlePosition: {x: -0.069, y: 0.0978, z: 0.0162}
+    idleRotation: {x: -0.57837933, y: 0.46922058, z: 0.53083843, w: 0.404376}
+    aimPosition: {x: -0.06, y: 0.085, z: 0.023}
+    aimRotation: {x: -0.5854491, y: 0.59753335, z: 0.44448733, w: 0.32036585}
     scale: {x: 1.25, y: 1.25, z: 1.25}

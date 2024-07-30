@@ -2418,7 +2418,7 @@ MonoBehaviour:
   PlayerCombatManager: {fileID: 1040579519175565525}
   InventoryManager: {fileID: 0}
   CraftingManager: {fileID: 0}
-  playerClass: {fileID: 11400000, guid: 6dd64948a7607b44e9190d12b1de7698, type: 2}
+  playerClass: {fileID: 11400000, guid: b3d4f8ea579b6dc41ab6c50708bdf74e, type: 2}
 --- !u!114 &307008755928434001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2502,13 +2502,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapons:
+  - {fileID: 11400000, guid: d131f5f239faf7149a026070741cbda9, type: 2}
   - {fileID: 11400000, guid: 7f3382e286c8e1f409798eac945316f7, type: 2}
   - {fileID: 11400000, guid: de51d8a72644b9f40995e6f5a7415a9c, type: 2}
   - {fileID: 11400000, guid: eb0bb12ae2b15c74ebdb38162738eeae, type: 2}
   - {fileID: 11400000, guid: 2fa0744f2c7da89479ec0d12bcd20363, type: 2}
   - {fileID: 11400000, guid: e5a54a3f9aa47834886f249a37586755, type: 2}
   - {fileID: 11400000, guid: 3a22037bbb5145a4e93900fbedb91784, type: 2}
-  - {fileID: 11400000, guid: d131f5f239faf7149a026070741cbda9, type: 2}
   weaponHolder: {fileID: 1647793174159766167}
 --- !u!114 &3369281100218138181
 MonoBehaviour:
@@ -2540,7 +2540,7 @@ MonoBehaviour:
   aimLayerMask:
     serializedVersion: 2
     m_Bits: 192
-  aimRifleRig: {fileID: 0}
+  aimRifleRig: {fileID: 1375761974064312782}
   aimConstraintSource: {fileID: 102520571942739511}
 --- !u!114 &560611108351702078
 MonoBehaviour:
