@@ -27,7 +27,7 @@ public class CharacterNetworkManager : NetworkBehaviour
     public NetworkVariable<bool> isSprinting = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<bool> isJumping = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
-    [Header("Stats")]
+    [Header("StatsStamina")]
     public NetworkVariable<float> stamina = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<int> maxStamina = new NetworkVariable<int>(100, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<int> strength = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -46,6 +46,22 @@ public class CharacterNetworkManager : NetworkBehaviour
     protected virtual void Awake()
     {
         characterManager = GetComponent<CharacterManager>();
+    }
+
+    public void CheckHPDeath(int oldValue, int newValue)
+    {
+        if (currentHealth.Value <= 0)
+        {
+            StartCoroutine(characterManager.ProcessDeathEvent());
+        }
+
+        if (characterManager.IsOwner)
+        {
+            if (currentHealth.Value > maxHealth.Value)
+            {
+                currentHealth.Value = maxHealth.Value;
+            }
+        }
     }
 
     public void UpdateNetworkAnimationParams(float vertical, float horizontal, float moveAmount, float inAirTimer, bool isGrounded)

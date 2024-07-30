@@ -18,4 +18,10 @@ public class CharacterSaveData
     [Header("Character Stats")]
     public int totalDeaths;
     public int totalEnemiesKilled;
+
+    [Header("PlayerStats")] 
+    public int vitality;
+    public int strenght;
+    public int currentHealth;
+    public float currentStamina;
 }

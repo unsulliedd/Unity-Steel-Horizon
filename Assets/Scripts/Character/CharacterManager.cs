@@ -5,9 +5,15 @@ using UnityEngine;
 
 public class CharacterManager : NetworkBehaviour
 {
+    [Header("Status")] public NetworkVariable<bool> isDead = new NetworkVariable<bool>(false,
+        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    
     public Animator Animator { get; private set; }
     public CharacterController CharacterController { get; private set; }
+    public CharacterEffectsManager characterEffectsManager { get; private set; }
     public CharacterNetworkManager CharacterNetworkManager { get; private set; }
+    
+    public CharacterAnimationManager characterAnimationManager { get; private set; }
     public WeaponManager WeaponManager { get; private set; }
 
     [Header("Flags")]
@@ -24,6 +30,8 @@ public class CharacterManager : NetworkBehaviour
         Animator = GetComponent<Animator>();
         CharacterController = GetComponent<CharacterController>();
         CharacterNetworkManager = GetComponent<CharacterNetworkManager>();
+        characterEffectsManager = GetComponent<CharacterEffectsManager>();
+        characterAnimationManager = GetComponent<CharacterAnimationManager>();
         WeaponManager = GetComponent<WeaponManager>();
     }
 
@@ -55,5 +63,26 @@ public class CharacterManager : NetworkBehaviour
 
             transform.SetPositionAndRotation(smoothPosition, smoothRotation);
         }
+    }
+
+    public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation=false)
+    {
+        if (IsOwner)
+        {
+            CharacterNetworkManager.currentHealth.Value = 0;
+            isDead.Value = true;
+        }
+        Debug.Log("ÖLDÜM KARDEŞ");
+        if (!manuallySelectDeathAnimation)
+        {
+           // characterAnimationManager.PlayTargetAnimation("Dead_01",true);
+        }
+
+        yield return new WaitForSeconds(5);
+    }
+
+    public virtual void ReviveCharacter()
+    {
+        
     }
 }

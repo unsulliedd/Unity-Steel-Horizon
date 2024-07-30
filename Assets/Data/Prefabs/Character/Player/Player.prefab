@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 2698194475017017999}
   - component: {fileID: 2240261004197710123}
   - component: {fileID: 7215991774184057594}
+  - component: {fileID: 5115397442697797928}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -136,6 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f14db1e17bd374049999b8efe4a43088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDead:
+    m_InternalValue: 0
   isPerformingAction: 0
   isGrounded: 1
   applyRootMotion: 0
@@ -322,7 +325,7 @@ MonoBehaviour:
     m_InternalValue: 100
   strength:
     m_InternalValue: 1
-  health:
+  currentHealth:
     m_InternalValue: 0
   maxHealth:
     m_InternalValue: 100
@@ -562,6 +565,18 @@ MonoBehaviour:
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
     m_Visible: 1
+--- !u!114 &5115397442697797928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107434631492608830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c629c27e212a2f146ba6c802df70242b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &131903019602639932
 GameObject:
   m_ObjectHideFlags: 0
