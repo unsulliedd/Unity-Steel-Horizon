@@ -12,6 +12,7 @@ public class WeaponManager : MonoBehaviour
     private GameObject currentWeapon; // Currently equipped weapon GameObject
     private Transform currentMuzzle; // Transform of the current weapon's muzzle
     private ParticleSystem muzzleFlashParticle; // Particle system for the muzzle flash
+    private PlayerManager playerManager; // Reference to the PlayerManager
     private PlayerNetworkManager playerNetworkManager; // Reference to the PlayerNetworkManager
 
     /// <summary>
@@ -19,6 +20,7 @@ public class WeaponManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        playerManager = GetComponent<PlayerManager>();
         playerNetworkManager = GetComponent<PlayerNetworkManager>();
     }
 
@@ -55,8 +57,17 @@ public class WeaponManager : MonoBehaviour
         // Instantiate the new weapon
         currentWeapon = Instantiate(weaponToEquip.weaponPrefab, weaponHolder);
         // Set the weapon's position and rotation
-        currentWeapon.transform.SetLocalPositionAndRotation(weaponToEquip.idlePosition, weaponToEquip.idleRotation);
-        currentWeapon.transform.localScale = new Vector3(0.015f, 0.015f, 0.015f);
+        if (playerManager.playerClass.TryGetWeaponPosition(weaponToEquip.weaponBaseName, out WeaponPosition weaponPosition))
+        {
+            currentWeapon.transform.SetLocalPositionAndRotation(weaponPosition.idlePosition, weaponPosition.idleRotation);
+            currentWeapon.transform.localScale = weaponPosition.scale;
+        }
+        else
+        {
+            Debug.LogWarning("Weapon position not found for weapon: " + weaponToEquip.weaponBaseName);
+        }
+
+        //currentWeapon.transform.localScale = new Vector3(0.015f, 0.015f, 0.015f);
         // Get the muzzle
         GetMuzzle(weaponToEquip);
 

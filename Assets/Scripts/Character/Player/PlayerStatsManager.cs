@@ -15,19 +15,24 @@ public class PlayerStatsManager : CharacterStatsManager
         playerManager = GetComponent<PlayerManager>();
     }
 
-    // Start is called before the first frame update
     override protected void Start()
     {
         base.Start();
+
         CalculateHealthBasedOnVitalityLevel(playerManager.PlayerNetworkManager.vitality.Value);
         CalculateStaminaBasedOnStrength(playerManager.PlayerNetworkManager.strength.Value);
     }
 
-    // Update is called once per frame
     override protected void Update()
     {
         base.Update();
         RegenerateStamina();
+    }
+
+    public int CalculateHealthBasedOnVitalityLevel(int vitality)
+    {
+        int health = 90 + (vitality * 10); // Base stamina is 100 plus 10 per strength point
+        return Mathf.RoundToInt(health);
     }
 
     // Calculates stamina based on the strength attribute
@@ -69,10 +74,5 @@ public class PlayerStatsManager : CharacterStatsManager
     {         
         if (previousStamina < currentStamina)
             staminaRegenTimer = 0;
-    }
-    public int CalculateHealthBasedOnVitalityLevel(int vitality)
-    {
-        int health = 90 + (vitality * 10); // Base stamina is 100 plus 10 per strength point
-        return Mathf.RoundToInt(health);
     }
 }

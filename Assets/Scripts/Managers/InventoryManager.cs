@@ -21,6 +21,8 @@ public class InventoryManager : MonoBehaviour
     public int gears = 0; // Number of gears
     public int pipes = 0; // Number of pipes
 
+    public int ammo = 60;
+
     public event Action OnInventoryUpdated; // Event triggered when the inventory is updated
 
 

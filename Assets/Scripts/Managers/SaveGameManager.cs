@@ -32,6 +32,7 @@ public class SaveGameManager : MonoBehaviour
     public static SaveGameManager Instance { get; private set; } // Singleton instance of SaveGameManager
 
     public AsyncOperation WorldSceneOperation { get; private set; } // AsyncOperation for world scene
+    public PlayerClass playerClass;
 
     private void Awake()
     {
@@ -89,9 +90,19 @@ public class SaveGameManager : MonoBehaviour
                 currentCharacterSlot = slot;
                 currentCharacterData = new CharacterSaveData
                 {
-                    characterName = "Character",
+                    characterName = "Player",
                     characterClass = null,
-                    characterLevel = 1
+                    characterLevel = 1,
+                    //characterName = playerClass.name,
+                    //characterClass = playerClass.className,
+                    //characterLevel = 1,
+                    ////positionX = 0,
+                    ////positionY = 0,
+                    ////positionZ = 0,
+                    //currentHealth = playerClass.health,
+                    //currentStamina = playerClass.stamina,
+                    //vitality = playerClass.baseVitality,
+                    //strenght = playerClass.baseStrength,
                 };
 
                 // Create a new save file for the character

@@ -5,15 +5,12 @@ using UnityEngine;
 
 public class CharacterManager : NetworkBehaviour
 {
-    [Header("Status")] public NetworkVariable<bool> isDead = new NetworkVariable<bool>(false,
-        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    
     public Animator Animator { get; private set; }
     public CharacterController CharacterController { get; private set; }
-    public CharacterEffectsManager characterEffectsManager { get; private set; }
     public CharacterNetworkManager CharacterNetworkManager { get; private set; }
+    public CharacterAnimationManager CharacterAnimationManager { get; private set; }
+    public CharacterEffectsManager CharacterEffectsManager { get; private set; }
     
-    public CharacterAnimationManager characterAnimationManager { get; private set; }
     public WeaponManager WeaponManager { get; private set; }
 
     [Header("Flags")]
@@ -23,6 +20,8 @@ public class CharacterManager : NetworkBehaviour
     public bool canMove = true;
     public bool canRotate = true;
 
+    public bool IsDead => CharacterNetworkManager.isDead.Value;
+
     protected virtual void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -30,8 +29,8 @@ public class CharacterManager : NetworkBehaviour
         Animator = GetComponent<Animator>();
         CharacterController = GetComponent<CharacterController>();
         CharacterNetworkManager = GetComponent<CharacterNetworkManager>();
-        characterEffectsManager = GetComponent<CharacterEffectsManager>();
-        characterAnimationManager = GetComponent<CharacterAnimationManager>();
+        CharacterAnimationManager = GetComponent<CharacterAnimationManager>();
+        CharacterEffectsManager = GetComponent<CharacterEffectsManager>();
         WeaponManager = GetComponent<WeaponManager>();
     }
 
@@ -42,6 +41,8 @@ public class CharacterManager : NetworkBehaviour
 
     protected virtual void Update()
     {
+        if (IsDead) return;
+
         //If the player is the owner of the character, then update the network position
         if (IsOwner)
         {
@@ -69,13 +70,12 @@ public class CharacterManager : NetworkBehaviour
     {
         if (IsOwner)
         {
-            CharacterNetworkManager.currentHealth.Value = 0;
-            isDead.Value = true;
+            CharacterNetworkManager.health.Value = 0;
+            CharacterNetworkManager.isDead.Value = true;
         }
-        Debug.Log("ÖLDÜM KARDEŞ");
         if (!manuallySelectDeathAnimation)
         {
-           // characterAnimationManager.PlayTargetAnimation("Dead_01",true);
+           CharacterAnimationManager.PlayTargetAnimation("Death", true);
         }
 
         yield return new WaitForSeconds(5);

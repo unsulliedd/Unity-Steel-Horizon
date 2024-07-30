@@ -64,22 +64,18 @@ public class PlayerManager : CharacterManager
             PlayerUIManager.Instance.playerManager = this;
             SaveGameManager.Instance.playerManager = this;
 
+            // Update stats when they change
+            PlayerNetworkManager.vitality.OnValueChanged += PlayerNetworkManager.SetNewHealthValue;
+            PlayerNetworkManager.strength.OnValueChanged += PlayerNetworkManager.SetNewStaminaValue;
 
             // Health
-            PlayerNetworkManager.vitality.OnValueChanged += PlayerNetworkManager.SetNewHealthValue;
-            PlayerNetworkManager.currentHealth.OnValueChanged += PlayerUIManager.Instance.playerHUDManager.SetNewHealthValue;
-            PlayerNetworkManager.maxHealth.Value = PlayerStatsManager.CalculateHealthBasedOnVitalityLevel(PlayerNetworkManager.vitality.Value);
-            PlayerNetworkManager.currentHealth.Value = PlayerStatsManager.CalculateHealthBasedOnVitalityLevel(PlayerNetworkManager.vitality.Value);
-            PlayerUIManager.Instance.playerHUDManager.SetMaxHealthValue(PlayerNetworkManager.maxHealth.Value);
-            PlayerNetworkManager.currentHealth.OnValueChanged += PlayerNetworkManager.CheckHPDeath;
+            PlayerNetworkManager.health.OnValueChanged += PlayerUIManager.Instance.playerHUDManager.SetNewHealthValue;
+            
+
             // Stamina
-            PlayerNetworkManager.strength.OnValueChanged += PlayerNetworkManager.SetNewStaminaValue;
             PlayerNetworkManager.stamina.OnValueChanged += PlayerUIManager.Instance.playerHUDManager.SetNewStaminaValue;
             PlayerNetworkManager.stamina.OnValueChanged += PlayerStatsManager.ResetStaminaTimer;
-            PlayerNetworkManager.maxStamina.Value = PlayerStatsManager.CalculateStaminaBasedOnStrength(PlayerNetworkManager.strength.Value);
-            PlayerNetworkManager.stamina.Value = PlayerStatsManager.CalculateStaminaBasedOnStrength(PlayerNetworkManager.strength.Value);
 
-            PlayerUIManager.Instance.playerHUDManager.SetMaxStaminaValue(PlayerNetworkManager.maxStamina.Value);
 
             SaveGameCallbacks.OnSaveGame += SaveCurrentGameData;
             SaveGameCallbacks.OnLoadGame += LoadCurrentGameData;
@@ -88,6 +84,9 @@ public class PlayerManager : CharacterManager
             if (IsOwner && !IsServer)
                 LoadCurrentGameData(ref SaveGameManager.Instance.currentCharacterData);
         }
+
+        PlayerNetworkManager.health.OnValueChanged += PlayerNetworkManager.CheckHPDeath;
+
     }
 
     private IEnumerator InitializeSingletons()
@@ -100,10 +99,9 @@ public class PlayerManager : CharacterManager
         base.ReviveCharacter();
         if (IsOwner)
         {
-            isDead.Value = false;
-            PlayerNetworkManager.currentHealth.Value = PlayerNetworkManager.maxHealth.Value;
+            PlayerNetworkManager.isDead.Value = false;
+            PlayerNetworkManager.health.Value = PlayerNetworkManager.maxHealth.Value;
             PlayerNetworkManager.stamina.Value = PlayerNetworkManager.maxStamina.Value;
-            Debug.Log("doğdum ab");
         }
     }
 
@@ -127,13 +125,11 @@ public class PlayerManager : CharacterManager
         PlayerNetworkManager.vitality.Value = playerClass.baseVitality;
         PlayerNetworkManager.health.Value = playerClass.health;
         PlayerNetworkManager.luck.Value = playerClass.baseLuck;
+    }
+
     public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
     {
         return base.ProcessDeathEvent(manuallySelectDeathAnimation);
-        if (IsOwner)
-        {
-
-        }
     }
 
     private void DebugMenu()
@@ -146,7 +142,6 @@ public class PlayerManager : CharacterManager
     }
 
     public void SaveCurrentGameData(ref CharacterSaveData currentCharacterData)
-
     {
         // Ensure PlayerNetworkManager and its characterName are not null
         if (PlayerNetworkManager != null)
@@ -157,10 +152,20 @@ public class PlayerManager : CharacterManager
             currentCharacterData.positionZ = transform.position.z;
 
             currentCharacterData.characterClass = playerClass.className;
+
             currentCharacterData.vitality = PlayerNetworkManager.vitality.Value;
             currentCharacterData.strenght = PlayerNetworkManager.strength.Value;
-            currentCharacterData.currentHealth = PlayerNetworkManager.currentHealth.Value;
+
+            currentCharacterData.currentHealth = PlayerNetworkManager.health.Value;
             currentCharacterData.currentStamina = PlayerNetworkManager.stamina.Value;
+
+            currentCharacterData.ownedWeapons = InventoryManager.ownedWeapons;
+            currentCharacterData.ownedAmmo = InventoryManager.ammo;
+            currentCharacterData.ownedJunkAmount = InventoryManager.junkAmount;
+            currentCharacterData.ownedChipAmount = InventoryManager.chips;
+            currentCharacterData.ownedGearAmount = InventoryManager.gears;
+            currentCharacterData.ownedCableAmount = InventoryManager.cables;
+            currentCharacterData.ownedPipeAmount = InventoryManager.pipes;
         }
         else
             Debug.LogError("PlayerNetworkManager or its characterName is null");
@@ -170,15 +175,25 @@ public class PlayerManager : CharacterManager
     {
         PlayerNetworkManager.characterName.Value = currentCharacterData.characterName;
         transform.position = new Vector3(currentCharacterData.positionX, currentCharacterData.positionY, currentCharacterData.positionZ);
+
         PlayerNetworkManager.vitality.Value = currentCharacterData.vitality;
         PlayerNetworkManager.strength.Value = currentCharacterData.strenght;
-        PlayerNetworkManager.maxHealth.Value =
-            PlayerStatsManager.CalculateHealthBasedOnVitalityLevel(PlayerNetworkManager.vitality.Value);
-        PlayerNetworkManager.maxStamina.Value =
-            PlayerStatsManager.CalculateStaminaBasedOnStrength(PlayerNetworkManager.strength.Value);
-        PlayerNetworkManager.currentHealth.Value = currentCharacterData.currentHealth;
-        PlayerNetworkManager.stamina.Value =
-            currentCharacterData.currentStamina;
+
+        PlayerNetworkManager.maxHealth.Value = PlayerStatsManager.CalculateHealthBasedOnVitalityLevel(PlayerNetworkManager.vitality.Value);
+        PlayerNetworkManager.maxStamina.Value = PlayerStatsManager.CalculateStaminaBasedOnStrength(PlayerNetworkManager.strength.Value);
+
+        PlayerNetworkManager.health.Value = PlayerNetworkManager.health.Value;
+        PlayerNetworkManager.stamina.Value = PlayerNetworkManager.stamina.Value;
+
+        PlayerUIManager.Instance.playerHUDManager.SetMaxHealthValue(PlayerNetworkManager.maxHealth.Value);
         PlayerUIManager.Instance.playerHUDManager.SetMaxStaminaValue(PlayerNetworkManager.maxStamina.Value);
+
+        InventoryManager.ownedWeapons = currentCharacterData.ownedWeapons;
+        InventoryManager.ammo = currentCharacterData.ownedAmmo;
+        InventoryManager.junkAmount = currentCharacterData.ownedJunkAmount;
+        InventoryManager.chips = currentCharacterData.ownedChipAmount;
+        InventoryManager.gears = currentCharacterData.ownedGearAmount;
+        InventoryManager.cables = currentCharacterData.ownedCableAmount;
+        InventoryManager.pipes = currentCharacterData.ownedPipeAmount;
     }
 }

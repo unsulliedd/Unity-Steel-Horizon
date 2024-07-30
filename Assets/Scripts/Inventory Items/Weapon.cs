@@ -17,6 +17,7 @@ public enum WeaponRarity
 public class Weapon : ScriptableObject
 {
     public string weaponID;
+    public string weaponBaseName;
     public string weaponName;
     public GameObject weaponPrefab;
     public float fireRate;

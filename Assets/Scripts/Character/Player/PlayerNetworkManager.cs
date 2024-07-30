@@ -91,7 +91,7 @@ public class PlayerNetworkManager : CharacterNetworkManager
     public void SetNewHealthValue(int oldValue, int newValue)
     {
         maxHealth.Value = playerManager.PlayerStatsManager.CalculateHealthBasedOnVitalityLevel(newValue);
-        currentHealth.Value = maxHealth.Value;
+        health.Value = maxHealth.Value;
     }
     public void SetNewStaminaValue(int oldValue, int newValue)
     {

@@ -13,13 +13,9 @@ public class UGS_Analytics : MonoBehaviour
     private void Awake()
     {
         if (Instance == null)
-        {
             Instance = this;
-        }
         else
-        {
             Destroy(gameObject);
-        }
     }
     async void Start()
     {

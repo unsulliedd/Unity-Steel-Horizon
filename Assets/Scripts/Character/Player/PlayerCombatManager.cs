@@ -48,6 +48,8 @@ public class PlayerCombatManager : CharacterCombatManager
     {
         base.Update();
 
+        if (playerManager.IsDead) return;
+
         GetCombatInputs();                  // Get inputs for combat actions
         UpdateNetworkCombatModeState();     // Update combat mode state over the network
         UpdateNetworkAnimationRigging();    // Update animation rigging over the network

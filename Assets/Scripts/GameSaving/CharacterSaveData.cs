@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -15,13 +16,22 @@ public class CharacterSaveData
     public float positionY;
     public float positionZ;
 
-    [Header("Character Stats")]
-    public int totalDeaths;
-    public int totalEnemiesKilled;
-
-    [Header("PlayerStats")] 
-    public int vitality;
-    public int strenght;
+    [Header("Stats")] 
     public int currentHealth;
     public float currentStamina;
+    public int vitality;
+    public int strenght;
+
+    [Header("Inventory")]
+    public List<Weapon> ownedWeapons;
+    public int ownedJunkAmount;
+    public int ownedAmmo;
+    public int ownedChipAmount;
+    public int ownedGearAmount;
+    public int ownedCableAmount;
+    public int ownedPipeAmount;
+
+    [Header("Kill Records")]
+    public int totalDeaths;
+    public int totalEnemiesKilled;
 }

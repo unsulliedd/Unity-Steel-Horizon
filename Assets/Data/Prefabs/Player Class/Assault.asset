@@ -16,7 +16,7 @@ MonoBehaviour:
   classDescription: 
   health: 100
   stamina: 100
-  healthRegenAmounth: 10
+  healthRegenAmount: 0
   staminaRegenAmount: 10
   baseDamage: 2
   baseArmor: 50
@@ -34,3 +34,22 @@ MonoBehaviour:
   abilityEffect: 0
   classIcon: {fileID: 0}
   classInGameImage: {fileID: 21300000, guid: 53cd1c94968eec145b15cb04f9c1b348, type: 3}
+  weaponPositions:
+  - weaponName: Revolver
+    idlePosition: {x: -0.001702, y: 0.002864, z: 0.000296}
+    idleRotation: {x: -0.56256676, y: 0.46522683, z: 0.5477852, w: 0.40867338}
+    aimPosition: {x: -0.0012, y: 0.002, z: -0.000951}
+    aimRotation: {x: -0.6443509, y: 0.6554024, z: 0.31134182, w: 0.24150781}
+    scale: {x: 0.015, y: 0.015, z: 0.015}
+  - weaponName: TommyGun
+    idlePosition: {x: -0.001702, y: 0.002864, z: 0.000296}
+    idleRotation: {x: 0, y: 0, z: 0, w: 0}
+    aimPosition: {x: 0, y: 0, z: 0}
+    aimRotation: {x: 0, y: 0, z: 0, w: 0}
+    scale: {x: 1, y: 1, z: 1}
+  - weaponName: CrossGun
+    idlePosition: {x: -0.001702, y: 0.002864, z: 0.000296}
+    idleRotation: {x: 0, y: 0, z: 0, w: 0}
+    aimPosition: {x: 0, y: 0, z: 0}
+    aimRotation: {x: 0, y: 0, z: 0, w: 0}
+    scale: {x: 1, y: 1, z: 1}

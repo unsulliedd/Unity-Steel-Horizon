@@ -29,7 +29,7 @@ public class TakeDamageEffect : InstantCharacterEffect
     {
      
         base.ProcessEffect(character);
-       if(character.isDead.Value)
+       if(character.CharacterNetworkManager.isDead.Value)
            return;
         CalculateDamage(character);
     }
@@ -50,7 +50,7 @@ public class TakeDamageEffect : InstantCharacterEffect
                 finalDamageDealt = 1;
             }
 
-            character.CharacterNetworkManager.currentHealth.Value -= finalDamageDealt;
+            character.CharacterNetworkManager.health.Value -= finalDamageDealt;
         }
     }
 }

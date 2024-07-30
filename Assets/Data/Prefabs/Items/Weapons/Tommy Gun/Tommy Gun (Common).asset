@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Tommy Gun (Common)
   m_EditorClassIdentifier: 
   weaponID: 000301
+  weaponBaseName: TommyGun
   weaponName: Tommy Gun (Common)
   weaponPrefab: {fileID: 1078584457682286906, guid: 219248e34de4e5241b05f639f93b36c4,
     type: 3}
@@ -26,3 +27,5 @@ MonoBehaviour:
   aimPosition: {x: -0.00064, y: 0.00089, z: 0.00009}
   aimRotation: {x: -0.6243327, y: 0.65636843, z: 0.32341868, w: 0.27347675}
   muzzleTransform: {fileID: 0}
+  weaponIcon: {fileID: 0}
+  upgradeCosts: []
