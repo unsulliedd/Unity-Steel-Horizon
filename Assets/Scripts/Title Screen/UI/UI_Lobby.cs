@@ -163,7 +163,7 @@ public class UI_Lobby : MonoBehaviour
         {
             GameObject playerItem = Instantiate(playerListItemPrefab, playersListParent);
             var playerListItem = playerItem.GetComponent<UI_LobbyPlayerListItem>();
-            playerListItem.SetPlayerInfo(player.Id, player.Data["displayName"].Value);
+            playerListItem.SetPlayerInfo(player.Id);
         }
     }
 
@@ -171,5 +171,12 @@ public class UI_Lobby : MonoBehaviour
     {
         createLobbyPanel.SetActive(true);
         lobbyDetailsPanel.SetActive(false);
+    }
+
+    public async void ExitLobby()
+    {
+        await LobbyManager.Instance.LeaveLobby();
+        ClearLobbyDetails();
+        listLobbiesButton.onClick.Invoke();
     }
 }

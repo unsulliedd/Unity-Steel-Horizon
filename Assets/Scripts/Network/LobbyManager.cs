@@ -189,10 +189,8 @@ public class LobbyManager : MonoBehaviour
                 await LobbyService.Instance.RemovePlayerAsync(currentLobby.Id, AuthenticationService.Instance.PlayerId);
                 currentLobby = null;
                 Debug.Log("Left the lobby.");
-
                 if (currentLobbyEvents != null)
                 {
-                    await currentLobbyEvents.UnsubscribeAsync();
                     currentLobbyEvents = null;
                 }
             }
