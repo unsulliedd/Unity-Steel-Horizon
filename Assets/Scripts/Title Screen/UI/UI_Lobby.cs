@@ -98,9 +98,10 @@ public class UI_Lobby : MonoBehaviour
             return;
         }
 
-        for (int i = 1; i < lobbyListParent.childCount; i++)
+        // Clear the lobby list
+        foreach (Transform child in lobbyListParent)
         {
-            Destroy(lobbyListParent.GetChild(i).gameObject);
+            Destroy(child.gameObject);
         }
 
         Lobby currentLobby = LobbyManager.Instance.GetCurrentLobby();
@@ -131,7 +132,13 @@ public class UI_Lobby : MonoBehaviour
                 Debug.LogWarning($"Lobby {lobby.Name} has no description.");
             }
 
-            lobbyListItem.SetLobbyInfo(lobby.Name, description, lobby.Players.Count, lobby.MaxPlayers);
+            int playerCount = lobby.Players.Count;
+            if (currentLobby != null && currentLobby.Id == lobby.Id)
+            {
+                playerCount = Mathf.Max(playerCount, 1); // Ensure at least one player (the host) is counted
+            }
+
+            lobbyListItem.SetLobbyInfo(lobby.Name, description, playerCount, lobby.MaxPlayers);
 
             Button joinButton = lobbyListItem.GetComponentInChildren<Button>();
             joinButton.onClick.AddListener(async () =>
@@ -152,6 +159,7 @@ public class UI_Lobby : MonoBehaviour
             }
         }
     }
+
 
     public void UpdateLobbyDetails(Lobby lobby)
     {
