@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class LobbyListItem : MonoBehaviour
+public class UI_LobbyListItem : MonoBehaviour
 {
     public TextMeshProUGUI lobbyNameText;
     public TextMeshProUGUI lobbyDescriptionText;

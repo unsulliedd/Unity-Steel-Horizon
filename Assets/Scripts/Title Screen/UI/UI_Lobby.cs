@@ -114,7 +114,7 @@ public class UI_Lobby : MonoBehaviour
             }
 
             GameObject listItem = Instantiate(lobbyListItemPrefab, lobbyListParent);
-            var lobbyListItem = listItem.GetComponent<LobbyListItem>();
+            var lobbyListItem = listItem.GetComponent<UI_LobbyListItem>();
             if (lobbyListItem == null)
             {
                 Debug.LogError("LobbyListItem component not found on lobbyListItemPrefab.");

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using Unity.Services.Authentication;
+using Unity.Services.Core;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class LobbyManager : MonoBehaviour
 
     private async void Start()
     {
+        await UnityServices.InitializeAsync();
         if (LobbyService.Instance != null)
         {
             // Register event handlers
@@ -71,12 +73,14 @@ public class LobbyManager : MonoBehaviour
             currentLobby = null;
             Debug.Log("Lobby has been deleted.");
             UI_Lobby.Instance.ClearLobbyDetails();
+            UI_Lobby.Instance.listLobbiesButton.onClick.Invoke();
         }
         else
         {
             changes.ApplyToLobby(currentLobby);
             Debug.Log("Lobby changes applied.");
             UI_Lobby.Instance.UpdateLobbyDetails(currentLobby);
+            UI_Lobby.Instance.listLobbiesButton.onClick.Invoke();
         }
     }
 
