@@ -189,8 +189,90 @@ Steel Horizon, 4 oyuncunun birlikte açık dünya içerisinde çeşitli görevle
 -Bu sprint ekip olarak birbirimize karşı daha samimi ve yardımcı biçimede yaklaştık.Tekil olarak çalışmaktan ziyade birbirimizle aktif iletişimde kalarak bütün sorunları çözmeye odaklandık.
 
 
+## Sprint 3
 
+- **Sprint içi puan değerlendirmesi** 106 olarak belirlenmiştir.
+- **İkinci Sprint için bitirilmesi istenilen puan sayısı** 106 olarak belirlenmiştir ve istenilen hedefe … oranında hedefler gerçekleştirilmiştir.
+- SS1
+- SS2
 
+## Sprint Review
+
+- **Loading Screen:** Yükleme ekranı başarıyla eklendi ve optimize edildi, kullanıcı deneyimi iyileştirildi.
+- **Health & Damage System:** Sağlık ve hasar sistemi yeniden gözden geçirilip daha sağlam bir yapıya oturtuldu.
+- **Inventory Entegrasyonu:** Envanter sistemi oyuna entegre edildi, öğe yönetimi artık daha kullanıcı dostu.
+- **Crafting System Entegrasyonu:** Crafting sistemi sorunsuz bir şekilde oyuna dahil edildi, oyuncuların kaynakları kullanarak öğe yapmaları sağlandı.
+- **HUD Yenilikleri:** Kullanıcı arayüzü yenilendi, oyuncuların bilgiye daha hızlı erişimi sağlandı.
+- **Player Combat Rework:** Oyuncu dövüş mekanikleri elden geçirildi ve daha akıcı hale getirildi.
+- **Texture Paint:** Oyun dünyasının görselliği için texture paint işlemleri uygulandı, çevre detaylandırıldı.
+- **Player Camera Rework:** Oyuncu kamerası yeniden tasarlandı, daha iyi bir görüş açısı ve oynanış sunuluyor.
+- **Vehicle Controller:** Araç kontrol sistemi geliştirildi, araç sürüş deneyimi daha gerçekçi hale getirildi.
+- **3D Model Rework:** Mevcut 3D modeller yeniden ele alındı, daha detaylı ve estetik bir görünüm sağlandı.
+- **Skybox İyileştirmeleri:** Gökyüzü dokuları ve ışıklandırması iyileştirildi, atmosfer daha etkileyici hale getirildi.
+- **UGS Analytics Entegrasyonu:** UGS analitik sistemi entegre edilerek kullanıcı davranışları takip edilebilir hale getirildi.
+- **Ses Efektleri Implementation:** Oyuna yeni ses efektleri eklendi, atmosferin derinliği artırıldı.
+- **Character Selection Ekranı:** Karakter seçim ekranı oluşturuldu, oyuncuların karakter seçimi daha etkili hale getirildi.
+
+## Demonstrasyon
+
+Bu sprintte oyuna eklenen ve geliştirilen özellikler, yükleme ekranından başlayarak oyuncunun deneyimlediği her aşamada hissedilir. Sağlık ve hasar sistemi ile oyuncunun hayatta kalma dinamikleri geliştirilirken, envanter ve crafting sistemlerinin entegrasyonu ile oyuncuların oyun içi ilerleyişleri güçlendirildi. Yenilenen dövüş mekanikleri ve oyuncu kamerası, oyun akışını daha akıcı hale getirirken, araç sürüş sisteminin geliştirilmesi de oyunculara daha gerçekçi bir sürüş deneyimi sunuyor. HUD yenilikleri ve ses efektleri, kullanıcı deneyimini derinleştirirken, 3D model ve skybox iyileştirmeleri, oyunun görsel kalitesini artırdı. Tüm bu yenilikler UGS Analytics entegrasyonu ile takip edilebilir hale getirildi ve karakter seçim ekranı sayesinde oyuncuların tercihlerini daha etkili yapmaları sağlandı.
+
+## İyileştirme Alanları
+
+- Eğitilmiş modeller oyun dünyasına yerleştirildiğinde büyük ölçüde performans kaybı yaşanmakta.
+- Oyundaki taşıt her zeminde düzgün çalışmıyor, collider ile ilgili sıkıntılar yaşanmakta.
+- Karakterin pozlarında iyileştirmeler için IK Chain sistemi gözden geçirilmeli.
+- Karakter aim pozisyonu yeniden düzenlenmeli.
+
+## Geribildirim
+
+- Main menu arayüzünün daha anlaşılabilir hale getirilebileceğine karar verildi, çeşitli düzenlemeler yapıldı.
+- Silah modellerinin karakterin pozuna uygun olmadığına karar verildi, modeller tekrar düzenlendi.
+- Bazı textureların görsel bütünlüğü bozduğuna karar verildi ve yeniden düzenlendi.
+
+## Sonraki Adımlar
+
+**Gelecekte yapılması planlananlar**
+
+- **Level Design Geliştirmeleri:** Oyun dünyasının daha zengin ve dinamik hale getirilmesi için seviye tasarımı üzerinde detaylı çalışmalar yapılacak.
+- **VFX Tasarımları:** Görsel efektlerin oyunun atmosferine katkısını artırmak amacıyla yeni VFX tasarımları oluşturulacak ve mevcut efektler iyileştirilecek.
+- **Daha Kompleks Model Yapıları:** Karakter ve çevre modellerinde daha detaylı ve karmaşık yapılar oluşturularak görsel kalite artırılacak.
+- **Çevre Tasarımı:** Oyun dünyasının daha gerçekçi ve etkileyici bir görsellik sunması için çevre tasarımı geliştirilecek.
+- **Optimizasyon İyileştirmeleri:** Oyun performansını artırmak için kaynak yönetimi ve yükleme süreleri üzerinde çalışmalar yapılacak.
+- **Hikaye Anlatımı İyileştirmeleri:** Oyuncuların oyunun hikayesini daha derin ve etkileyici bir şekilde deneyimlemesi için hikaye anlatımı güçlendirilecek.
+
+## Sprint Review Katılımcıları
+
+- Barış Çetin
+- Barış Onur Yıldız
+- Berk Karakaş
+- Beyza Sürücü
+- Damla Akkuş
+
+## Sprint Retrospective
+
+### Neler İyi Gitti?
+
+- **Ekibin Uyumlu Çalışması:** Ekip üyeleri arasındaki iletişim ve işbirliği bu sprintte oldukça verimliydi. Özellikle farklı sistemlerin entegrasyonu ve geliştirilmesi sırasında ortaya çıkan zorluklar, ekip üyeleri arasında etkili bir koordinasyonla çözüldü.
+- **Gelişmiş Kullanıcı Deneyimi:** Yükleme ekranı, HUD yenilikleri ve ses efektleri gibi iyileştirmeler, kullanıcı deneyimini daha üst seviyeye taşıdı. Bu alanlarda yapılan çalışmaların geri dönüşleri oldukça olumluydu.
+- **Teknik Başarımlar:** Player combat rework ve vehicle controller gibi teknik açıdan karmaşık özellikler başarıyla tamamlandı. Bu, ekibin teknik yeteneklerini ve problem çözme kapasitesini ortaya koydu.
+
+### Neler Geliştirilebilir?
+
+- **Performans Sorunları:** Eğitilmiş modellerin oyuna entegre edilmesi sırasında yaşanan performans kaybı, dikkate alınması gereken önemli bir sorun olarak öne çıktı. Gelecek sprintlerde optimizasyon çalışmalarıyla bu sorunun üzerine gidilmesi gerekiyor.
+- **Collider Sorunları:** Araç kontrol sisteminde, farklı zeminlerde çalışırken yaşanan collider sorunları, oyun deneyimini olumsuz etkiledi. Bu sorunun çözülmesi için daha fazla test ve iyileştirme çalışması yapılmalı.
+- **Karakter Pozları:** Karakter pozlamalarında kullanılan IK Chain sistemi gözden geçirilmeli. Ayrıca, karakterin aim mekaniklerinde yaşanan sorunlar da ele alınmalı.
+
+### Hangi Dersler Çıkarıldı?
+
+- **Erken Testin Önemi:** Modellerin oyun dünyasına yerleştirilmesinde yaşanan performans sorunları, erken aşamada daha kapsamlı testlerin yapılması gerektiğini gösterdi. Bu sprintte karşılaşılan zorluklar, gelecekte benzer sorunları önlemek için daha proaktif bir yaklaşım benimsenmesi gerektiğini ortaya koydu.
+- **Sürekli İyileştirme:** Ekip, geri bildirimler doğrultusunda main menu arayüzü, silah modelleri ve texturelar üzerinde iyileştirmeler yaptı. Bu durum, ekibin geri bildirimlere açık olduğunu ve sürekli iyileştirme prensibiyle hareket ettiğini gösterdi.
+
+### Eylem Planı ve Sonraki Adımlar
+
+- **Performans Optimizasyonu:** Eğitilmiş modellerin performansını artırmak için optimizasyon çalışmaları yapılacak. Bu kapsamda, oyun içi kaynak kullanımı analiz edilecek ve gereksiz yükler ortadan kaldırılacak.
+- **Collider İyileştirmeleri:** Araç kontrol sisteminde yaşanan collider sorunları üzerinde çalışmalar devam edecek. Daha geniş kapsamlı testler yapılarak, sorunun kaynağı belirlenecek ve düzeltilecek.
+- **Karakter Pozları ve Aim Mekanikleri:** IK Chain sistemi ve karakterin aim mekanikleri üzerine detaylı bir inceleme yapılarak, gerekli iyileştirmeler gerçekleştirilecek.
 
 
 
