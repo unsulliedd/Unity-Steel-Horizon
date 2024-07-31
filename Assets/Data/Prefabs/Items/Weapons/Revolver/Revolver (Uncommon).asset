@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Revolver (Uncommon)
   m_EditorClassIdentifier: 
   weaponID: 000102
+  weaponBaseName: Revolver
   weaponName: Revolver (UnCommon)
   weaponPrefab: {fileID: 2910390057228400487, guid: c2433245824948a4ba94d290f9f01065,
     type: 3}

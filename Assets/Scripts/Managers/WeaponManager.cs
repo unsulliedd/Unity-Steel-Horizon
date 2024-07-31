@@ -164,18 +164,41 @@ public class WeaponManager : MonoBehaviour
     /// <summary>
     /// Updates the networked transform of the equipped weapon.
     /// </summary>
-    public void UpdateWeaponNetworkTransform(Weapon weapon)
+    /// <summary>
+    /// Updates the networked transform of the equipped weapon.
+    /// </summary>
+    public void UpdateWeaponNetworkTransform()
     {
         if (currentWeapon == null) return;
 
-        if (playerNetworkManager.isAiming.Value)
-            UpdateWeaponTransform(weapon.aimPosition, weapon.aimRotation);
-        else
-            UpdateWeaponTransform(weapon.idlePosition, weapon.idleRotation);
+        Weapon currentWeaponData = GetCurrentWeapon();
+        if (currentWeaponData == null) return;
 
-        // Set the weapon's position and rotation based on network values
-        currentWeapon.transform.SetLocalPositionAndRotation(playerNetworkManager.weaponPosition.Value, playerNetworkManager.weaponRotation.Value);
+        if (playerManager.playerClass.TryGetWeaponPosition(currentWeaponData.weaponBaseName, out WeaponPosition weaponPosition))
+        {
+            if (playerNetworkManager.isAiming.Value)
+            {
+                currentWeapon.transform.SetLocalPositionAndRotation(weaponPosition.aimPosition, weaponPosition.aimRotation);
+            }
+            else
+            {
+                currentWeapon.transform.SetLocalPositionAndRotation(weaponPosition.idlePosition, weaponPosition.idleRotation);
+            }
+            currentWeapon.transform.localScale = weaponPosition.scale;
+
+            // Update network variables
+            if (playerNetworkManager.IsOwner)
+            {
+                playerNetworkManager.weaponPosition.Value = currentWeapon.transform.localPosition;
+                playerNetworkManager.weaponRotation.Value = currentWeapon.transform.localRotation;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Weapon position not found for weapon: " + currentWeaponData.weaponBaseName);
+        }
     }
+
 
     /// <summary>
     /// Updates the weapon transform based on the network values.

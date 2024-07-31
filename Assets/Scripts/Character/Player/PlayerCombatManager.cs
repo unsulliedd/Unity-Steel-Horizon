@@ -124,8 +124,7 @@ public class PlayerCombatManager : CharacterCombatManager
         if (currentWeapon != null)
         {
             currentWeapon.SetActive(playerManager.PlayerNetworkManager.isInCombatMode.Value);
-            playerManager.WeaponManager.UpdateWeaponNetworkTransform(
-                playerManager.WeaponManager.weapons[playerManager.PlayerNetworkManager.currentWeaponIndex.Value]);
+            playerManager.WeaponManager.UpdateWeaponNetworkTransform();
         }
     }
 
@@ -152,8 +151,7 @@ public class PlayerCombatManager : CharacterCombatManager
         }
 
         UpdateNetworkCrosshairVisibility(); // Update the crosshair visibility over the network
-        playerManager.WeaponManager.UpdateWeaponNetworkTransform(
-            playerManager.WeaponManager.weapons[playerManager.PlayerNetworkManager.currentWeaponIndex.Value]);
+        playerManager.WeaponManager.UpdateWeaponNetworkTransform();
     }
 
     /// <summary>

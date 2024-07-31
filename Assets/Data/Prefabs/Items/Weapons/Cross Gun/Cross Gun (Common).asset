@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Cross Gun (Common)
   m_EditorClassIdentifier: 
   weaponID: 000201
+  weaponBaseName: CrossGun
   weaponName: Cross Gun (Common)
   weaponPrefab: {fileID: 2893558791848129826, guid: 6b72fe4f71b11334faf0a9c804a61cab,
     type: 3}
@@ -26,3 +27,5 @@ MonoBehaviour:
   aimPosition: {x: -0.00064, y: 0.00089, z: 0.00009}
   aimRotation: {x: -0.6243327, y: 0.65636843, z: 0.32341868, w: 0.27347675}
   muzzleTransform: {fileID: 0}
+  weaponIcon: {fileID: 0}
+  upgradeCosts: []
