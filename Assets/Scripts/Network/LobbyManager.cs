@@ -123,10 +123,10 @@ public class LobbyManager : MonoBehaviour
         {
             IsPrivate = false,
             Data = new Dictionary<string, DataObject>
-        {
-            { "description", new DataObject(DataObject.VisibilityOptions.Public, lobbyDescription) },
-            { "joinCode", new DataObject(DataObject.VisibilityOptions.Public, joinCode) }
-        }
+            {
+                { "description", new DataObject(DataObject.VisibilityOptions.Public, lobbyDescription) },
+                { "joinCode", new DataObject(DataObject.VisibilityOptions.Public, joinCode) }
+            }
         };
 
         try
@@ -135,9 +135,6 @@ public class LobbyManager : MonoBehaviour
             currentLobby = lobby;
             hostId = AuthenticationService.Instance.PlayerId;
             Debug.Log($"Lobby created with ID: {lobby.Id}");
-
-            // Manually add the host to the player list
-            lobby.Players.Add(new Player(AuthenticationService.Instance.PlayerId));
 
             await SubscribeToLobbyEvents();
 
