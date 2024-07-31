@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 
 /// <summary>
 /// Manages the title screen and related UI functionalities.
@@ -21,7 +22,14 @@ public class TitleScreenManager : MonoBehaviour
     [Header("Submenu")]
     [SerializeField] private GameObject newGameSubmenu;             // New game submenu
     [SerializeField] private GameObject newGameButton;              // New game button
-    [SerializeField] private GameObject startAsHostButton;          // Start as host button
+    [SerializeField] private GameObject loadGameButton;             // Load game button
+    #endregion
+
+    #region Profile
+    [Header("Profile")]
+    [SerializeField] private TextMeshProUGUI profileName;           // Profile button
+    [SerializeField] private TextMeshProUGUI profileLevel;          // Profile button
+    [SerializeField] private Image profilePicture;                  // Profile picture
     #endregion
 
     #region Load Menu
@@ -33,6 +41,9 @@ public class TitleScreenManager : MonoBehaviour
     [SerializeField] private GameObject deleteInfoMouseImage;       // Image for mouse delete info
     [SerializeField] private GameObject deleteInfoGamepadImage;     // Image for gamepad delete info
     #endregion
+
+    [Header("Lobby")]
+    [SerializeField] private GameObject lobbyPanel;                 // Lobby panel
 
     #region No Empty Slots Panel
     [Header("No Empty Slots Panel")]
@@ -64,6 +75,21 @@ public class TitleScreenManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    private async void Start()
+    {
+        if (SteamManager.Instance.isSteamRunning)
+        {
+            profileName.text = SteamManager.Instance.GetSteamUserName();
+            string level = SteamManager.Instance.GetSteamLevel();
+            profileLevel.text = $"Level: {level}";
+            var avatar = await SteamManager.Instance.GetSteamUserAvatar();
+            if (avatar != null)
+            {
+                profilePicture.sprite = avatar;
+            }
+        }
+    }
+
     private void Update()
     {
         if (titleScreenLoadMenu.activeSelf)
@@ -76,6 +102,11 @@ public class TitleScreenManager : MonoBehaviour
 
         if (PlayerInputManager.Instance.cancelPerformed)
             HandleCancellation();
+    }
+
+    public void StartSinglePLayerNewGame()
+    {
+        SaveGameManager.Instance.NewGame();
     }
 
     /// <summary>
@@ -149,7 +180,7 @@ public class TitleScreenManager : MonoBehaviour
         newGameSubmenu.SetActive(isActive);
 
         if (isActive)
-            StartCoroutine(SetFirstSelectedButton(startAsHostButton));
+            StartCoroutine(SetFirstSelectedButton(loadGameButton));
         else
             StartCoroutine(SetFirstSelectedButton(newGameButton));
     }
@@ -189,6 +220,11 @@ public class TitleScreenManager : MonoBehaviour
         titleScreenMenu.SetActive(true);
         titleScreenLoadMenu.SetActive(false);
         StartCoroutine(SetFirstSelectedButton(newGameButton));
+    }
+
+    public void LobbyMenuToggle()
+    {
+        lobbyPanel.SetActive(!lobbyPanel.activeSelf);
     }
 
     /// <summary>
