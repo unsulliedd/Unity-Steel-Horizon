@@ -6,7 +6,7 @@ using UnityEngine;
 public class RelayManager : MonoBehaviour
 {
     public static RelayManager Instance { get; private set; }
-
+    public string joinCode;
     private void Awake()
     {
         if (Instance == null)

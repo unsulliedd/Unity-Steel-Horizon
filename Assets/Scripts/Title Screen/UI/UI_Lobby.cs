@@ -45,7 +45,7 @@ public class UI_Lobby : MonoBehaviour
 
         maxPlayersDropdown.value = 3;
 
-        startGameButton.onClick.AddListener(StartGame);
+        startGameButton.onClick.AddListener(StartGame); // Start game button click listener
     }
 
     private async Task CreateLobby()
@@ -71,7 +71,7 @@ public class UI_Lobby : MonoBehaviour
             Debug.Log("Lobi baþarýyla oluþturuldu.");
         }
 
-        joinCode.text = lobby.Id;
+        joinCode.text = RelayManager.Instance.joinCode;
 
         await ListLobbies();
     }
@@ -179,6 +179,13 @@ public class UI_Lobby : MonoBehaviour
     {
         createLobbyPanel.SetActive(true);
         lobbyDetailsPanel.SetActive(false);
+    }
+
+    public async void ExitLobby()
+    {
+        await LobbyManager.Instance.LeaveLobby();
+        ClearLobbyDetails();
+        listLobbiesButton.onClick.Invoke();
     }
 
     private void StartGame()
