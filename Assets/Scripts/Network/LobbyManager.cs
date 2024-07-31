@@ -10,6 +10,7 @@ public class LobbyManager : MonoBehaviour
     public static LobbyManager Instance { get; private set; }
     private Lobby currentLobby;
     private ILobbyEvents currentLobbyEvents;
+    private string hostId;
 
     private void Awake()
     {
@@ -67,17 +68,14 @@ public class LobbyManager : MonoBehaviour
     {
         if (changes.LobbyDeleted)
         {
-            // Handle lobby being deleted
             currentLobby = null;
             Debug.Log("Lobby has been deleted.");
-            // Update UI to reflect lobby deletion
             UI_Lobby.Instance.ClearLobbyDetails();
         }
         else
         {
             changes.ApplyToLobby(currentLobby);
             Debug.Log("Lobby changes applied.");
-            // Refresh UI with updated lobby details
             UI_Lobby.Instance.UpdateLobbyDetails(currentLobby);
         }
     }
@@ -87,7 +85,6 @@ public class LobbyManager : MonoBehaviour
         currentLobbyEvents = null;
         currentLobby = null;
         Debug.Log("Kicked from the lobby.");
-        // Update UI to reflect being kicked from the lobby
         UI_Lobby.Instance.ClearLobbyDetails();
     }
 
@@ -136,9 +133,9 @@ public class LobbyManager : MonoBehaviour
         {
             Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
             currentLobby = lobby;
+            hostId = AuthenticationService.Instance.PlayerId;
             Debug.Log($"Lobby created with ID: {lobby.Id}");
 
-            // Subscribe to lobby events
             await SubscribeToLobbyEvents();
 
             return lobby;
@@ -171,7 +168,6 @@ public class LobbyManager : MonoBehaviour
             currentLobby = lobby;
             Debug.Log($"Joined lobby with ID: {lobby.Id}");
 
-            // Subscribe to lobby events
             await SubscribeToLobbyEvents();
         }
         catch (LobbyServiceException ex)
@@ -189,8 +185,10 @@ public class LobbyManager : MonoBehaviour
                 await LobbyService.Instance.RemovePlayerAsync(currentLobby.Id, AuthenticationService.Instance.PlayerId);
                 currentLobby = null;
                 Debug.Log("Left the lobby.");
+
                 if (currentLobbyEvents != null)
                 {
+                    await currentLobbyEvents.UnsubscribeAsync();
                     currentLobbyEvents = null;
                 }
             }
@@ -204,5 +202,10 @@ public class LobbyManager : MonoBehaviour
     public Lobby GetCurrentLobby()
     {
         return currentLobby;
+    }
+
+    public string GetHostId()
+    {
+        return hostId;
     }
 }

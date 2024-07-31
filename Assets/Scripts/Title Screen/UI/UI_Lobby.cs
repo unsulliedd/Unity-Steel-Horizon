@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Threading.Tasks;
 using TMPro;
 using Unity.Services.Lobbies.Models;
+using Unity.Services.Authentication;
 
 public class UI_Lobby : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class UI_Lobby : MonoBehaviour
     public Transform playersListParent;
     public GameObject playerListItemPrefab;
 
+    public Button startGameButton; // Start game button
+
     void Awake()
     {
         if (Instance == null)
@@ -41,6 +44,8 @@ public class UI_Lobby : MonoBehaviour
         listLobbiesButton.onClick.AddListener(async () => await ListLobbies());
 
         maxPlayersDropdown.value = 3;
+
+        startGameButton.onClick.AddListener(StartGame);
     }
 
     private async Task CreateLobby()
@@ -165,6 +170,9 @@ public class UI_Lobby : MonoBehaviour
             var playerListItem = playerItem.GetComponent<UI_LobbyPlayerListItem>();
             playerListItem.SetPlayerInfo(player.Id);
         }
+
+        // Start button visibility based on host
+        startGameButton.gameObject.SetActive(LobbyManager.Instance.GetHostId() == AuthenticationService.Instance.PlayerId);
     }
 
     public void ClearLobbyDetails()
@@ -173,10 +181,16 @@ public class UI_Lobby : MonoBehaviour
         lobbyDetailsPanel.SetActive(false);
     }
 
-    public async void ExitLobby()
+    private void StartGame()
     {
-        await LobbyManager.Instance.LeaveLobby();
-        ClearLobbyDetails();
-        listLobbiesButton.onClick.Invoke();
+        if (LobbyManager.Instance.GetHostId() == AuthenticationService.Instance.PlayerId)
+        {
+            Debug.Log("Starting game...");
+            // Add your logic to start the game for all players
+        }
+        else
+        {
+            Debug.LogError("Only the host can start the game.");
+        }
     }
 }
