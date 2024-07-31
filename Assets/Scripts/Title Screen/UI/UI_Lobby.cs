@@ -6,6 +6,8 @@ using Unity.Services.Lobbies.Models;
 
 public class UI_Lobby : MonoBehaviour
 {
+    public static UI_Lobby Instance { get; private set; }
+
     public Button createLobbyButton;
     public Button listLobbiesButton;
     public TMP_InputField lobbyNameInputField;
@@ -20,6 +22,18 @@ public class UI_Lobby : MonoBehaviour
     public TextMeshProUGUI lobbyNameText;
     public Transform playersListParent;
     public GameObject playerListItemPrefab;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -119,7 +133,7 @@ public class UI_Lobby : MonoBehaviour
             {
                 await LobbyManager.Instance.LeaveLobby();
                 await LobbyManager.Instance.JoinLobby(lobby.Id);
-                
+                UpdateLobbyDetails(lobby);
             });
 
             if (currentLobby != null && currentLobby.Id == lobby.Id)
@@ -134,8 +148,7 @@ public class UI_Lobby : MonoBehaviour
         }
     }
 
-
-    private void UpdateLobbyDetails(Lobby lobby)
+    public void UpdateLobbyDetails(Lobby lobby)
     {
         createLobbyPanel.SetActive(false);
         lobbyDetailsPanel.SetActive(true);
@@ -150,7 +163,13 @@ public class UI_Lobby : MonoBehaviour
         {
             GameObject playerItem = Instantiate(playerListItemPrefab, playersListParent);
             var playerListItem = playerItem.GetComponent<UI_LobbyPlayerListItem>();
-            playerListItem.SetPlayerInfo(player.Id);
+            playerListItem.SetPlayerInfo(player.Id, player.Data["displayName"].Value);
         }
+    }
+
+    public void ClearLobbyDetails()
+    {
+        createLobbyPanel.SetActive(true);
+        lobbyDetailsPanel.SetActive(false);
     }
 }

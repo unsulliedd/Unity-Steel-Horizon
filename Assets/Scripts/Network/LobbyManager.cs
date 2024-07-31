@@ -9,6 +9,7 @@ public class LobbyManager : MonoBehaviour
 {
     public static LobbyManager Instance { get; private set; }
     private Lobby currentLobby;
+    private ILobbyEvents currentLobbyEvents;
 
     private void Awake()
     {
@@ -20,6 +21,95 @@ public class LobbyManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private async void Start()
+    {
+        if (LobbyService.Instance != null)
+        {
+            // Register event handlers
+            await SubscribeToLobbyEvents();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (currentLobbyEvents != null)
+        {
+            currentLobbyEvents.Callbacks.LobbyChanged -= OnLobbyChanged;
+            currentLobbyEvents.Callbacks.KickedFromLobby -= OnKickedFromLobby;
+            currentLobbyEvents.Callbacks.LobbyEventConnectionStateChanged -= OnLobbyEventConnectionStateChanged;
+        }
+    }
+
+    private async Task SubscribeToLobbyEvents()
+    {
+        if (currentLobby != null)
+        {
+            var callbacks = new LobbyEventCallbacks();
+            callbacks.LobbyChanged += OnLobbyChanged;
+            callbacks.KickedFromLobby += OnKickedFromLobby;
+            callbacks.LobbyEventConnectionStateChanged += OnLobbyEventConnectionStateChanged;
+
+            try
+            {
+                currentLobbyEvents = await LobbyService.Instance.SubscribeToLobbyEventsAsync(currentLobby.Id, callbacks);
+            }
+            catch (LobbyServiceException ex)
+            {
+                Debug.LogError($"Failed to subscribe to lobby events: {ex.Message}");
+            }
+        }
+    }
+
+    private void OnLobbyChanged(ILobbyChanges changes)
+    {
+        if (changes.LobbyDeleted)
+        {
+            // Handle lobby being deleted
+            currentLobby = null;
+            Debug.Log("Lobby has been deleted.");
+            // Update UI to reflect lobby deletion
+            UI_Lobby.Instance.ClearLobbyDetails();
+        }
+        else
+        {
+            changes.ApplyToLobby(currentLobby);
+            Debug.Log("Lobby changes applied.");
+            // Refresh UI with updated lobby details
+            UI_Lobby.Instance.UpdateLobbyDetails(currentLobby);
+        }
+    }
+
+    private void OnKickedFromLobby()
+    {
+        currentLobbyEvents = null;
+        currentLobby = null;
+        Debug.Log("Kicked from the lobby.");
+        // Update UI to reflect being kicked from the lobby
+        UI_Lobby.Instance.ClearLobbyDetails();
+    }
+
+    private void OnLobbyEventConnectionStateChanged(LobbyEventConnectionState state)
+    {
+        switch (state)
+        {
+            case LobbyEventConnectionState.Unsubscribed:
+                Debug.Log("Unsubscribed from lobby events.");
+                break;
+            case LobbyEventConnectionState.Subscribing:
+                Debug.Log("Subscribing to lobby events...");
+                break;
+            case LobbyEventConnectionState.Subscribed:
+                Debug.Log("Subscribed to lobby events.");
+                break;
+            case LobbyEventConnectionState.Unsynced:
+                Debug.Log("Connection problems with lobby events. Reconnecting...");
+                break;
+            case LobbyEventConnectionState.Error:
+                Debug.LogError("Error with lobby event connection.");
+                break;
         }
     }
 
@@ -36,10 +126,10 @@ public class LobbyManager : MonoBehaviour
         {
             IsPrivate = false,
             Data = new Dictionary<string, DataObject>
-        {
-            { "description", new DataObject(DataObject.VisibilityOptions.Public, lobbyDescription) },
-            { "joinCode", new DataObject(DataObject.VisibilityOptions.Public, joinCode) }
-        }
+            {
+                { "description", new DataObject(DataObject.VisibilityOptions.Public, lobbyDescription) },
+                { "joinCode", new DataObject(DataObject.VisibilityOptions.Public, joinCode) }
+            }
         };
 
         try
@@ -47,6 +137,10 @@ public class LobbyManager : MonoBehaviour
             Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
             currentLobby = lobby;
             Debug.Log($"Lobby created with ID: {lobby.Id}");
+
+            // Subscribe to lobby events
+            await SubscribeToLobbyEvents();
+
             return lobby;
         }
         catch (LobbyServiceException ex)
@@ -55,7 +149,6 @@ public class LobbyManager : MonoBehaviour
             return null;
         }
     }
-
 
     public async Task<List<Lobby>> ListLobbies()
     {
@@ -77,6 +170,9 @@ public class LobbyManager : MonoBehaviour
             Lobby lobby = await LobbyService.Instance.JoinLobbyByIdAsync(lobbyId);
             currentLobby = lobby;
             Debug.Log($"Joined lobby with ID: {lobby.Id}");
+
+            // Subscribe to lobby events
+            await SubscribeToLobbyEvents();
         }
         catch (LobbyServiceException ex)
         {
@@ -93,6 +189,12 @@ public class LobbyManager : MonoBehaviour
                 await LobbyService.Instance.RemovePlayerAsync(currentLobby.Id, AuthenticationService.Instance.PlayerId);
                 currentLobby = null;
                 Debug.Log("Left the lobby.");
+
+                if (currentLobbyEvents != null)
+                {
+                    await currentLobbyEvents.UnsubscribeAsync();
+                    currentLobbyEvents = null;
+                }
             }
             catch (LobbyServiceException ex)
             {
