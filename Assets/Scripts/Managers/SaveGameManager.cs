@@ -230,7 +230,10 @@ public class SaveGameManager : MonoBehaviour
         else if (TitleScreenManager.Instance.startAsClient)
             NetworkManager.Singleton.StartClient();
         else
+        {
+            GameManager.Instance.StartSinglePlayerGame();
             NetworkManager.Singleton.StartHost();
+        }
         
         // Once the scene is loaded, load the game data
         SaveGameCallbacks.LoadGame(ref currentCharacterData);

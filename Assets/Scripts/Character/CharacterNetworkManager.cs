@@ -95,7 +95,6 @@ public class CharacterNetworkManager : NetworkBehaviour
     }
 
     [Rpc(SendTo.Server)]
-
     public void ShootBulletServerRpc(Vector3 position, Quaternion rotation)
     {
         ShootBulletClientRpc(position, rotation);
