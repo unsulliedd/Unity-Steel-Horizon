@@ -6,6 +6,7 @@ using Unity.Services.Authentication;
 using System.Collections.Generic;
 using Unity.Netcode;
 using Unity.Services.Lobbies;
+using System.Threading.Tasks;
 
 public class UI_CharacterSelection : MonoBehaviour
 {
@@ -13,11 +14,12 @@ public class UI_CharacterSelection : MonoBehaviour
 
     public GameObject characterSelectionPanel;
     public Button[] characterButtons;
+    public TextMeshProUGUI[] playerNamesText;
     public Button confirmButton;
     public TextMeshProUGUI timerText;
 
     private int selectedCharacterIndex = -1;
-    private float countdown = 120f; // Timer süresi saniye olarak
+    private float countdown = 10f;
     private bool isCountdownActive = false;
 
     private void Awake()
@@ -55,10 +57,27 @@ public class UI_CharacterSelection : MonoBehaviour
         }
     }
 
-    private void OnCharacterButtonClicked(Button button)
+    private async void OnCharacterButtonClicked(Button button)
     {
         selectedCharacterIndex = System.Array.IndexOf(characterButtons, button);
         Debug.Log($"Character {selectedCharacterIndex} selected");
+
+        if (selectedCharacterIndex != -1)
+        {
+            string playerId = AuthenticationService.Instance.PlayerId;
+            var lobbyData = new Dictionary<string, DataObject>
+            {
+                { "characterIndex_" + playerId, new DataObject(DataObject.VisibilityOptions.Member, selectedCharacterIndex.ToString()) }
+            };
+
+            // Sadece host lobby'yi güncelleyebilir
+            if (LobbyManager.Instance.GetHostId() == playerId)
+            {
+                await LobbyService.Instance.UpdateLobbyAsync(LobbyManager.Instance.GetCurrentLobby().Id, new UpdateLobbyOptions { Data = lobbyData });
+            }
+
+            UpdatePlayerStatus();
+        }
     }
 
     private async void OnConfirmButtonClicked()
@@ -67,14 +86,20 @@ public class UI_CharacterSelection : MonoBehaviour
         {
             Debug.Log($"Character {selectedCharacterIndex} confirmed");
 
+            string playerId = AuthenticationService.Instance.PlayerId;
             var lobbyData = new Dictionary<string, DataObject>
             {
-                { "characterIndex_" + AuthenticationService.Instance.PlayerId, new DataObject(DataObject.VisibilityOptions.Member, selectedCharacterIndex.ToString()) }
+                { "characterIndex_" + playerId, new DataObject(DataObject.VisibilityOptions.Member, selectedCharacterIndex.ToString()) }
             };
 
-            await LobbyService.Instance.UpdateLobbyAsync(LobbyManager.Instance.GetCurrentLobby().Id, new UpdateLobbyOptions { Data = lobbyData });
+            // Sadece host lobby'yi güncelleyebilir
+            if (LobbyManager.Instance.GetHostId() == playerId)
+            {
+                await LobbyService.Instance.UpdateLobbyAsync(LobbyManager.Instance.GetCurrentLobby().Id, new UpdateLobbyOptions { Data = lobbyData });
+            }
 
-            StartGame();
+            UpdatePlayerStatus();
+            CheckAllPlayersReady();
         }
     }
 
@@ -82,7 +107,8 @@ public class UI_CharacterSelection : MonoBehaviour
     {
         characterSelectionPanel.SetActive(true);
         isCountdownActive = false;
-        countdown = 10f; // Zamanlayýcýyý sýfýrla
+        countdown = 10f;
+        UpdatePlayerStatus();
     }
 
     public void StartCountdown()
@@ -90,15 +116,79 @@ public class UI_CharacterSelection : MonoBehaviour
         isCountdownActive = true;
     }
 
-    private void StartGame()
+    private void CheckAllPlayersReady()
+    {
+        var lobby = LobbyManager.Instance.GetCurrentLobby();
+        bool allReady = true;
+
+        foreach (var player in lobby.Players)
+        {
+            if (!lobby.Data.ContainsKey("characterIndex_" + player.Id))
+            {
+                allReady = false;
+                break;
+            }
+        }
+
+        if (allReady)
+        {
+            UI_Lobby.Instance.SetAllPlayersReady(true);
+            StartGame();
+        }
+        else
+        {
+            UI_Lobby.Instance.SetAllPlayersReady(false);
+        }
+    }
+
+    private void UpdatePlayerStatus()
+    {
+        var lobby = LobbyManager.Instance.GetCurrentLobby();
+
+        foreach (var player in lobby.Players)
+        {
+            string playerId = player.Id;
+
+            for (int i = 0; i < characterButtons.Length; i++)
+            {
+                if (lobby.Data.ContainsKey("characterIndex_" + playerId) && int.Parse(lobby.Data["characterIndex_" + playerId].Value) == i)
+                {
+                    playerNamesText[i].text = playerId + " (Ready)";
+                }
+                else if (string.IsNullOrEmpty(playerNamesText[i].text) || playerNamesText[i].text == playerId + " (Ready)")
+                {
+                    playerNamesText[i].text = "";
+                }
+            }
+        }
+    }
+
+    public async void StartGame()
     {
         isCountdownActive = false;
         Debug.Log("Starting game...");
-
-
         Debug.Log(selectedCharacterIndex);
+
+        if (LobbyManager.Instance.GetHostId() == AuthenticationService.Instance.PlayerId)
+        {
+            string joinCode = await GameManager.Instance.StartHostWithRelay();
+            Debug.Log($"Host started with join code: {joinCode}");
+        }
+        else
+        {
+            string joinCode = LobbyManager.Instance.GetJoinCode();
+            if (joinCode != null)
+            {
+                bool success = await GameManager.Instance.StartClientWithRelay(joinCode);
+                Debug.Log($"Client joined with join code: {joinCode}, success: {success}");
+            }
+            else
+            {
+                Debug.LogError("Join code not found!");
+            }
+        }
+
         SaveGameManager.Instance.NewGame(selectedCharacterIndex);
-        
     }
 
     public async void Leave()

@@ -29,6 +29,8 @@ public class UI_Lobby : MonoBehaviour
     public Button startGameButton; // Start game button
     public Lobby currentLobby;
 
+    private bool allPlayersReady = false;
+
     void Awake()
     {
         if (Instance == null)
@@ -183,7 +185,7 @@ public class UI_Lobby : MonoBehaviour
         }
 
         // Start button visibility based on host
-        //startGameButton.gameObject.SetActive(LobbyManager.Instance.GetHostId() == AuthenticationService.Instance.PlayerId);
+        startGameButton.gameObject.SetActive(LobbyManager.Instance.GetHostId() == AuthenticationService.Instance.PlayerId);
     }
 
     public void ClearLobbyDetails()
@@ -206,22 +208,46 @@ public class UI_Lobby : MonoBehaviour
             try
             {
                 await LobbyService.Instance.SendHeartbeatPingAsync(currentLobby.Id);
-                foreach (var player in currentLobby.Players)
+                var lobbyData = new UpdateLobbyOptions
                 {
-                    Debug.Log($"Player {player.Id} is ready");
-                    var lobbyData = new UpdateLobbyOptions
+                    Data = new Dictionary<string, DataObject>
                     {
-                        Data = new Dictionary<string, DataObject>
-                        {
-                            { "startGame", new DataObject(DataObject.VisibilityOptions.Member, "true") },
-                            { "relayJoinCode", new DataObject(DataObject.VisibilityOptions.Public, RelayManager.Instance.joinCode) }
-                        }
-                    };
-                    await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, lobbyData);
-                }
+                        { "showCharacterSelection", new DataObject(DataObject.VisibilityOptions.Member, "true") }
+                    }
+                };
+                await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, lobbyData);
+
+                Debug.Log("Character selection start request sent.");
+                UI_CharacterSelection.Instance.ShowCharacterSelection();
+            }
+            catch (LobbyServiceException ex)
+            {
+                Debug.LogError($"Failed to start character selection: {ex.Message}");
+            }
+        }
+        else
+        {
+            Debug.LogError("Only the host can start the character selection.");
+        }
+    }
+
+    public async void AllPlayersReady()
+    {
+        if (allPlayersReady)
+        {
+            try
+            {
+                var lobbyData = new UpdateLobbyOptions
+                {
+                    Data = new Dictionary<string, DataObject>
+                    {
+                        { "startGame", new DataObject(DataObject.VisibilityOptions.Member, "true") }
+                    }
+                };
+                await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, lobbyData);
 
                 Debug.Log("Game start request sent.");
-                await GameManager.Instance.StartGameWithRelay(RelayManager.Instance.joinCode);
+                //await GameManager.Instance.StartGameWithRelay(RelayManager.Instance.joinCode);
             }
             catch (LobbyServiceException ex)
             {
@@ -230,7 +256,12 @@ public class UI_Lobby : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Only the host can start the game.");
+            Debug.LogError("Not all players are ready.");
         }
+    }
+
+    public void SetAllPlayersReady(bool ready)
+    {
+        allPlayersReady = ready;
     }
 }

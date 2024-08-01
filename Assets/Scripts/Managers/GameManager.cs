@@ -1,15 +1,17 @@
 using UnityEngine;
 using Unity.Netcode;
-using Unity.Services.Relay.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Unity.Netcode.Transports.UTP;
 using Unity.Services.Authentication;
+using Unity.Services.Core;
+using Unity.Services.Relay;
+using Unity.Services.Relay.Models;
+using Unity.Netcode.Transports.UTP;
+using System.Threading.Tasks;
+using Unity.Networking.Transport.Relay;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    public GameObject[] characterPrefabs; // Karakter prefablarý
+    public GameObject[] characterPrefabs;
 
     private void Awake()
     {
@@ -24,47 +26,39 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public async Task StartGameWithRelay(string relayJoinCode)
+    public async Task<string> StartHostWithRelay(int maxConnections = 5)
     {
-        Debug.Log(relayJoinCode);
-        if (NetworkManager.Singleton.IsListening)
+        await UnityServices.InitializeAsync();
+        if (!AuthenticationService.Instance.IsSignedIn)
         {
-            Debug.LogWarning("NetworkManager is already running.");
-            return;
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
         }
 
-        if (LobbyManager.Instance.GetHostId() == AuthenticationService.Instance.PlayerId)
-        {
-            Debug.Log("Starting as host");
-            RelayManager.Instance.joinCode = relayJoinCode;
-            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(
-                RelayManager.Instance.allocation.RelayServer.IpV4,
-                (ushort)RelayManager.Instance.allocation.RelayServer.Port,
-                RelayManager.Instance.allocation.AllocationIdBytes,
-                RelayManager.Instance.allocation.Key,
-                RelayManager.Instance.allocation.ConnectionData
-            );
-            NetworkManager.Singleton.StartHost();
-        }
-        else
-        {
-            Debug.Log("Starting as client");
-            var joinAllocation = await RelayManager.Instance.JoinRelay(relayJoinCode);
-            if (joinAllocation != null)
-            {
-                NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(
-                    joinAllocation.RelayServer.IpV4,
-                    (ushort)joinAllocation.RelayServer.Port,
-                    joinAllocation.AllocationIdBytes,
-                    joinAllocation.Key,
-                    joinAllocation.ConnectionData,
-                    joinAllocation.HostConnectionData
-                );
-                NetworkManager.Singleton.StartClient();
-            }
-        }
-
+        Allocation allocation = await RelayService.Instance.CreateAllocationAsync(maxConnections);
+        NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(allocation, "dtls"));
+        var joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+        return NetworkManager.Singleton.StartHost() ? joinCode : null;
     }
+
+    public async Task<bool> StartClientWithRelay(string joinCode)
+    {
+        await UnityServices.InitializeAsync();
+        if (!AuthenticationService.Instance.IsSignedIn)
+        {
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+        }
+
+        var joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode: joinCode);
+        NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinAllocation, "dtls"));
+        return !string.IsNullOrEmpty(joinCode) && NetworkManager.Singleton.StartClient();
+    }
+
+    public void StartSinglePlayerGame()
+    {
+        NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData("127.0.0.1", 7777);
+        NetworkManager.Singleton.StartHost();
+    }
+
     public void Spawn(int selectedCharacterIndex)
     {
         if (NetworkManager.Singleton.IsServer)
@@ -77,17 +71,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void StartSinglePlayerGame()
-    {
-        NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData("127.0.0.1", 7777);
-    }
 
     private void SpawnPlayerCharacter(ulong clientId, int selectedCharacterIndex)
     {
-        // Get the selected character index from the SaveGameManager
-        int characterIndex = SaveGameManager.Instance.currentCharacterData.characterClassIndex;
-
-        if (characterIndex < 0 || characterIndex >= characterPrefabs.Length)
+        if (selectedCharacterIndex < 0 || selectedCharacterIndex >= characterPrefabs.Length)
         {
             Debug.LogError("Invalid character index");
             return;
@@ -97,10 +84,9 @@ public class GameManager : MonoBehaviour
         GameObject characterInstance = Instantiate(characterPrefab);
 
         var networkObject = characterInstance.GetComponent<NetworkObject>();
-
         networkObject.SpawnAsPlayerObject(clientId);
         Debug.Log($"Spawned player character for client {clientId}");
-        // Set the character data on the PlayerManager component
+
         PlayerManager playerManager = characterInstance.GetComponent<PlayerManager>();
         playerManager.SetCharacterData(SaveGameManager.Instance.currentCharacterData);
     }

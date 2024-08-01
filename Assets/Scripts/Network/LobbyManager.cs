@@ -31,7 +31,6 @@ public class LobbyManager : MonoBehaviour
         await UnityServices.InitializeAsync();
         if (LobbyService.Instance != null)
         {
-            // Register event handlers
             if (currentLobby != null)
             {
                 await SubscribeToLobbyEvents();
@@ -96,12 +95,16 @@ public class LobbyManager : MonoBehaviour
             UI_Lobby.Instance.UpdateLobbyDetails(currentLobby);
             UI_Lobby.Instance.listLobbiesButton.onClick.Invoke();
 
-            // Check if the game should start
-            if (currentLobby.Data.ContainsKey("startGame") && currentLobby.Data["startGame"].Value == "true")
+            if (currentLobby.Data.ContainsKey("showCharacterSelection") && currentLobby.Data["showCharacterSelection"].Value == "true")
             {
-                Debug.Log("StartGame flag is set to true in the lobby.");
+                Debug.Log("Character selection started in the lobby.");
                 UI_CharacterSelection.Instance.ShowCharacterSelection();
                 UI_CharacterSelection.Instance.StartCountdown();
+            }
+            else if (currentLobby.Data.ContainsKey("startGame") && currentLobby.Data["startGame"].Value == "true")
+            {
+                Debug.Log("StartGame flag is set to true in the lobby.");
+                UI_CharacterSelection.Instance.StartGame();
             }
             else
             {
@@ -109,7 +112,6 @@ public class LobbyManager : MonoBehaviour
             }
         }
     }
-
 
     private void OnKickedFromLobby()
     {
@@ -239,6 +241,15 @@ public class LobbyManager : MonoBehaviour
     public string GetHostId()
     {
         return hostId;
+    }
+
+    public string GetJoinCode()
+    {
+        if (currentLobby != null && currentLobby.Data.ContainsKey("joinCode"))
+        {
+            return currentLobby.Data["joinCode"].Value;
+        }
+        return null;
     }
 
     public async Task StartGameInLobby()
