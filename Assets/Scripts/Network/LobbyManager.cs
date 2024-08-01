@@ -95,18 +95,21 @@ public class LobbyManager : MonoBehaviour
             Debug.Log("Lobby changes applied.");
             UI_Lobby.Instance.UpdateLobbyDetails(currentLobby);
             UI_Lobby.Instance.listLobbiesButton.onClick.Invoke();
-            Debug.Log(currentLobby.Data.ContainsKey("startGame"));
-            Debug.Log(currentLobby.Data["startGame"].Value);
 
+            // Check if the game should start
             if (currentLobby.Data.ContainsKey("startGame") && currentLobby.Data["startGame"].Value == "true")
             {
                 Debug.Log("StartGame flag is set to true in the lobby.");
                 UI_CharacterSelection.Instance.ShowCharacterSelection();
                 UI_CharacterSelection.Instance.StartCountdown();
             }
-            // Check if the game should start
+            else
+            {
+                Debug.Log("StartGame flag is not set in the lobby.");
+            }
         }
     }
+
 
     private void OnKickedFromLobby()
     {
