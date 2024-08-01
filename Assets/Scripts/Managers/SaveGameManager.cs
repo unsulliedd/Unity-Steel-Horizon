@@ -5,9 +5,6 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-/// <summary>
-/// Manages saving and loading game data, including character profiles and game state.
-/// </summary>
 public class SaveGameManager : MonoBehaviour
 {
     [SerializeField] private int worldSceneIndex = 2; // Index of the world scene to load
@@ -221,19 +218,18 @@ public class SaveGameManager : MonoBehaviour
         WorldSceneOperation = SceneManager.LoadSceneAsync(worldSceneIndex, LoadSceneMode.Single);
         yield return new WaitUntil(() => WorldSceneOperation.isDone);
 
-        if (TitleScreenManager.Instance.startAsHost)
-            NetworkManager.Singleton.StartHost();
-        else if (TitleScreenManager.Instance.startAsClient)
-            NetworkManager.Singleton.StartClient();
-        else
-        {
-            GameManager.Instance.StartSinglePlayerGame();
-            NetworkManager.Singleton.StartHost();
-        }
+        //if (TitleScreenManager.Instance.startAsHost)
+        //    NetworkManager.Singleton.StartHost();
+        //else if (TitleScreenManager.Instance.startAsClient)
+        //    NetworkManager.Singleton.StartClient();
+        //else
+        //{
+        //    NetworkManager.Singleton.StartHost();
+        //}
 
         // Once the scene is loaded, load the game data
         SaveGameCallbacks.LoadGame(ref currentCharacterData);
-        GameManager.Instance.Spawn(selectedCharacterIndex);
+        GameManager.Instance.SpawnPlayers();
     }
 
     public int GetWorldSceneIndex() => worldSceneIndex;

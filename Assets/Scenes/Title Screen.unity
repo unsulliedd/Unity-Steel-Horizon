@@ -961,6 +961,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character Selection Background
       objectReference: {fileID: 0}
+    - target: {fileID: 4879207575975514523, guid: 62dcb616e0232e1488f318cf4da2b23f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5149581083048464334, guid: 62dcb616e0232e1488f318cf4da2b23f,
         type: 3}
       propertyPath: m_Name

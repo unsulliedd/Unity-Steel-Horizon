@@ -11,7 +11,7 @@ public class LobbyManager : MonoBehaviour
     public static LobbyManager Instance { get; private set; }
     private Lobby currentLobby;
     private ILobbyEvents currentLobbyEvents;
-    private string hostId;
+    public string hostId;
 
     private void Awake()
     {
@@ -149,9 +149,10 @@ public class LobbyManager : MonoBehaviour
         {
             Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
             currentLobby = lobby;
+            Debug.Log(lobby.HostId);
             hostId = AuthenticationService.Instance.PlayerId;
+            Debug.Log(hostId);
             Debug.Log($"Lobby created with ID: {lobby.Id}");
-
             await SubscribeToLobbyEvents();
 
             return lobby;

@@ -1,7 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Collections;
+using Unity.Services.Lobbies.Models;
+using Unity.Services.Authentication;
+using System.Collections.Generic;
+using Unity.Netcode;
+using Unity.Services.Lobbies;
 
 public class UI_CharacterSelection : MonoBehaviour
 {
@@ -21,6 +25,7 @@ public class UI_CharacterSelection : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -57,14 +62,21 @@ public class UI_CharacterSelection : MonoBehaviour
         Debug.Log($"Character {selectedCharacterIndex} selected");
     }
 
-    private void OnConfirmButtonClicked()
+    private async void OnConfirmButtonClicked()
     {
         if (selectedCharacterIndex != -1)
         {
             Debug.Log($"Character {selectedCharacterIndex} confirmed");
             characterSelectionPanel.SetActive(false);
 
-            // Seçilen karakter indeksi ile yeni bir oyun baþlat
+            // Karakter seçim bilgilerini lobby verisine ekleyin
+            var lobbyData = new Dictionary<string, DataObject>
+            {
+                { "characterIndex_" + AuthenticationService.Instance.PlayerId, new DataObject(DataObject.VisibilityOptions.Member, selectedCharacterIndex.ToString()) }
+            };
+
+            await LobbyService.Instance.UpdateLobbyAsync(LobbyManager.Instance.GetCurrentLobby().Id, new UpdateLobbyOptions { Data = lobbyData });
+
             StartGame();
         }
     }
@@ -85,7 +97,10 @@ public class UI_CharacterSelection : MonoBehaviour
     {
         isCountdownActive = false;
         Debug.Log("Starting game...");
-        SaveGameManager.Instance.NewGame(selectedCharacterIndex);
-        // Tüm oyuncular için oyunu baþlatma mantýðýný ekle
+
+        if (NetworkManager.Singleton.IsServer)
+        {
+            SaveGameManager.Instance.NewGame(selectedCharacterIndex);
+        }
     }
 }

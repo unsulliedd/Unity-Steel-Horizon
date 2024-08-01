@@ -76,6 +76,7 @@ public class UI_Lobby : MonoBehaviour
         }
 
         joinCode.text = RelayManager.Instance.joinCode;
+        Debug.Log($"Join Code: {joinCode.text}");
 
         await ListLobbies();
     }
@@ -207,11 +208,15 @@ public class UI_Lobby : MonoBehaviour
                     {
                         Data = new Dictionary<string, DataObject>
                         {
-                            { "startGame", new DataObject(DataObject.VisibilityOptions.Member, "true") }
+                            { "startGame", new DataObject(DataObject.VisibilityOptions.Member, "true") },
+                            { "relayJoinCode", new DataObject(DataObject.VisibilityOptions.Public, RelayManager.Instance.joinCode) }
                         }
                     };
                     await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, lobbyData);
                 }
+
+                Debug.Log("Game start request sent.");
+                await GameManager.Instance.StartGameWithRelay(RelayManager.Instance.joinCode);
             }
             catch (LobbyServiceException ex)
             {
