@@ -183,7 +183,7 @@ public class UI_Lobby : MonoBehaviour
         }
 
         // Start button visibility based on host
-        startGameButton.gameObject.SetActive(LobbyManager.Instance.GetHostId() == AuthenticationService.Instance.PlayerId);
+        //startGameButton.gameObject.SetActive(LobbyManager.Instance.GetHostId() == AuthenticationService.Instance.PlayerId);
     }
 
     public void ClearLobbyDetails()

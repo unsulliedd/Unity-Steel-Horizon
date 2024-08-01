@@ -98,7 +98,7 @@ public class LobbyManager : MonoBehaviour
             Debug.Log(currentLobby.Data.ContainsKey("startGame"));
             Debug.Log(currentLobby.Data["startGame"].Value);
 
-            if (currentLobby.Data.ContainsKey("startGame") && currentLobby.Data["startGame"].Value == "true" || LobbyManager.Instance.GetHostId() != AuthenticationService.Instance.PlayerId)
+            if (currentLobby.Data.ContainsKey("startGame") && currentLobby.Data["startGame"].Value == "true")
             {
                 Debug.Log("StartGame flag is set to true in the lobby.");
                 UI_CharacterSelection.Instance.ShowCharacterSelection();
