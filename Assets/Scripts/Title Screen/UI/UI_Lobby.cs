@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using TMPro;
 using Unity.Services.Lobbies.Models;
 using Unity.Services.Authentication;
+using System.Collections.Generic;
+using Unity.Services.Lobbies;
 
 public class UI_Lobby : MonoBehaviour
 {
@@ -25,6 +27,7 @@ public class UI_Lobby : MonoBehaviour
     public GameObject playerListItemPrefab;
 
     public Button startGameButton; // Start game button
+    public Lobby currentLobby;
 
     void Awake()
     {
@@ -45,7 +48,7 @@ public class UI_Lobby : MonoBehaviour
 
         maxPlayersDropdown.value = 3;
 
-        //startGameButton.onClick.AddListener(StartGame); // Start game button click listener
+        startGameButton.onClick.AddListener(StartGame); // Start game button click listener
     }
 
     private async Task CreateLobby()
@@ -68,6 +71,7 @@ public class UI_Lobby : MonoBehaviour
         Lobby lobby = await LobbyManager.Instance.CreateLobby(lobbyName, lobbyDescription, maxPlayers);
         if (lobby != null)
         {
+            currentLobby = lobby;
             Debug.Log("Lobby successfully created.");
         }
 
@@ -75,7 +79,6 @@ public class UI_Lobby : MonoBehaviour
 
         await ListLobbies();
     }
-
 
     private async Task ListLobbies()
     {
@@ -104,7 +107,7 @@ public class UI_Lobby : MonoBehaviour
             Destroy(lobbyListParent.GetChild(i).gameObject);
         }
 
-        Lobby currentLobby = LobbyManager.Instance.GetCurrentLobby();
+        currentLobby = LobbyManager.Instance.GetCurrentLobby();
 
         foreach (var lobby in lobbies)
         {
@@ -139,6 +142,7 @@ public class UI_Lobby : MonoBehaviour
             {
                 await LobbyManager.Instance.LeaveLobby();
                 await LobbyManager.Instance.JoinLobby(lobby.Id);
+                currentLobby = lobby;
                 UpdateLobbyDetails(lobby);
             });
 
@@ -189,13 +193,30 @@ public class UI_Lobby : MonoBehaviour
         listLobbiesButton.onClick.Invoke();
     }
 
-    public void StartGame()
+    private async void StartGame()
     {
-        if (LobbyManager.Instance.GetHostId() == AuthenticationService.Instance.PlayerId)
+        if (currentLobby.HostId == AuthenticationService.Instance.PlayerId)
         {
-            UI_CharacterSelection.Instance.characterSelectionPanel.SetActive(true);
-            Debug.Log("Starting game...");
-            // Add your logic to start the game for all players
+            try
+            {
+                await LobbyService.Instance.SendHeartbeatPingAsync(currentLobby.Id);
+                foreach (var player in currentLobby.Players)
+                {
+                    Debug.Log($"Player {player.Id} is ready");
+                    var lobbyData = new UpdateLobbyOptions
+                    {
+                        Data = new Dictionary<string, DataObject>
+                        {
+                            { "startGame", new DataObject(DataObject.VisibilityOptions.Member, "true") }
+                        }
+                    };
+                    await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, lobbyData);
+                }
+            }
+            catch (LobbyServiceException ex)
+            {
+                Debug.LogError($"Failed to start game: {ex.Message}");
+            }
         }
         else
         {

@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.Netcode;
 using System.Collections;
 
 public class UI_CharacterSelection : MonoBehaviour
@@ -14,7 +13,7 @@ public class UI_CharacterSelection : MonoBehaviour
     public TextMeshProUGUI timerText;
 
     private int selectedCharacterIndex = -1;
-    private float countdown = 120f; // Timer duration in seconds
+    private float countdown = 120f; // Timer süresi saniye olarak
     private bool isCountdownActive = false;
 
     private void Awake()
@@ -43,7 +42,7 @@ public class UI_CharacterSelection : MonoBehaviour
     {
         if (isCountdownActive)
         {
-            countdown -= Time.time;
+            countdown -= Time.deltaTime;
             timerText.text = $"Game starts in: {Mathf.Ceil(countdown)}s";
             if (countdown <= 0)
             {
@@ -65,10 +64,8 @@ public class UI_CharacterSelection : MonoBehaviour
             Debug.Log($"Character {selectedCharacterIndex} confirmed");
             characterSelectionPanel.SetActive(false);
 
-            // Start a new game with the selected character index
+            // Seçilen karakter indeksi ile yeni bir oyun baþlat
             StartGame();
-            // Optionally, you can start the game immediately or show a countdown
-            // StartCountdown();
         }
     }
 
@@ -76,10 +73,10 @@ public class UI_CharacterSelection : MonoBehaviour
     {
         characterSelectionPanel.SetActive(true);
         isCountdownActive = false;
-        countdown = 10f; // Reset the timer
+        countdown = 10f; // Zamanlayýcýyý sýfýrla
     }
 
-    private void StartCountdown()
+    public void StartCountdown()
     {
         isCountdownActive = true;
     }
@@ -89,6 +86,6 @@ public class UI_CharacterSelection : MonoBehaviour
         isCountdownActive = false;
         Debug.Log("Starting game...");
         SaveGameManager.Instance.NewGame(selectedCharacterIndex);
-        // Add logic to start the game for all players
+        // Tüm oyuncular için oyunu baþlatma mantýðýný ekle
     }
 }

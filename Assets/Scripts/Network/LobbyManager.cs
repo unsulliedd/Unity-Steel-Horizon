@@ -32,7 +32,10 @@ public class LobbyManager : MonoBehaviour
         if (LobbyService.Instance != null)
         {
             // Register event handlers
-            await SubscribeToLobbyEvents();
+            if (currentLobby != null)
+            {
+                await SubscribeToLobbyEvents();
+            }
         }
     }
 
@@ -58,6 +61,7 @@ public class LobbyManager : MonoBehaviour
             try
             {
                 currentLobbyEvents = await LobbyService.Instance.SubscribeToLobbyEventsAsync(currentLobby.Id, callbacks);
+                Debug.Log("Subscribed to lobby events.");
             }
             catch (LobbyServiceException ex)
             {
@@ -81,6 +85,14 @@ public class LobbyManager : MonoBehaviour
             Debug.Log("Lobby changes applied.");
             UI_Lobby.Instance.UpdateLobbyDetails(currentLobby);
             UI_Lobby.Instance.listLobbiesButton.onClick.Invoke();
+
+            // Check if the game should start
+            if (currentLobby.Data.ContainsKey("startGame") && currentLobby.Data["startGame"].Value == "true")
+            {
+                Debug.Log("StartGame flag is set to true in the lobby.");
+                UI_CharacterSelection.Instance.ShowCharacterSelection();
+                UI_CharacterSelection.Instance.StartCountdown();
+            }
         }
     }
 
@@ -211,5 +223,32 @@ public class LobbyManager : MonoBehaviour
     public string GetHostId()
     {
         return hostId;
+    }
+
+    public async Task StartGameInLobby()
+    {
+        if (currentLobby != null)
+        {
+            var lobbyData = new Dictionary<string, DataObject>
+            {
+                { "startGame", new DataObject(DataObject.VisibilityOptions.Member, "true") }
+            };
+
+            try
+            {
+                await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, new UpdateLobbyOptions { Data = lobbyData });
+                Debug.Log("Lobby data updated to start the game.");
+            }
+            catch (LobbyServiceException ex)
+            {
+                Debug.LogError($"Failed to update lobby: {ex.Message}");
+            }
+        }
+    }
+
+    public async void SubscribeLobbyEventsOnLobbyMenu()
+    {
+        await SubscribeToLobbyEvents();
+        await ListLobbies();
     }
 }
