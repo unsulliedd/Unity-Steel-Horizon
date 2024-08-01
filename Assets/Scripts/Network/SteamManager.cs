@@ -127,7 +127,6 @@ public class SteamManager : MonoBehaviour
         }
 
         var ticket = await SteamUser.GetAuthSessionTicketAsync();
-        Debug.Log(ticket);
         if (ticket == null || ticket.Data == null || ticket.Data.Length == 0)
         {
             Debug.LogError("Failed to get Steam authentication ticket.");

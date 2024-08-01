@@ -553,6 +553,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a70669ba6bdfb240ac07ff64d31c49e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterPrefabs:
+  - {fileID: 107434631492608830, guid: 7b1e67df1dd667549ab52d787074df8b, type: 3}
+  - {fileID: 4844543506815224979, guid: 87f68c77290702b4cbf2aa3cb89bca5c, type: 3}
+  - {fileID: 6506388466264085648, guid: e6d7e06c044c7c94a8c9177600e37e27, type: 3}
+  - {fileID: 3563796724399957245, guid: 5e4650329ffcec34786fb9f88cc98389, type: 3}
 --- !u!4 &1680861020
 Transform:
   m_ObjectHideFlags: 0
@@ -631,6 +636,35 @@ PrefabInstance:
       propertyPath: worldSceneIndex
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 912471403327615154, guid: 752fa9a6569f81443aa8a2a70fdc729f,
+        type: 3}
+      propertyPath: playerClass.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 912471403327615154, guid: 752fa9a6569f81443aa8a2a70fdc729f,
+        type: 3}
+      propertyPath: playerClass.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6dd64948a7607b44e9190d12b1de7698,
+        type: 2}
+    - target: {fileID: 912471403327615154, guid: 752fa9a6569f81443aa8a2a70fdc729f,
+        type: 3}
+      propertyPath: playerClass.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: cc5ef63073e6adc49aa0459858584c0e,
+        type: 2}
+    - target: {fileID: 912471403327615154, guid: 752fa9a6569f81443aa8a2a70fdc729f,
+        type: 3}
+      propertyPath: playerClass.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: b3d4f8ea579b6dc41ab6c50708bdf74e,
+        type: 2}
+    - target: {fileID: 912471403327615154, guid: 752fa9a6569f81443aa8a2a70fdc729f,
+        type: 3}
+      propertyPath: playerClass.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 63549688de2e73242bf95ebfa3494fdd,
+        type: 2}
     - target: {fileID: 2190508900098316056, guid: 752fa9a6569f81443aa8a2a70fdc729f,
         type: 3}
       propertyPath: m_Name
@@ -764,6 +798,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7607354394171691486, guid: 62dcb616e0232e1488f318cf4da2b23f,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 946229090
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1114,8 +1153,7 @@ PrefabInstance:
         type: 3}
       propertyPath: NetworkConfig.PlayerPrefab
       value: 
-      objectReference: {fileID: 4844543506815224979, guid: 87f68c77290702b4cbf2aa3cb89bca5c,
-        type: 3}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

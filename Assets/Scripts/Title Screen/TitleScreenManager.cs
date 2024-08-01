@@ -106,7 +106,7 @@ public class TitleScreenManager : MonoBehaviour
 
     public void StartSinglePLayerNewGame()
     {
-        SaveGameManager.Instance.NewGame();
+        //SaveGameManager.Instance.NewGame();
     }
 
     /// <summary>
@@ -160,7 +160,7 @@ public class TitleScreenManager : MonoBehaviour
     /// </summary>
     public void StartNewGame()
     {
-        SaveGameManager.Instance.NewGame();
+        //SaveGameManager.Instance.NewGame();
     }
 
     /// <summary>

@@ -45,7 +45,7 @@ public class UI_Lobby : MonoBehaviour
 
         maxPlayersDropdown.value = 3;
 
-        startGameButton.onClick.AddListener(StartGame); // Start game button click listener
+        //startGameButton.onClick.AddListener(StartGame); // Start game button click listener
     }
 
     private async Task CreateLobby()
@@ -56,7 +56,7 @@ public class UI_Lobby : MonoBehaviour
 
         if (string.IsNullOrEmpty(lobbyName))
         {
-            Debug.LogError("Lobi adý boþ olamaz.");
+            Debug.LogError("Lobby name cannot be empty.");
             return;
         }
 
@@ -68,13 +68,14 @@ public class UI_Lobby : MonoBehaviour
         Lobby lobby = await LobbyManager.Instance.CreateLobby(lobbyName, lobbyDescription, maxPlayers);
         if (lobby != null)
         {
-            Debug.Log("Lobi baþarýyla oluþturuldu.");
+            Debug.Log("Lobby successfully created.");
         }
 
         joinCode.text = RelayManager.Instance.joinCode;
 
         await ListLobbies();
     }
+
 
     private async Task ListLobbies()
     {
@@ -188,10 +189,11 @@ public class UI_Lobby : MonoBehaviour
         listLobbiesButton.onClick.Invoke();
     }
 
-    private void StartGame()
+    public void StartGame()
     {
         if (LobbyManager.Instance.GetHostId() == AuthenticationService.Instance.PlayerId)
         {
+            UI_CharacterSelection.Instance.characterSelectionPanel.SetActive(true);
             Debug.Log("Starting game...");
             // Add your logic to start the game for all players
         }

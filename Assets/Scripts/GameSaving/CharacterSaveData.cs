@@ -20,7 +20,7 @@ public class CharacterSaveData
     public int currentHealth;
     public float currentStamina;
     public int vitality;
-    public int strenght;
+    public int strength;
 
     [Header("Inventory")]
     public List<Weapon> ownedWeapons;
@@ -34,4 +34,5 @@ public class CharacterSaveData
     [Header("Kill Records")]
     public int totalDeaths;
     public int totalEnemiesKilled;
+    internal int characterClassIndex;
 }

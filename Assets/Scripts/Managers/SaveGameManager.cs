@@ -32,7 +32,7 @@ public class SaveGameManager : MonoBehaviour
     public static SaveGameManager Instance { get; private set; } // Singleton instance of SaveGameManager
 
     public AsyncOperation WorldSceneOperation { get; private set; } // AsyncOperation for world scene
-    public PlayerClass playerClass;
+    public PlayerClass[] playerClass;
 
     private void Awake()
     {
@@ -70,7 +70,7 @@ public class SaveGameManager : MonoBehaviour
     /// <summary>
     /// Starts a new game, finding an empty character slot and initializing it.
     /// </summary>
-    public void NewGame()
+    public void NewGame(int selectedCharacterIndex)
     {
         InitializeSaveFileWriter();
 
@@ -91,18 +91,15 @@ public class SaveGameManager : MonoBehaviour
                 currentCharacterData = new CharacterSaveData
                 {
                     characterName = "Player",
-                    characterClass = null,
+                    characterClass = playerClass[selectedCharacterIndex].className,
+                    characterClassIndex = selectedCharacterIndex,
                     characterLevel = 1,
-                    //characterName = playerClass.name,
-                    //characterClass = playerClass.className,
-                    //characterLevel = 1,
-                    ////positionX = 0,
-                    ////positionY = 0,
-                    ////positionZ = 0,
-                    //currentHealth = playerClass.health,
-                    //currentStamina = playerClass.stamina,
-                    //vitality = playerClass.baseVitality,
-                    //strenght = playerClass.baseStrength,
+                    ownedWeapons = new List<Weapon>(),
+                    // Additional initialization based on selected character
+                    currentHealth = playerClass[selectedCharacterIndex].health,
+                    currentStamina = playerClass[selectedCharacterIndex].stamina,
+                    vitality = playerClass[selectedCharacterIndex].baseVitality,
+                    strength = playerClass[selectedCharacterIndex].baseStrength,
                 };
 
                 // Create a new save file for the character
@@ -116,7 +113,7 @@ public class SaveGameManager : MonoBehaviour
         if (!emptySlotFound)
             TitleScreenManager.Instance.NoEmptySlotPanelPopUp();
         else
-            StartCoroutine(LoadWorldScene());
+            StartCoroutine(LoadWorldScene(selectedCharacterIndex));
     }
 
     /// <summary>
@@ -149,7 +146,7 @@ public class SaveGameManager : MonoBehaviour
         // Load the character data from the save file
         currentCharacterData = saveFileWriter.LoadSaveFile();
 
-        StartCoroutine(LoadWorldScene());
+        StartCoroutine(LoadWorldScene(currentCharacterData.characterClassIndex));
     }
 
     /// <summary>
@@ -213,7 +210,7 @@ public class SaveGameManager : MonoBehaviour
     /// Loads the world scene asynchronously.
     /// </summary>
     /// <returns>An enumerator for coroutine support.</returns>
-    public IEnumerator LoadWorldScene()
+    public IEnumerator LoadWorldScene(int selectedCharacterIndex)
     {
         AsyncOperation loadingSceneOperation = SceneManager.LoadSceneAsync(loadingScreenIndex, LoadSceneMode.Additive);
         yield return new WaitUntil(() => loadingSceneOperation.isDone);
@@ -224,7 +221,6 @@ public class SaveGameManager : MonoBehaviour
         WorldSceneOperation = SceneManager.LoadSceneAsync(worldSceneIndex, LoadSceneMode.Single);
         yield return new WaitUntil(() => WorldSceneOperation.isDone);
 
-
         if (TitleScreenManager.Instance.startAsHost)
             NetworkManager.Singleton.StartHost();
         else if (TitleScreenManager.Instance.startAsClient)
@@ -234,9 +230,10 @@ public class SaveGameManager : MonoBehaviour
             GameManager.Instance.StartSinglePlayerGame();
             NetworkManager.Singleton.StartHost();
         }
-        
+
         // Once the scene is loaded, load the game data
         SaveGameCallbacks.LoadGame(ref currentCharacterData);
+        GameManager.Instance.Spawn(selectedCharacterIndex);
     }
 
     public int GetWorldSceneIndex() => worldSceneIndex;

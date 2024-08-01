@@ -1,10 +1,12 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
+using Unity.Netcode;
 
 public class PlayerManager : CharacterManager
 {
-    [Header("DebugMenu")][SerializeField] private bool respawnCharacter = false;
+    [Header("DebugMenu")]
+    [SerializeField] private bool respawnCharacter = false;
     [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
     [HideInInspector] public PlayerAnimationManager PlayerAnimationManager;
     [HideInInspector] public PlayerNetworkManager PlayerNetworkManager;
@@ -39,7 +41,7 @@ public class PlayerManager : CharacterManager
     {
         base.Update();
 
-        // Prevent the player controlling other players
+        // Prevent the player from controlling other players
         if (!IsOwner) return;
 
         playerLocomotionManager.HandleAllMovement();
@@ -70,12 +72,10 @@ public class PlayerManager : CharacterManager
 
             // Health
             PlayerNetworkManager.health.OnValueChanged += PlayerUIManager.Instance.playerHUDManager.SetNewHealthValue;
-            
 
             // Stamina
             PlayerNetworkManager.stamina.OnValueChanged += PlayerUIManager.Instance.playerHUDManager.SetNewStaminaValue;
             PlayerNetworkManager.stamina.OnValueChanged += PlayerStatsManager.ResetStaminaTimer;
-
 
             SaveGameCallbacks.OnSaveGame += SaveCurrentGameData;
             SaveGameCallbacks.OnLoadGame += LoadCurrentGameData;
@@ -86,7 +86,6 @@ public class PlayerManager : CharacterManager
         }
 
         PlayerNetworkManager.health.OnValueChanged += PlayerNetworkManager.CheckHPDeath;
-
     }
 
     private IEnumerator InitializeSingletons()
@@ -141,6 +140,11 @@ public class PlayerManager : CharacterManager
         }
     }
 
+    public void SetCharacterData(CharacterSaveData characterData)
+    {
+        InitializePlayerStats();
+    }
+
     public void SaveCurrentGameData(ref CharacterSaveData currentCharacterData)
     {
         // Ensure PlayerNetworkManager and its characterName are not null
@@ -154,7 +158,7 @@ public class PlayerManager : CharacterManager
             currentCharacterData.characterClass = playerClass.className;
 
             currentCharacterData.vitality = PlayerNetworkManager.vitality.Value;
-            currentCharacterData.strenght = PlayerNetworkManager.strength.Value;
+            currentCharacterData.strength = PlayerNetworkManager.strength.Value;
 
             currentCharacterData.currentHealth = PlayerNetworkManager.health.Value;
             currentCharacterData.currentStamina = PlayerNetworkManager.stamina.Value;
@@ -177,7 +181,7 @@ public class PlayerManager : CharacterManager
         transform.position = new Vector3(currentCharacterData.positionX, currentCharacterData.positionY, currentCharacterData.positionZ);
 
         PlayerNetworkManager.vitality.Value = currentCharacterData.vitality;
-        PlayerNetworkManager.strength.Value = currentCharacterData.strenght;
+        PlayerNetworkManager.strength.Value = currentCharacterData.strength;
 
         PlayerNetworkManager.maxHealth.Value = PlayerStatsManager.CalculateHealthBasedOnVitalityLevel(PlayerNetworkManager.vitality.Value);
         PlayerNetworkManager.maxStamina.Value = PlayerStatsManager.CalculateStaminaBasedOnStrength(PlayerNetworkManager.strength.Value);
