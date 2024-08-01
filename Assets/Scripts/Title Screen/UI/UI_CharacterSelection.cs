@@ -25,7 +25,6 @@ public class UI_CharacterSelection : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -67,9 +66,7 @@ public class UI_CharacterSelection : MonoBehaviour
         if (selectedCharacterIndex != -1)
         {
             Debug.Log($"Character {selectedCharacterIndex} confirmed");
-            characterSelectionPanel.SetActive(false);
 
-            // Karakter seçim bilgilerini lobby verisine ekleyin
             var lobbyData = new Dictionary<string, DataObject>
             {
                 { "characterIndex_" + AuthenticationService.Instance.PlayerId, new DataObject(DataObject.VisibilityOptions.Member, selectedCharacterIndex.ToString()) }
@@ -100,7 +97,15 @@ public class UI_CharacterSelection : MonoBehaviour
 
         if (NetworkManager.Singleton.IsServer)
         {
+            Debug.Log(selectedCharacterIndex);
             SaveGameManager.Instance.NewGame(selectedCharacterIndex);
         }
+    }
+
+    public async void Leave()
+    {
+        await LobbyManager.Instance.LeaveLobby();
+        NetworkManager.Singleton.Shutdown();
+        characterSelectionPanel.SetActive(false);
     }
 }

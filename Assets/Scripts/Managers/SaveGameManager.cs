@@ -92,7 +92,6 @@ public class SaveGameManager : MonoBehaviour
                     characterClassIndex = selectedCharacterIndex,
                     characterLevel = 1,
                     ownedWeapons = new List<Weapon>(),
-                    // Additional initialization based on selected character
                     currentHealth = playerClass[selectedCharacterIndex].health,
                     currentStamina = playerClass[selectedCharacterIndex].stamina,
                     vitality = playerClass[selectedCharacterIndex].baseVitality,
@@ -105,7 +104,7 @@ public class SaveGameManager : MonoBehaviour
                 break;
             }
         }
-
+        Debug.Log("NewGame" + selectedCharacterIndex);
         // Show no empty slot message
         if (!emptySlotFound)
             TitleScreenManager.Instance.NoEmptySlotPanelPopUp();
@@ -209,12 +208,13 @@ public class SaveGameManager : MonoBehaviour
     /// <returns>An enumerator for coroutine support.</returns>
     public IEnumerator LoadWorldScene(int selectedCharacterIndex)
     {
+        Debug.Log("Loading world scene...");
         AsyncOperation loadingSceneOperation = SceneManager.LoadSceneAsync(loadingScreenIndex, LoadSceneMode.Additive);
         yield return new WaitUntil(() => loadingSceneOperation.isDone);
-
+        Debug.Log("Loading scene loaded");
         Scene loadingScene = SceneManager.GetSceneByBuildIndex(loadingScreenIndex);
         SceneManager.SetActiveScene(loadingScene);
-
+        Debug.Log("Loading scene activated");
         WorldSceneOperation = SceneManager.LoadSceneAsync(worldSceneIndex, LoadSceneMode.Single);
         yield return new WaitUntil(() => WorldSceneOperation.isDone);
 
@@ -229,7 +229,7 @@ public class SaveGameManager : MonoBehaviour
 
         // Once the scene is loaded, load the game data
         SaveGameCallbacks.LoadGame(ref currentCharacterData);
-        GameManager.Instance.SpawnPlayers();
+        GameManager.Instance.Spawn(selectedCharacterIndex);
     }
 
     public int GetWorldSceneIndex() => worldSceneIndex;

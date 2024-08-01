@@ -39,6 +39,16 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        if (currentLobbyEvents != null)
+        {
+            currentLobbyEvents.Callbacks.LobbyChanged += OnLobbyChanged;
+            currentLobbyEvents.Callbacks.KickedFromLobby += OnKickedFromLobby;
+            currentLobbyEvents.Callbacks.LobbyEventConnectionStateChanged += OnLobbyEventConnectionStateChanged;
+        }
+    }
+
     private void OnDestroy()
     {
         if (currentLobbyEvents != null)
@@ -85,14 +95,16 @@ public class LobbyManager : MonoBehaviour
             Debug.Log("Lobby changes applied.");
             UI_Lobby.Instance.UpdateLobbyDetails(currentLobby);
             UI_Lobby.Instance.listLobbiesButton.onClick.Invoke();
+            Debug.Log(currentLobby.Data.ContainsKey("startGame"));
+            Debug.Log(currentLobby.Data["startGame"].Value);
 
-            // Check if the game should start
             if (currentLobby.Data.ContainsKey("startGame") && currentLobby.Data["startGame"].Value == "true")
             {
                 Debug.Log("StartGame flag is set to true in the lobby.");
                 UI_CharacterSelection.Instance.ShowCharacterSelection();
                 UI_CharacterSelection.Instance.StartCountdown();
             }
+            // Check if the game should start
         }
     }
 
@@ -247,7 +259,7 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    public async void SubscribeLobbyEventsOnLobbyMenu()
+    public async Task SubscribeLobbyEventsOnLobbyMenu()
     {
         await SubscribeToLobbyEvents();
         await ListLobbies();

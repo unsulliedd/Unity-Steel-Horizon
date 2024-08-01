@@ -11,8 +11,6 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public GameObject[] characterPrefabs; // Karakter prefablarý
 
-    private Dictionary<ulong, int> clientCharacterSelections = new Dictionary<ulong, int>();
-
     private void Awake()
     {
         if (Instance == null)
@@ -47,7 +45,6 @@ public class GameManager : MonoBehaviour
                 RelayManager.Instance.allocation.ConnectionData
             );
             NetworkManager.Singleton.StartHost();
-            SaveGameManager.Instance.StartCoroutine(SaveGameManager.Instance.LoadWorldScene(SaveGameManager.Instance.currentCharacterData.characterClassIndex));
         }
         else
         {
@@ -66,45 +63,45 @@ public class GameManager : MonoBehaviour
                 NetworkManager.Singleton.StartClient();
             }
         }
-    }
 
-    public void SpawnPlayers()
+    }
+    public void Spawn(int selectedCharacterIndex)
     {
         if (NetworkManager.Singleton.IsServer)
         {
             foreach (var clientId in NetworkManager.Singleton.ConnectedClientsIds)
             {
-                int characterIndex = clientCharacterSelections.ContainsKey(clientId) ? clientCharacterSelections[clientId] : 0;
-                SpawnPlayerCharacter(clientId, characterIndex);
+                Debug.Log($"Spawning player for client {clientId}");
+                SpawnPlayerCharacter(clientId, selectedCharacterIndex);
             }
         }
     }
 
-    private void SpawnPlayerCharacter(ulong clientId, int characterIndex)
+    public void StartSinglePlayerGame()
     {
+        NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData("127.0.0.1", 7777);
+    }
+
+    private void SpawnPlayerCharacter(ulong clientId, int selectedCharacterIndex)
+    {
+        // Get the selected character index from the SaveGameManager
+        int characterIndex = SaveGameManager.Instance.currentCharacterData.characterClassIndex;
+
         if (characterIndex < 0 || characterIndex >= characterPrefabs.Length)
         {
             Debug.LogError("Invalid character index");
             return;
         }
 
-        GameObject characterPrefab = characterPrefabs[characterIndex];
+        GameObject characterPrefab = characterPrefabs[selectedCharacterIndex];
         GameObject characterInstance = Instantiate(characterPrefab);
 
         var networkObject = characterInstance.GetComponent<NetworkObject>();
+
         networkObject.SpawnAsPlayerObject(clientId);
         Debug.Log($"Spawned player character for client {clientId}");
-    }
-
-    public void SetCharacterIndexForClient(ulong clientId, int characterIndex)
-    {
-        if (clientCharacterSelections.ContainsKey(clientId))
-        {
-            clientCharacterSelections[clientId] = characterIndex;
-        }
-        else
-        {
-            clientCharacterSelections.Add(clientId, characterIndex);
-        }
+        // Set the character data on the PlayerManager component
+        PlayerManager playerManager = characterInstance.GetComponent<PlayerManager>();
+        playerManager.SetCharacterData(SaveGameManager.Instance.currentCharacterData);
     }
 }

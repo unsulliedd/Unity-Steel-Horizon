@@ -51,6 +51,11 @@ public class UI_Lobby : MonoBehaviour
         startGameButton.onClick.AddListener(StartGame); // Start game button click listener
     }
 
+    private async void OnEnable()
+    {
+        await LobbyManager.Instance.SubscribeLobbyEventsOnLobbyMenu();
+    }
+
     private async Task CreateLobby()
     {
         string lobbyName = lobbyNameInputField.text;
