@@ -95,11 +95,10 @@ public class UI_CharacterSelection : MonoBehaviour
         isCountdownActive = false;
         Debug.Log("Starting game...");
 
-        if (NetworkManager.Singleton.IsServer)
-        {
-            Debug.Log(selectedCharacterIndex);
-            SaveGameManager.Instance.NewGame(selectedCharacterIndex);
-        }
+
+        Debug.Log(selectedCharacterIndex);
+        SaveGameManager.Instance.NewGame(selectedCharacterIndex);
+        
     }
 
     public async void Leave()
