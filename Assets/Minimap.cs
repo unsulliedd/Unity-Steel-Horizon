@@ -1,19 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Services.Lobbies.Models;
 using UnityEngine;
 
-public class Minimap : MonoBehaviour 
+namespace mini
 {
-    public Transform player;
-    // Start is called before the first frame update
-
-    private void LateUpdate()
+    public class Minimap : MonoBehaviour
     {
-        Vector3 newPosition = player.position;
-        newPosition.y = transform.position.y; 
-        transform.position = newPosition;
+        public Transform playerTransform;
+        // Start is called before the first frame update
 
-        transform.rotation = Quaternion.Euler(90f, player.eulerAngles.y, 0f);
+        bool iscome;
+
+        private void Awake()
+        {
+            iscome = true;
+        }
+
+     
+
+        private void Update()
+        {
+            {
+                GameObject[] player = GameObject.FindGameObjectsWithTag("Player");
+                if (iscome)
+                {
+                    foreach (GameObject go in player)
+                    {
+                        if (go != null)
+                        {
+                            playerTransform = go.GetComponent<Transform>();
+                           
+                        }
+                    }
+                }
+            }
+        }
+
+        private void LateUpdate()
+        {
+            Vector3 newPosition = playerTransform.position;
+            newPosition.y = transform.position.y;
+            transform.position = newPosition;
+
+            transform.rotation = Quaternion.Euler(90f, playerTransform.eulerAngles.y, 0f);
+
+        }
+
     }
-
 }
+
