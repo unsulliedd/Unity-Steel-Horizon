@@ -8,7 +8,9 @@ public class RaycastWeapon : MonoBehaviour
     public float fireRate = 1f; // Silahın ateş hızı
     public int damage = 10; // Verilen hasar
     public Transform firePoint; // Silahın ateş ettiği nokta
-    public LayerMask targetMask; // Hangi katmandaki objelere çarpacağını belirler
+    public LayerMask targetMask;
+    private CharacterNetworkManager _characterNetworkManager;
+    [SerializeField] private GameObject bulletPrefab;// Hangi katmandaki objelere çarpacağını belirler
 
     private float nextTimeToFire = 0f;
 
@@ -31,6 +33,8 @@ public class RaycastWeapon : MonoBehaviour
         {
             if (hit.collider.CompareTag("Player")) // Oyuncu etiketine sahip objeleri hedef alır
             {
+                
+               
                 return true;
             }
         }
@@ -39,7 +43,8 @@ public class RaycastWeapon : MonoBehaviour
 
     void Shoot()
     {
-        Debug.Log("Ateş edildi!");
-        // Burada hasar verme ve diğer efektleri ekleyebilirsin
+        GameObject go=Instantiate(bulletPrefab, firePoint);
+        go.GetComponent<Rigidbody>().AddForce(transform.forward*200,ForceMode.Acceleration);
+        Destroy(go,3);
     }
 }
