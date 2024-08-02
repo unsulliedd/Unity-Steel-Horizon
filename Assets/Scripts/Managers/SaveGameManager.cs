@@ -93,6 +93,7 @@ public class SaveGameManager : MonoBehaviour
                     characterName = "Player",
                     characterClass = null,
                     characterLevel = 1,
+                    ownedWeapons = new List<Weapon>()
                     //characterName = playerClass.name,
                     //characterClass = playerClass.className,
                     //characterLevel = 1,

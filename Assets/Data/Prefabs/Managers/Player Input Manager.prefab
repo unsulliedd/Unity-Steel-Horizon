@@ -44,10 +44,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826757b83cb5d7e4ba1438f5801b59a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerManager: {fileID: 0}
+  moveInput: {x: 0, y: 0}
+  horizontalMoveInput: 0
+  verticalMoveInput: 0
+  moveAmount: 0
+  rollInput: 0
+  sprintInput: 0
+  jumpInput: 0
+  lookInput: {x: 0, y: 0}
+  horizontalLookInput: 0
+  verticalLookInput: 0
+  driveInput: {x: 0, y: 0}
+  horizontalDriveInput: 0
+  verticalDriveInput: 0
+  brakeVehicleInput: 0
+  interactInput: 0
+  fireInput: 0
+  aimInput: 0
+  combatMode: 0
+  openCharacterMenuInput: 0
+  openInventoryMenuInput: 0
+  openSkillMenuInput: 0
   navigationInput: {x: 0, y: 0}
-  pointerPosition: {x: 0, y: 0}
+  scrollWheelInput: {x: 0, y: 0}
   submitPerformed: 0
+  deletePerformed: 0
   cancelPerformed: 0
   clickPerformed: 0
+  rightClickPerformed: 0
   anyKeyPerformed: 0
   isGamepadActive: 0

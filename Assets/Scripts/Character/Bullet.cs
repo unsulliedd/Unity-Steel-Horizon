@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     public float bulletSpeed = 1f;
 
     public Rigidbody rb; // Reference to the bullet's Rigidbody
+    public AudioSource audioSource; // Reference to the bullet's AudioSource
 
     /// <summary>
     /// Called when the bullet is enabled. Initializes the Rigidbody and sets a timer to disable the bullet.
@@ -16,6 +17,7 @@ public class Bullet : MonoBehaviour
     void OnEnable()
     {
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
         rb.isKinematic = false; // Ensure the Rigidbody is not kinematic
         Invoke(nameof(Disable), lifeTime); // Schedule the bullet to be disabled after its lifetime
     }

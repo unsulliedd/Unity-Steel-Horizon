@@ -33,6 +33,11 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     private PlayerManager playerManager;
 
+    public float lastFootstepTime;
+    public float footstepInterval = 0.5f;
+
+    private bool wasMoving = false;
+
     protected override void Awake()
     {
         base.Awake();
@@ -98,6 +103,15 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
         float speed = playerManager.PlayerNetworkManager.isSprinting.Value ? sprintSpeed : (moveAmount <= 0.5f ? walkSpeed : runSpeed);
         playerManager.CharacterController.Move(speed * Time.deltaTime * moveDirection);
+
+        if (moveAmount > 0)
+        {
+            if (Time.time - lastFootstepTime >= footstepInterval)
+            {
+                playerManager.PlayerNetworkManager.PlayFootStepServerRpc();
+                lastFootstepTime = Time.time;
+            }
+        }
     }
 
     // Handle player rotation based on input

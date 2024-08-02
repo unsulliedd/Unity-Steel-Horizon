@@ -12,6 +12,8 @@ public class CharacterManager : NetworkBehaviour
     public CharacterEffectsManager CharacterEffectsManager { get; private set; }
     
     public WeaponManager WeaponManager { get; private set; }
+    public AudioSource audioSource;
+    public AudioSource environmentAudioSource;
 
     [Header("Flags")]
     public bool isPerformingAction = false;
@@ -32,6 +34,7 @@ public class CharacterManager : NetworkBehaviour
         CharacterAnimationManager = GetComponent<CharacterAnimationManager>();
         CharacterEffectsManager = GetComponent<CharacterEffectsManager>();
         WeaponManager = GetComponent<WeaponManager>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     protected virtual void Start()

@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using static Unity.Barracuda.TextureAsTensorData;
 
 public class CharacterNetworkManager : NetworkBehaviour
 {
@@ -85,7 +86,10 @@ public class CharacterNetworkManager : NetworkBehaviour
     public void PlayActionAnimationsForAllClientsRpc(ulong clientId, string animationName, bool applyRootMotion)
     {
         if (clientId != NetworkManager.Singleton.LocalClientId)
+        {
+            characterManager.audioSource.PlayOneShot(AudioManager.Instance.actionSound);
             PerformActionAnimationsFromServer(animationName, applyRootMotion);
+        }
     }
 
     private void PerformActionAnimationsFromServer(string animationId, bool applyRootMotion)
@@ -104,10 +108,22 @@ public class CharacterNetworkManager : NetworkBehaviour
     public void ShootBulletClientRpc(Vector3 position, Quaternion rotation)
     {
         characterManager.WeaponManager.GetMuzzleFlashParticle().Play();
-
         GameObject bulletGameobject = ObjectPoolManager.Instance.SpawnFromPool("Bullet", position, rotation);
         Bullet bullet = bulletGameobject.GetComponent<Bullet>();
+        AudioManager.Instance.PlaySemiShot();
         bullet.rb.isKinematic = false;
         bullet.rb.velocity = bullet.transform.forward * bullet.bulletSpeed;
+    }
+
+    [Rpc(SendTo.Server)]
+    public void PlayFootStepServerRpc()
+    {
+        PlayFootStepClientRpc();
+    }
+
+    [Rpc(SendTo.Everyone)]
+    public void PlayFootStepClientRpc()
+    {
+        characterManager.audioSource.PlayOneShot(AudioManager.Instance.footStep);
     }
 }
