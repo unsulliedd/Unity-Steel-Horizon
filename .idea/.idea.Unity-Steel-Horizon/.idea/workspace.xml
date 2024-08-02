@@ -7,19 +7,62 @@
     <list default="true" id="61dd8044-5626-4490-8aee-1b1e203dbe96" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Unity-Steel-Horizon/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Unity-Steel-Horizon/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/BTest/Cloud/UnityVolumetricCloudsURP-main/Assets/VolumetricClouds/VolumetricClouds.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BTest/Cloud/UnityVolumetricCloudsURP-main/Assets/VolumetricClouds/VolumetricClouds.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Data/Prefabs/Character/Player/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Prefabs/Character/Player/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAC.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Boss/BossAC.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/AIWeapons.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/AIWeapons.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Balta.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Balta.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Downloads/bossson@Standing Melee Attack 360 Low.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Downloads/bossson@Standing Melee Attack 360 Low.fbx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Downloads/bossson@Standing Melee Attack Downward.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Downloads/bossson@Standing Melee Attack Downward.fbx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Downloads/bossson@Standing Melee Attack Horizontal.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Downloads/bossson@Standing Melee Attack Horizontal.fbx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Downloads/bossson@Standing Melee Run Jump Attack.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Downloads/bossson@Standing Melee Run Jump Attack.fbx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Falling Forward Death.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Falling Forward Death.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Male Locomotion Pose.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Male Locomotion Pose.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Melee Attack 360 High (1).fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Melee Attack 360 High (1).fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Melee Attack Downward (1).fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Melee Attack Downward (1).fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Melee Attack Horizontal (1).fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Melee Attack Horizontal (1).fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Melee Attack Kick Ver. 1 (1).fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Melee Attack Kick Ver. 1 (1).fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Melee Combo Attack Ver. 1.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Melee Combo Attack Ver. 1.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Melee Combo Attack Ver. 2 (1).fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Melee Combo Attack Ver. 2 (1).fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Melee Run Jump Attack.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Melee Run Jump Attack.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing React Large From Right.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing React Large From Right.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing React Large Gut.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing React Large Gut.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Run Forward.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Run Forward.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Taunt Battlecry.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Taunt Battlecry.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Walk Back (1).fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Walk Back (1).fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Walk Back.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Walk Back.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Walk Forward (1) 1.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Walk Forward (1) 1.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Walk Forward (1).fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Standing Walk Forward (1).fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Unarmed Idle.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Unarmed Idle.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Unarmed Walk Forward.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAnimationss/Unarmed Walk Forward.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossAreaAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Boss/BossAreaAttack.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/BossManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Boss/BossManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Boss/DashState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Boss/DashState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/Prefabs/Managers/WorldEffectsManager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Prefabs/Managers/WorldEffectsManager.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Title Screen.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Title Screen.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/World Scene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/World Scene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/CharacterEffectsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/CharacterEffectsManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/CharacterManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/CharacterManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/CharacterNetworkManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/CharacterNetworkManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Player/Effects/PlayerEffectsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/Player/Effects/PlayerEffectsManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Player/Effects/WorldCharacterEffectsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/Player/Effects/WorldCharacterEffectsManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Player/PlayerHUDManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/Player/PlayerHUDManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Player/PlayerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/Player/PlayerManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameSaving/CharacterSaveData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameSaving/CharacterSaveData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/DynamicsManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/DynamicsManager.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Bullet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/Bullet.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DamageCollider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DamageCollider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/WorldCharacterEffectsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/WorldCharacterEffectsManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ShooterAI/AIIWeapons.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ShooterAI/AIIWeapons.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,9 +81,13 @@
     <setting file="file://$USER_HOME$/Downloads/EffectHealth/Character/Player/PlayerManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Downloads/EffectHealth/Character/Player/PlayerNetworkManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Downloads/EffectHealth/Character/Player/PlayerStatsManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/DamageCollider.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Boss/AIWeapons.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Boss/BossAnimationss/MeshS.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Boss/BossAnimationss/MeshSocketBoss.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/BossHealth.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Character/CharacterEffectsManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Character/Player/Effects/TakeDamageEffect.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/WeaponIIK.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -53,29 +100,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "masterHealth",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;levelDesign&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\baris\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\baris\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\baris\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\baris\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\baris\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\baris\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="$USER_HOME$/Downloads\Steel Horizon.exe" />
+      <option name="EXE_PATH" value="$PROJECT_DIR$/../../zoort/Steel Horizon.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="C:\Users\baris\OneDrive\Desktop\New folder" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -133,6 +180,8 @@
       <workItem from="1721032551620" duration="6271000" />
       <workItem from="1721062857426" duration="13977000" />
       <workItem from="1721993177188" duration="14117000" />
+      <workItem from="1722583430349" duration="6185000" />
+      <workItem from="1722592724945" duration="12441000" />
     </task>
     <servers />
   </component>

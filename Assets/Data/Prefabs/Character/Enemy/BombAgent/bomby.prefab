@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: -8683167659688576255}
   - component: {fileID: -5401659857905159073}
   m_Layer: 0
-  m_Name: Bomby
+  m_Name: bomby
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -238,7 +238,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &477607431586228595
 BoxCollider:
@@ -279,11 +279,11 @@ MonoBehaviour:
   MaxStep: 0
   moveSpeed: 300
   detectionRadius: 20
+  player: {fileID: 0}
   explodeDuration: 3
   material: {fileID: 2100000, guid: 056b8378eaa9abc4099799b460ca1f78, type: 2}
   targetColor: {r: 1, g: 0, b: 0, a: 1}
   duration: 1
-  bombTriggerTime: 10
 --- !u!114 &-8683167659688576255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,8 +296,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2781774652
-  InScenePlacedSourceGlobalObjectIdHash: 0
+  GlobalObjectIdHash: 519348236
+  InScenePlacedSourceGlobalObjectIdHash: 1489008251
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0

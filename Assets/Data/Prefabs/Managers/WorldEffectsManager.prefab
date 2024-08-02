@@ -47,3 +47,4 @@ MonoBehaviour:
   TakeDamageEffect: {fileID: 11400000, guid: 940161480e43a424fad887be903483c2, type: 2}
   _instantCharacterEffects:
   - {fileID: 11400000, guid: 940161480e43a424fad887be903483c2, type: 2}
+  - {fileID: 11400000, guid: 18100c3ade8cfb64c8c7764ad42a9b7d, type: 2}

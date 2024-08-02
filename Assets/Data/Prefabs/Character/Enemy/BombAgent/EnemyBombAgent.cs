@@ -20,7 +20,7 @@ public class EnemyBombAgent : Agent, INetworkSerializable
     public Material material; // Rengini değiştirmek istediğiniz materyal
     public Color targetColor = Color.red; // Hedef renk (kırmızı)
     public float duration = 1f; // Renk değişiminin süresi
-    public float bombTriggerTime = 10f; // Bomba tetiklenme süresi
+    // Bomba tetiklenme süresi
     private bool isBombTriggered;
     private Color originalColor; // Orijinal renk
     private float bombTimer; // Bomba tetikleme süresi sayacı
@@ -46,10 +46,8 @@ public class EnemyBombAgent : Agent, INetworkSerializable
     {
         if (IsServer)
         {
-            enemyMovement.velocity = Vector3.zero;
-            transform.localPosition = Vector3.zero;
             StopAllCoroutines();
-            bombTimer = bombTriggerTime; // Bombayı tetiklemek için sayaç sıfırlanır
+          
             isBombTriggered = true;
             time = 0;
 
@@ -97,7 +95,7 @@ public class EnemyBombAgent : Agent, INetworkSerializable
 
     IEnumerator TriggerBomb()
     {
-        AddReward(5); // Oyuncuyu bulup bombayı tetiklediği için ödüllendirin.
+      
 
         while (time < explodeDuration)
         {
@@ -105,17 +103,7 @@ public class EnemyBombAgent : Agent, INetworkSerializable
             yield return StartCoroutine(ChangeToColor(targetColor, originalColor, duration));
             time += Time.deltaTime;
         }
-
-        if (Vector3.Distance(transform.position, player.position) < 5f)
-        {
-            AddReward(30);
-        }
-        else
-        {
-            AddReward(-5);
-        }
-
-        EndEpisode(); // Bölümü sonlandır
+        
     }
 
     IEnumerator ChangeToColor(Color startColor, Color endColor, float duration)
@@ -153,14 +141,15 @@ public class EnemyBombAgent : Agent, INetworkSerializable
     private void FixedUpdate()
     {
         if (!IsServer) return;
+        enemyMovement.AddForce(Physics.gravity*300,ForceMode.Acceleration);
 
-        bombTimer -= Time.fixedDeltaTime;
+      
         if (bombTimer <= 0)
         {
-            AddReward(-15f);
+         
             StopAllCoroutines();
             material.color = originalColor;
-            EndEpisode();
+         
         }
     }
 
@@ -180,38 +169,39 @@ public class EnemyBombAgent : Agent, INetworkSerializable
 
     private void UpdateNearestPlayer()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRadius);
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         float nearestDistance = Mathf.Infinity;
         Transform nearestPlayer = null;
 
-        foreach (var hitCollider in hitColliders)
+        // Her bir "Player" nesnesi için döngü
+        foreach (var obj in players)
         {
-            if (hitCollider.CompareTag("Player"))
+            // Mevcut obje ile oyuncu arasındaki mesafeyi hesaplayın
+            float distance = Vector3.Distance(transform.position, obj.transform.position);
+
+            // Eğer bu mesafe, şimdiye kadar bulunan en yakın mesafeden daha küçükse
+            if (distance < nearestDistance)
             {
-                float distance = Vector3.Distance(transform.position, hitCollider.transform.position);
-                if (distance < nearestDistance)
-                {
-                    nearestDistance = distance;
-                    nearestPlayer = hitCollider.transform;
-                }
+                // En yakın mesafeyi ve oyuncuyu güncelleyin
+                nearestDistance = distance;
+                nearestPlayer = obj.transform;
             }
         }
 
+        // Eğer bir oyuncu bulunduysa, player değişkenini güncelleyin
         if (nearestPlayer != null)
         {
             player = nearestPlayer;
+            Debug.Log("Nearest player: " + player.name);
         }
+    
     }
 
     private void OnCollisionEnter(Collision other)
     {
         if (!IsServer) return;
 
-        if (other.collider.CompareTag("Wall"))
-        {
-            AddReward(-15f);
-            EndEpisode();
-        }
+  
     }
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
