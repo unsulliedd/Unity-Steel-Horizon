@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7401241819707868368}
   - component: {fileID: 6392813013964184691}
   - component: {fileID: 1857379083437766915}
-  - component: {fileID: 7489811599413790910}
+  - component: {fileID: 6740900091397349509}
   m_Layer: 0
   m_Name: Balta
   m_TagString: Untagged
@@ -103,7 +103,7 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 64
---- !u!114 &7489811599413790910
+--- !u!114 &6740900091397349509
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,15 +112,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 545443688336775876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10e697f89a6731e41a01b6c2179f766f, type: 3}
+  m_Script: {fileID: 11500000, guid: b6b6ecc287cadae4993fff906caf7546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   aimTransform: {fileID: 0}
   bone: {fileID: 0}
   angleLimit: 90
-  distanceLimit: 4.85
+  distanceLimit: 1.5
   iterations: 10
-  weight: 0.482
+  weight: 1
   canTurn: 0
 --- !u!1 &2675481367072414182
 GameObject:

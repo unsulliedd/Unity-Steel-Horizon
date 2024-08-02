@@ -39,8 +39,13 @@ public class Bullet : MonoBehaviour
         {
             Vector3 hitPoint = hit.point; // Point of collision
             Vector3 hitNormal = hit.normal; // Normal at the point of collision
-            string tag = collision.transform.tag; // Tag of the collided object
-
+            string tag = collision.transform.tag;
+            if (hit.transform.CompareTag("Boss"))
+            {
+                Debug.Log("FUCKKKK");
+                hit.transform.GetComponentInChildren<BossHealth>().TakeDamageToBoss(5);
+            }// Tag of the collided object
+           
             // Handle the collision impact based on the collided object's tag
             HandleCollisionImpact(tag, hitPoint, hitNormal);
 
@@ -59,6 +64,11 @@ public class Bullet : MonoBehaviour
         switch (tag)
         {
             case "Enemy":
+            case "Boss":
+                SpawnImpactEffect("BulletHit", hitPoint, hitNormal, 4);
+                
+                
+                break;
             case "Player":
                 // Spawn bullet hit effect for enemy or player
                 SpawnImpactEffect("BulletHit", hitPoint, hitNormal, 4);

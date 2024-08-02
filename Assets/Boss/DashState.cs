@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class DashState : StateMachineBehaviour
 {
-    [SerializeField] private GameObject lightning;
+   
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -23,7 +23,7 @@ public class DashState : StateMachineBehaviour
     {
         animator.GetComponent<NavMeshAgent>().speed = 2;
         animator.GetComponent<NavMeshAgent>().acceleration = 2;
-        GameObject.Find("Aura Lightning").gameObject.SetActive(false);
+       
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

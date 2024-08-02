@@ -33,6 +33,8 @@ public class BossManager : MonoBehaviour
     private BossState state;
     private Vector3 retreatPos;
     public Transform origin;
+    private float damageCheckInterval = 1.0f; // Hasar kontrol süresi (saniye)
+    private float lastDamageTime = 0.0f;
    
 
     // Kutunun yarı genişlik, yarı yükseklik ve yarı derinlik değerleri
@@ -54,6 +56,7 @@ public class BossManager : MonoBehaviour
         animator = GetComponent<Animator>();
         secondAttack = GetComponent<BossAreaAttack>();
         thirdAttack = GetComponent<BossFinalAttack>();
+        StartCoroutine(CheckDamage());
         state = BossState.Idle;
         attackTimer = attackCooldown;
         basicAttackTimer = basicAttackDuration;
@@ -63,6 +66,7 @@ public class BossManager : MonoBehaviour
     void Update()
     {
         // Assign agent speed to Animator parameter
+       
         animator.SetFloat("Speed", agent.velocity.magnitude);
     RotateShields();
     bool IsExistPlayer = CheckPlayerExist();
@@ -215,13 +219,13 @@ public class BossManager : MonoBehaviour
                 // Hedef geri çekilme pozisyonu
                 retreatPos = new Vector3(averagePosition.x, transform.position.y,
                     transform.position.z + retreatDistance / Mathf.Clamp(transform.rotation.z-averagePosition.z,1,5));
-                Debug.Log(retreatPos);
+               
                 // Geri çekilme pozisyonuna git
                 agent.SetDestination(retreatPos);
                 canSetPos = false;
             }
           
-        Debug.Log((Vector3.Distance(transform.position, retreatPos)));
+       
 
             // Geri çekilme işlemi tamamlandığında saldırıya geç
             if (Vector3.Distance(transform.position, retreatPos) < 5f)
@@ -292,6 +296,7 @@ public class BossManager : MonoBehaviour
     public void OnDamageTaken()
     {
         takingContinuousDamage = true; // Hasar alındığında çağırılacak fonksiyon
+        lastDamageTime = Time.time; // Son hasar alınma zamanını güncelle
     }
 
     public void OnDamageStopped()
@@ -299,6 +304,19 @@ public class BossManager : MonoBehaviour
         takingContinuousDamage = false; // Hasar durduğunda çağırılacak fonksiyon
     }
 
+    private IEnumerator CheckDamage()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(damageCheckInterval);
+
+            // Belirli bir süre boyunca hasar alınmadıysa OnDamageStopped fonksiyonunu çağır
+            if (takingContinuousDamage && Time.time - lastDamageTime > damageCheckInterval)
+            {
+                OnDamageStopped();
+            }
+        }
+    }
     void RotateShields()
     {
         if(shield!=null)

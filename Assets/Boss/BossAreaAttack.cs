@@ -7,8 +7,6 @@ public class BossAreaAttack : MonoBehaviour
     public GameObject areaAttackEffectPrefab; // Alan saldırısı efekt prefabı
     public float areaAttackInterval = 10.0f; // Alan saldırısı aralığı
     private float areaAttackTimer;
-    public float sphereRadius = 5.0f; // Saldırı yarıçapı
-    public LayerMask characterLayer;
     private GameObject[] bolts; // Karakterler için layer mask
     private int currentBoltIndex = 0;
     private Animator _animator;
@@ -32,12 +30,10 @@ public class BossAreaAttack : MonoBehaviour
         _animator.SetBool("TriggerArea",true);
         yield return new WaitForSeconds(1f);
         _animator.SetBool("TriggerArea",false);
-        Vector3 sphereCastStartPos = transform.position;
-        RaycastHit[] hits = Physics.SphereCastAll(sphereCastStartPos, sphereRadius, Vector3.forward, 0f, characterLayer);
-
-        foreach (RaycastHit hit in hits)
+        GameObject[] characters = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject chara in characters)
         {
-            GameObject character = hit.collider.gameObject;
+            GameObject character = chara;
 
             // Alan saldırısı efekti oluştur
             Vector3 attackPosition = character.transform.position;
@@ -57,10 +53,5 @@ public class BossAreaAttack : MonoBehaviour
        
     }
 
-    private void OnDrawGizmos()
-    {
-        // SphereCast alanını çizdir
-        Gizmos.color = Color.red; // Alanın rengini ayarla
-        Gizmos.DrawWireSphere(transform.position, sphereRadius);
-    }
+   
 }
