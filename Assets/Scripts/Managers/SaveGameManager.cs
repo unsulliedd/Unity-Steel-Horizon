@@ -5,34 +5,31 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-/// <summary>
-/// Manages saving and loading game data, including character profiles and game state.
-/// </summary>
 public class SaveGameManager : MonoBehaviour
 {
-    [SerializeField] private int worldSceneIndex = 2; // Index of the world scene to load
-    public int loadingScreenIndex = 1; // Index of the loading screen scene
+    [SerializeField] private int worldSceneIndex = 2;
+    public int loadingScreenIndex = 1;
 
-    private SaveFileWriter saveFileWriter; // Handles the writing and reading of save files
+    private SaveFileWriter saveFileWriter;
 
     [Header("Save/Load")]
-    public bool saveGame; // Flag to trigger game save
-    public bool loadGame; // Flag to trigger game load
+    public bool saveGame;
+    public bool loadGame;
 
     [Header("Current Character Data")]
-    public CharacterSlot currentCharacterSlot; // Current character slot being used
-    public CharacterSaveData currentCharacterData; // Data of the current character
-    private string saveFileName; // Name of the save file
+    public CharacterSlot currentCharacterSlot;
+    public CharacterSaveData currentCharacterData;
+    private string saveFileName;
 
     [Header("Character Slots")]
-    public List<CharacterSaveData> characterSlots = new List<CharacterSaveData>(); // List of all character slots
+    public List<CharacterSaveData> characterSlots = new List<CharacterSaveData>();
 
-    public PlayerManager playerManager; // Reference to the PlayerManager
+    public PlayerManager playerManager;
 
-    public static SaveGameManager Instance { get; private set; } // Singleton instance of SaveGameManager
+    public static SaveGameManager Instance { get; private set; }
 
-    public AsyncOperation WorldSceneOperation { get; private set; } // AsyncOperation for world scene
-    public PlayerClass playerClass;
+    public AsyncOperation WorldSceneOperation { get; private set; }
+    public PlayerClass[] playerClass;
 
     private void Awake()
     {
@@ -47,13 +44,11 @@ public class SaveGameManager : MonoBehaviour
 
     private void Start()
     {
-        // Load all character profiles at the start
         LoadAllCharacterProfiles();
     }
 
     private void Update()
     {
-        // Manual in-game save/load handling
         if (saveGame)
         {
             SaveGame();
@@ -67,16 +62,12 @@ public class SaveGameManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Starts a new game, finding an empty character slot and initializing it.
-    /// </summary>
-    public void NewGame()
+    public void NewGame(int selectedCharacterIndex)
     {
         InitializeSaveFileWriter();
 
         bool emptySlotFound = false;
 
-        // Find an empty character slot
         for (int i = 0; i < characterSlots.Count; i++)
         {
             CharacterSlot slot = (CharacterSlot)i;
@@ -86,121 +77,84 @@ public class SaveGameManager : MonoBehaviour
 
             if (!saveFileWriter.CheckIfSaveFileExists())
             {
-                // Set the current character slot and default data
                 currentCharacterSlot = slot;
                 currentCharacterData = new CharacterSaveData
                 {
                     characterName = "Player",
-                    characterClass = null,
+                    characterClass = playerClass[selectedCharacterIndex].className,
+                    characterClassIndex = selectedCharacterIndex,
                     characterLevel = 1,
-                    ownedWeapons = new List<Weapon>()
-                    //characterName = playerClass.name,
-                    //characterClass = playerClass.className,
-                    //characterLevel = 1,
-                    ////positionX = 0,
-                    ////positionY = 0,
-                    ////positionZ = 0,
-                    //currentHealth = playerClass.health,
-                    //currentStamina = playerClass.stamina,
-                    //vitality = playerClass.baseVitality,
-                    //strenght = playerClass.baseStrength,
+                    ownedWeapons = new List<Weapon>(),
+                    currentHealth = playerClass[selectedCharacterIndex].health,
+                    currentStamina = playerClass[selectedCharacterIndex].stamina,
+                    vitality = playerClass[selectedCharacterIndex].baseVitality,
+                    strength = playerClass[selectedCharacterIndex].baseStrength,
                 };
 
-                // Create a new save file for the character
                 saveFileWriter.CreateNewSaveFile(currentCharacterData);
                 emptySlotFound = true;
                 break;
             }
         }
+        Debug.Log("NewGame" + selectedCharacterIndex);
 
-        // Show no empty slot message
         if (!emptySlotFound)
             TitleScreenManager.Instance.NoEmptySlotPanelPopUp();
         else
-            StartCoroutine(LoadWorldScene());
+            StartCoroutine(LoadWorldScene(selectedCharacterIndex));
     }
 
-    /// <summary>
-    /// Saves the current game state to a file.
-    /// </summary>
     public void SaveGame()
     {
         saveFileName = AssignFileNamebyCharacterSlot(currentCharacterSlot);
-
         InitializeSaveFileWriter();
-
         saveFileWriter.saveFileName = saveFileName;
-        // Call save game callbacks
+
         SaveGameCallbacks.SaveGame(ref currentCharacterData);
 
-        // Save the current character data
         saveFileWriter.CreateNewSaveFile(currentCharacterData);
     }
 
-    /// <summary>
-    /// Loads the game state from a file.
-    /// </summary>
     public void LoadGame()
     {
         saveFileName = AssignFileNamebyCharacterSlot(currentCharacterSlot);
-
         InitializeSaveFileWriter();
         saveFileWriter.saveFileName = saveFileName;
 
-        // Load the character data from the save file
         currentCharacterData = saveFileWriter.LoadSaveFile();
 
-        StartCoroutine(LoadWorldScene());
+        StartCoroutine(LoadWorldScene(currentCharacterData.characterClassIndex));
     }
 
-    /// <summary>
-    /// Loads all character profiles from the save files.
-    /// </summary>
     public void LoadAllCharacterProfiles()
     {
         InitializeSaveFileWriter();
         for (int i = 0; i < characterSlots.Count; i++)
         {
-            // Load each character slot data
             saveFileWriter.saveFileName = AssignFileNamebyCharacterSlot((CharacterSlot)i);
             characterSlots[i] = saveFileWriter.LoadSaveFile();
         }
     }
 
-    /// <summary>
-    /// Deletes the save file for the specified character slot.
-    /// </summary>
     public void DeleteSaveGame(CharacterSlot characterSlot)
     {
-        InitializeSaveFileWriter(); // Ensure the save file writer is initialized
+        InitializeSaveFileWriter();
         saveFileWriter.saveFileName = AssignFileNamebyCharacterSlot(characterSlot);
-        saveFileWriter.DeleteSaveFile(); // Delete the save file for the specified character slot
+        saveFileWriter.DeleteSaveFile();
     }
 
-    /// <summary>
-    /// Checks if the specified character slot is empty.
-    /// </summary>
     public bool IsSlotEmpty(CharacterSlot characterSlot)
     {
         InitializeSaveFileWriter();
         saveFileWriter.saveFileName = AssignFileNamebyCharacterSlot(characterSlot);
-
-        // Check if the save file exists for the specified slot
         return !saveFileWriter.CheckIfSaveFileExists();
     }
 
-    /// <summary>
-    /// Assigns a file name based on the character slot.
-    /// </summary>
     public string AssignFileNamebyCharacterSlot(CharacterSlot characterSlot)
     {
-        // Return the appropriate file name based on the character slot
         return $"SH_{(int)characterSlot + 1:00}";
     }
 
-    /// <summary>
-    /// Initializes the save file writer.
-    /// </summary>
     private void InitializeSaveFileWriter()
     {
         if (saveFileWriter == null)
@@ -210,34 +164,20 @@ public class SaveGameManager : MonoBehaviour
             };
     }
 
-    /// <summary>
-    /// Loads the world scene asynchronously.
-    /// </summary>
-    /// <returns>An enumerator for coroutine support.</returns>
-    public IEnumerator LoadWorldScene()
+    public IEnumerator LoadWorldScene(int selectedCharacterIndex)
     {
+        Debug.Log("Loading world scene...");
         AsyncOperation loadingSceneOperation = SceneManager.LoadSceneAsync(loadingScreenIndex, LoadSceneMode.Additive);
         yield return new WaitUntil(() => loadingSceneOperation.isDone);
-
+        Debug.Log("Loading scene loaded");
         Scene loadingScene = SceneManager.GetSceneByBuildIndex(loadingScreenIndex);
         SceneManager.SetActiveScene(loadingScene);
-
+        Debug.Log("Loading scene activated");
         WorldSceneOperation = SceneManager.LoadSceneAsync(worldSceneIndex, LoadSceneMode.Single);
         yield return new WaitUntil(() => WorldSceneOperation.isDone);
 
-
-        if (TitleScreenManager.Instance.startAsHost)
-            NetworkManager.Singleton.StartHost();
-        else if (TitleScreenManager.Instance.startAsClient)
-            NetworkManager.Singleton.StartClient();
-        else
-        {
-            GameManager.Instance.StartSinglePlayerGame();
-            NetworkManager.Singleton.StartHost();
-        }
-        
-        // Once the scene is loaded, load the game data
         SaveGameCallbacks.LoadGame(ref currentCharacterData);
+        GameManager.Instance.Spawn(selectedCharacterIndex);
     }
 
     public int GetWorldSceneIndex() => worldSceneIndex;
