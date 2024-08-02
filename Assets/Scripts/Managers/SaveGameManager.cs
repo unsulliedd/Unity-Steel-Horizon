@@ -31,6 +31,8 @@ public class SaveGameManager : MonoBehaviour
     public AsyncOperation WorldSceneOperation { get; private set; }
     public PlayerClass[] playerClass;
 
+    public bool singlePlayer;
+
     private void Awake()
     {
         if (Instance == null)
@@ -175,9 +177,12 @@ public class SaveGameManager : MonoBehaviour
         Debug.Log("Loading scene activated");
         WorldSceneOperation = SceneManager.LoadSceneAsync(worldSceneIndex, LoadSceneMode.Single);
         yield return new WaitUntil(() => WorldSceneOperation.isDone);
-
+        Debug.Log(selectedCharacterIndex);
         SaveGameCallbacks.LoadGame(ref currentCharacterData);
-        GameManager.Instance.Spawn(selectedCharacterIndex);
+        if (singlePlayer)
+            GameManager.Instance.SpawnSinglePLayer(selectedCharacterIndex);
+        else
+            GameManager.Instance.Spawn(selectedCharacterIndex);
     }
 
     public int GetWorldSceneIndex() => worldSceneIndex;

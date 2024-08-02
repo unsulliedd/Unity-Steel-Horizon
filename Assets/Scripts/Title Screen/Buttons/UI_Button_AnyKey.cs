@@ -8,6 +8,7 @@ public class UI_Button_AnyKey : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject titleScreen;
+    [SerializeField] private GameObject ugsPanel;
     [SerializeField] private GameObject newGameButton;
 
     private void Update()
@@ -24,7 +25,7 @@ public class UI_Button_AnyKey : MonoBehaviour
         {
             EventSystem.current.SetSelectedGameObject(newGameButton);
             titleScreen.SetActive(false);
-            mainMenu.SetActive(true);
+            ugsPanel.SetActive(true);
         }
     }
 }

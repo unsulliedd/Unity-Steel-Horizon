@@ -1359,10 +1359,10 @@ GameObject:
   - component: {fileID: 113734234891065173}
   - component: {fileID: 6531190796681924940}
   - component: {fileID: 2681515463744570071}
+  - component: {fileID: 3457531308284209635}
   - component: {fileID: 2724516316402795619}
   - component: {fileID: 547135636094655017}
   - component: {fileID: 1088150887757708331}
-  - component: {fileID: 3457531308284209635}
   - component: {fileID: 3913678712631111496}
   - component: {fileID: 4906978994259305332}
   - component: {fileID: 1600555894864393338}
@@ -1521,6 +1521,26 @@ MonoBehaviour:
   jumpStaminaCost: 20
   lastFootstepTime: 0
   footstepInterval: 0.4
+--- !u!114 &3457531308284209635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4844543506815224979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f3fb8e616683ed418c410d7d08ebf11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isInCombatMode: 0
+  isAiming: 0
+  aimRange: 100
+  aimLayerMask:
+    serializedVersion: 2
+    m_Bits: 192
+  aimRifleRig: {fileID: 484063088732978233}
+  aimConstraintSource: {fileID: 88358366495354990}
 --- !u!114 &2724516316402795619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1573,26 +1593,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22798428d7724e3479eca42af4d98a90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3457531308284209635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4844543506815224979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f3fb8e616683ed418c410d7d08ebf11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isInCombatMode: 0
-  isAiming: 0
-  aimRange: 100
-  aimLayerMask:
-    serializedVersion: 2
-    m_Bits: 192
-  aimRifleRig: {fileID: 484063088732978233}
-  aimConstraintSource: {fileID: 88358366495354990}
 --- !u!114 &3913678712631111496
 MonoBehaviour:
   m_ObjectHideFlags: 0

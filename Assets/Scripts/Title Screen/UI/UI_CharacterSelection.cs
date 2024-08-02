@@ -6,7 +6,6 @@ using Unity.Services.Authentication;
 using System.Collections.Generic;
 using Unity.Netcode;
 using Unity.Services.Lobbies;
-using System.Threading.Tasks;
 
 public class UI_CharacterSelection : MonoBehaviour
 {
@@ -70,7 +69,6 @@ public class UI_CharacterSelection : MonoBehaviour
                 { "characterIndex_" + playerId, new DataObject(DataObject.VisibilityOptions.Member, selectedCharacterIndex.ToString()) }
             };
 
-            // Sadece host lobby'yi güncelleyebilir
             if (LobbyManager.Instance.GetHostId() == playerId)
             {
                 await LobbyService.Instance.UpdateLobbyAsync(LobbyManager.Instance.GetCurrentLobby().Id, new UpdateLobbyOptions { Data = lobbyData });
@@ -92,14 +90,13 @@ public class UI_CharacterSelection : MonoBehaviour
                 { "characterIndex_" + playerId, new DataObject(DataObject.VisibilityOptions.Member, selectedCharacterIndex.ToString()) }
             };
 
-            // Sadece host lobby'yi güncelleyebilir
             if (LobbyManager.Instance.GetHostId() == playerId)
             {
                 await LobbyService.Instance.UpdateLobbyAsync(LobbyManager.Instance.GetCurrentLobby().Id, new UpdateLobbyOptions { Data = lobbyData });
             }
 
-            UpdatePlayerStatus();
             CheckAllPlayersReady();
+            UpdatePlayerStatus();
         }
     }
 
@@ -187,7 +184,7 @@ public class UI_CharacterSelection : MonoBehaviour
                 Debug.LogError("Join code not found!");
             }
         }
-
+        SaveGameManager.Instance.singlePlayer = false;
         SaveGameManager.Instance.NewGame(selectedCharacterIndex);
     }
 

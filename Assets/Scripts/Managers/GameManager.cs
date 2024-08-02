@@ -7,6 +7,7 @@ using Unity.Services.Relay.Models;
 using Unity.Netcode.Transports.UTP;
 using System.Threading.Tasks;
 using Unity.Networking.Transport.Relay;
+using UnityEditor.PackageManager;
 
 public class GameManager : MonoBehaviour
 {
@@ -71,6 +72,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SpawnSinglePLayer(int selectedCharacterIndex)
+    {
+        StartSinglePlayerGame();
+        GameObject characterPrefab = characterPrefabs[selectedCharacterIndex];
+        GameObject characterInstance = Instantiate(characterPrefab);
+
+        var networkObject = characterInstance.GetComponent<NetworkObject>();
+        networkObject.SpawnAsPlayerObject(NetworkManager.Singleton.LocalClientId);
+
+        PlayerManager playerManager = characterInstance.GetComponent<PlayerManager>();
+        playerManager.SetCharacterData(SaveGameManager.Instance.currentCharacterData);
+    }
 
     private void SpawnPlayerCharacter(ulong clientId, int selectedCharacterIndex)
     {
