@@ -57,7 +57,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.3529412
+      - time: 0.32609555
         functionName: CheckWeaponDamage
         data: 
         objectReferenceParameter: {fileID: 919132149155446097, guid: ceea1764aa0fa384bb35e373117d15bd,
@@ -65,7 +65,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.4224599
+      - time: 0.51977533
         functionName: ResetFlag
         data: 
         objectReferenceParameter: {fileID: 919132149155446097, guid: ceea1764aa0fa384bb35e373117d15bd,

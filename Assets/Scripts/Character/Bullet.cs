@@ -44,7 +44,6 @@ public class Bullet : MonoBehaviour
             string tag = collision.transform.tag;
             if (hit.transform.CompareTag("Boss"))
             {
-                Debug.Log("FUCKKKK");
                 hit.transform.GetComponentInChildren<BossHealth>().TakeDamageToBoss(5);
             }// Tag of the collided object
            
@@ -66,6 +65,8 @@ public class Bullet : MonoBehaviour
         switch (tag)
         {
             case "Enemy":
+                SpawnImpactEffect("BulletHit", hitPoint, hitNormal, 4);
+                break;
             case "Boss":
                 SpawnImpactEffect("BulletHit", hitPoint, hitNormal, 4);
                 

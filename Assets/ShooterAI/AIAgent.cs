@@ -11,7 +11,7 @@ public class AIAgent : MonoBehaviour
     public AIStateID initialState;
     public AIAgentConfig config;
     public Transform playerTransform;
-    public WeaponIK weaponIK;
+    public WeaponIIIK weaponIK;
     public Transform[] patrolPoints;
 
     void Start()
