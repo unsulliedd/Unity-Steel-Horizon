@@ -8,6 +8,7 @@ public class CharacterSaveData
     public string characterName = "Character";
     public string characterClass;
     public int characterLevel = 1;
+    public int characterClassIndex;
 
     public float totalPlayTime;
 
@@ -34,5 +35,4 @@ public class CharacterSaveData
     [Header("Kill Records")]
     public int totalDeaths;
     public int totalEnemiesKilled;
-    internal int characterClassIndex;
 }

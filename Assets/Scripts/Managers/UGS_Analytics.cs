@@ -17,13 +17,13 @@ public class UGS_Analytics : MonoBehaviour
         else
             Destroy(gameObject);
     }
+
     async void Start()
     {
         DontDestroyOnLoad(gameObject);
         try
         {
             await UnityServices.InitializeAsync();
-            GiveConsent(); //Get user consent according to various legislations
         }
         catch (ConsentCheckException e)
         {

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AIIdleState : AIState
@@ -29,14 +27,17 @@ public class AIIdleState : AIState
         // Eğer oyuncu menzil dışındaysa
         if (playerDirection.magnitude > agent.config.maxSightDistance)
         {
-            agent.weaponIK.canTurn = false;
+            if (agent.weaponIK != null)
+                agent.weaponIK.canTurn = false;
 
             // Devriye hareketi
             Patrol(agent);
             return;
         }
 
-        agent.weaponIK.canTurn = true;
+        if (agent.weaponIK != null)
+            agent.weaponIK.canTurn = true;
+
         Vector3 agentDirection = agent.transform.forward;
         float dotProduct = Vector3.Dot(playerDirection, agentDirection);
         

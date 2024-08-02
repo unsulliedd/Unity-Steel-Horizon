@@ -26,6 +26,8 @@ public class WeaponIIIK : MonoBehaviour
         Vector3 targetDirection = bossTransform.target.position - aimTransform.position;
         Vector3 aimDirection = aimTransform.forward;
         float blendOut = 0.0f;
+        if (aimTransform == null)
+            return Vector3.zero;
         float targetAngle = Vector3.Angle(targetDirection, aimDirection);
         if (targetAngle > angleLimit)
         {

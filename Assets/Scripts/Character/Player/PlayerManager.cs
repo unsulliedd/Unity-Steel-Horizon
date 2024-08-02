@@ -81,7 +81,7 @@ public class PlayerManager : CharacterManager
             SaveGameCallbacks.OnLoadGame += LoadCurrentGameData;
 
             // Load the game data if the player is not the server
-            if (IsOwner && !IsServer)
+            if (IsOwner)
                 LoadCurrentGameData(ref SaveGameManager.Instance.currentCharacterData);
         }
 

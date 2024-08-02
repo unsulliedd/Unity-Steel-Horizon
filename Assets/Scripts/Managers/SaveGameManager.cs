@@ -91,6 +91,9 @@ public class SaveGameManager : MonoBehaviour
                     currentStamina = playerClass[selectedCharacterIndex].stamina,
                     vitality = playerClass[selectedCharacterIndex].baseVitality,
                     strength = playerClass[selectedCharacterIndex].baseStrength,
+                    positionX = -61,
+                    positionY = 31,
+                    positionZ = -955
                 };
 
                 saveFileWriter.CreateNewSaveFile(currentCharacterData);
@@ -124,7 +127,8 @@ public class SaveGameManager : MonoBehaviour
         saveFileWriter.saveFileName = saveFileName;
 
         currentCharacterData = saveFileWriter.LoadSaveFile();
-
+        Debug.Log("LoadGame" + currentCharacterData.characterClassIndex);
+        singlePlayer = true;
         StartCoroutine(LoadWorldScene(currentCharacterData.characterClassIndex));
     }
 

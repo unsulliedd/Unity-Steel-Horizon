@@ -23,6 +23,8 @@ public class WeaponIK : MonoBehaviour
     // Update is called once per frame
     Vector3 GetTargetPosition()
     {
+        if (aimTransform == null)
+            return Vector3.zero;
         Vector3 targetDirection = bossTransform.target.position - aimTransform.position;
         Vector3 aimDirection = aimTransform.forward;
         float blendOut = 0.0f;
@@ -41,16 +43,15 @@ public class WeaponIK : MonoBehaviour
         Vector3 direction = Vector3.Slerp(targetDirection, aimDirection, blendOut);
         return aimTransform.position + direction;
     }
+
     void LateUpdate()
     {
 
         Vector3 targetPosition = GetTargetPosition();
             for(int i = 0; i < iterations; i++)
-                AimAtTarget(bone, targetPosition);
-    
-   
-        
+                AimAtTarget(bone, targetPosition);  
     }
+
     private void AimAtTarget(Transform bone,Vector3 targetPosition)
     {
         Vector3 aimDirection=aimTransform.forward;
