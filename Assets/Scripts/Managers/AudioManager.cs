@@ -80,7 +80,7 @@ public class AudioManager : MonoBehaviour
     {
         if (scene.buildIndex == 0)
             PlayTitleScreenSoundtrack();
-        else if (scene.buildIndex == 3)
+        else if (scene.buildIndex == SaveGameManager.Instance.GetWorldSceneIndex())
             StartAmbientSoundLoop();
     }
 

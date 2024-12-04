@@ -12,12 +12,19 @@ public class WeaponIK : MonoBehaviour
     public int iterations = 10;
     [Range(0, 1)]
     public float weight = 1.0f;
-
+    private PlayerManager playerManager;
     public bool canTurn;
     // Start is called before the first frame update
     void Start()
     {
         bossTransform = GetComponentInParent<BossManager>();
+        StartCoroutine(FindPlayer());
+    }
+
+    IEnumerator FindPlayer()
+    {
+        yield return new WaitForSeconds(2f);
+        playerManager = GetComponentInParent<PlayerManager>();
     }
 
     // Update is called once per frame
@@ -25,7 +32,7 @@ public class WeaponIK : MonoBehaviour
     {
         if (aimTransform == null)
             return Vector3.zero;
-        Vector3 targetDirection = bossTransform.target.position - aimTransform.position;
+        Vector3 targetDirection = playerManager.transform.position - aimTransform.position;
         Vector3 aimDirection = aimTransform.forward;
         float blendOut = 0.0f;
         float targetAngle = Vector3.Angle(targetDirection, aimDirection);

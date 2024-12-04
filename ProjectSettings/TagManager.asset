@@ -11,6 +11,8 @@ TagManager:
   - FxTemporaire
   - Fire
   - Tank
+  - Boss
+  - Enemy
   layers:
   - Default
   - TransparentFX

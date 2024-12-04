@@ -45,8 +45,11 @@ public class Bullet : MonoBehaviour
             if (hit.transform.CompareTag("Boss"))
             {
                 hit.transform.GetComponentInChildren<BossHealth>().TakeDamageToBoss(5);
-            }// Tag of the collided object
-           
+            }
+            else if (hit.transform.CompareTag("Enemy"))
+            {
+                hit.transform.GetComponentInChildren<EnemyHealth>().TakeDamage(25);
+            }
             // Handle the collision impact based on the collided object's tag
             HandleCollisionImpact(tag, hitPoint, hitNormal);
 

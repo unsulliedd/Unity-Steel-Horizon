@@ -25,15 +25,15 @@ public class AIChasePlayer : AIState
 
     public void Update(AIAgent agent)
     {
-       // Debug.Log(playerTransform.gameObject.name);
-        Debug.Log(agent.gameObject.name);
+        if (agent.isdead)
+            return;
+
         timer = Time.deltaTime;
         if (timer < 0)
         {
             float sqrDistance = (agent.playerTransform.position - agent.navMeshAgent.destination).sqrMagnitude;
             if (sqrDistance < Mathf.Sqrt(agent.config.maxDistance))
             {
-
                 agent.navMeshAgent.SetDestination(agent.playerTransform.position);
             }
         }

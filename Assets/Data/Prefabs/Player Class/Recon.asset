@@ -38,8 +38,8 @@ MonoBehaviour:
   - weaponName: Revolver
     idlePosition: {x: -0.1313, y: 0.2572, z: -0.0155}
     idleRotation: {x: 0.37405446, y: -0.50578505, z: -0.49349356, w: -0.6006071}
-    aimPosition: {x: -0.057, y: 0.22, z: -0.127}
-    aimRotation: {x: -0.32310426, y: 0.22363833, z: 0.690272, w: 0.6075475}
+    aimPosition: {x: -0.113, y: 0.31, z: -0.03}
+    aimRotation: {x: 0.53058547, y: -0.56402564, z: -0.43418118, w: -0.4602617}
     scale: {x: 1.25, y: 1.25, z: 1.25}
   - weaponName: TommyGun
     idlePosition: {x: -0.0654, y: 0.1269, z: 0.0189}

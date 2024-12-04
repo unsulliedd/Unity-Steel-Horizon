@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class DoorTrigger : MonoBehaviour
 {
-    [SerializeField] private Transform Door;
     private bool canOpen;
     private Transform upPoint;
+    private BoxCollider boxCollider;
+
     private void Start()
     {
         upPoint = transform.GetChild(0).transform;
-
+        boxCollider = GetComponent<BoxCollider>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,9 +27,9 @@ public class DoorTrigger : MonoBehaviour
 
     private void Update()
     {
-        if (canOpen && upPoint.position.y > Door.transform.position.y)
+        if (canOpen && upPoint.position.y > transform.position.y)
         {
-            Door.Translate(0,Time.deltaTime*3,0);
+            transform.Translate(0,Time.deltaTime*3,0);
         }
     }
 }

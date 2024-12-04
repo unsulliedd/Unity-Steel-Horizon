@@ -22,6 +22,8 @@ public class AIIdleState : AIState
 
     public void Update(AIAgent agent)
     {
+        if (agent.isdead)
+            return;
         Vector3 playerDirection = agent.playerTransform.position - agent.transform.position;
         
         // Eğer oyuncu menzil dışındaysa

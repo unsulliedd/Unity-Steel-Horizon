@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -35,8 +33,8 @@ public class EnemyHealth : MonoBehaviour
     private void Die() {
         AIDeathState deathState = new AIDeathState();
         agent.StateMachine.ChangeState(AIStateID.Death);
-
     }
+
     private void Update()
     {
         blinkTimer-=Time.deltaTime;

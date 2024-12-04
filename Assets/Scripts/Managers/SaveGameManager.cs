@@ -91,9 +91,12 @@ public class SaveGameManager : MonoBehaviour
                     currentStamina = playerClass[selectedCharacterIndex].stamina,
                     vitality = playerClass[selectedCharacterIndex].baseVitality,
                     strength = playerClass[selectedCharacterIndex].baseStrength,
-                    positionX = -61,
-                    positionY = 31,
-                    positionZ = -955
+                    //positionX = -61,
+                    //positionY = 31,
+                    //positionZ = -955
+                    positionX= 857.5274047851563f,
+                    positionY= 1.1155128479003907f,
+                    positionZ= -597.9105834960938f,
                 };
 
                 saveFileWriter.CreateNewSaveFile(currentCharacterData);

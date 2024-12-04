@@ -7,7 +7,6 @@ using Unity.Services.Relay.Models;
 using Unity.Netcode.Transports.UTP;
 using System.Threading.Tasks;
 using Unity.Networking.Transport.Relay;
-using UnityEditor.PackageManager;
 
 public class GameManager : MonoBehaviour
 {
